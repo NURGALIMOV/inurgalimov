@@ -1,4 +1,4 @@
-package ru.job4j;
+﻿package ru.inurgalimov;
 /**
 * Тестовый класс для выполнения задания
 * @author Ilshat Nurgalimov

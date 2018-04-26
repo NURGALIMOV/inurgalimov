@@ -1,4 +1,4 @@
-package ru.inurgalimov;
+﻿package ru.inurgalimov;
 /**
 * Тестовый класс для выполнения задания
 * @author Ilshat Nurgalimov
