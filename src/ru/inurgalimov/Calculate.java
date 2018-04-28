@@ -1,13 +1,12 @@
-﻿package ru.inurgalimov;
+package ru.inurgalimov;
 /**
-* Тестовый класс для выполнения задания
+* Test class for the task
 * @author Ilshat Nurgalimov
 * @since 07.01.2018
 */
-
 public class Calculate {
     /**
-    * Метод main выводит строку в консоль.
+    * The main method prints a string to the console.
     * @param args - args
     */
     public static void main(String[] args) {
