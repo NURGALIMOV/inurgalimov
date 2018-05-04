@@ -1,5 +1,12 @@
 package ru.inurgalimov.calculator;
 
+/**
+ * Test class for Calculator
+ *
+ * @author Ilshat Nurgalimov
+ * @since 04.05.2018
+ */
+
 import org.junit.Test;
 
 import static org.hamcrest.core.Is.is;
@@ -7,6 +14,7 @@ import static org.junit.Assert.assertThat;
 
 public class CalculatorTest {
     private Calculator calc = new Calculator();
+
     @Test
     public void whenAddOnePlusOneThenTwo() {
         calc.add(1D, 1D);

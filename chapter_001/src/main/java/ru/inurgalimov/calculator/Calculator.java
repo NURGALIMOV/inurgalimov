@@ -1,5 +1,9 @@
 package ru.inurgalimov.calculator;
 
+/**
+ * @author Ilshat Nurgalimov
+ * @since 04.05.2018
+ */
 public class Calculator {
     private double result;
 
