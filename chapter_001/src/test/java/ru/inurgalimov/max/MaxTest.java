@@ -1,0 +1,23 @@
+package ru.inurgalimov.max;
+
+import org.junit.Test;
+
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
+
+
+/**
+ * Test class for Max
+ *
+ * @author Nurgalimov Ilshat
+ * @since 05.05.2018
+ */
+public class MaxTest {
+    @Test
+    public void whenFirstLessSecond() {
+        Max maxim = new Max();
+        int result = maxim.max(1, 2);
+        assertThat(result, is(2));
+    }
+}
+
