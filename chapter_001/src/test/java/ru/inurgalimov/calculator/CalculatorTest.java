@@ -1,22 +1,15 @@
 package ru.inurgalimov.calculator;
 
-/**
- * Test class for Calculator
- *
- * @author Ilshat Nurgalimov
- * @since 04.05.2018
- */
-
 import org.junit.Test;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
 public class CalculatorTest {
-    private Calculator calc = new Calculator();
 
     @Test
     public void whenAddOnePlusOneThenTwo() {
+        Calculator calc = new Calculator();
         calc.add(1D, 1D);
         double result = calc.getResult();
         double expected = 2D;
@@ -34,6 +27,7 @@ public class CalculatorTest {
 
     @Test
     public void whenDivTwoDivTwoThenOne() {
+        Calculator calc = new Calculator();
         calc.div(2D, 2D);
         double result = calc.getResult();
         double expected = 1D;
@@ -42,6 +36,7 @@ public class CalculatorTest {
 
     @Test
     public void whenMultipleTwoMultipleTwoThenFour() {
+        Calculator calc = new Calculator();
         calc.multiple(2D, 2D);
         double result = calc.getResult();
         double expected = 4D;

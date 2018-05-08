@@ -6,11 +6,7 @@ import java.io.PrintStream;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
-/**
- * Test
- * @author Ilshat Nurgalimov
- * @since 28.04.2018
- */
+
 
 public class CalculateTest {
     /**

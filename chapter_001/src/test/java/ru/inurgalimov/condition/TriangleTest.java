@@ -1,10 +1,5 @@
 package ru.inurgalimov.condition;
 
-/**
- * Test class for Triangle
- * @author Nurgalimov Ilshat
- * @since 06.05.2018
- */
 
 import org.junit.Test;
 
