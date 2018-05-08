@@ -1,5 +1,11 @@
 package ru.inurgalimov.loop;
 
+/**
+ * Test class for Counter
+ * @Nurgalimov Ilshat
+ * @since 08.05.2018
+ */
+
 import org.junit.Test;
 
 import static org.hamcrest.core.Is.is;
