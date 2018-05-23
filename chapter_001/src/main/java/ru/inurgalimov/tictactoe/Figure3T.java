@@ -19,11 +19,11 @@ public class Figure3T extends Rectangle {
         this.markO = !markX;
     }
 
-    public boolean hasMarkX() {
-        return this.markX;
-    }
-
-    public boolean hasMarkO() {
-        return this.markO;
+    public boolean hasMark(char ch) {
+        if (ch == 'X') {
+            return this.markX;
+        } else {
+            return this.markO;
+        }
     }
 }
