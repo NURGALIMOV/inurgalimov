@@ -51,12 +51,13 @@ public class TrackerTest {
         Item item1 = new Item("test1", "testDescription1", 123L);
         Item item2 = new Item("test2", "testDescription2", 1234L);
         Item item3 = new Item("test3", "testDescription3", 12345L);
-        Item item[] = {item1, item2, item3};
         tracker.add(item1);
         tracker.add(item2);
         tracker.add(item3);
 
-        Assert.assertThat(tracker.findAll(), is(item));
+        Assert.assertThat(tracker.findAll()[0], is(item1));
+        Assert.assertThat(tracker.findAll()[1], is(item2));
+        Assert.assertThat(tracker.findAll()[2], is(item3));
     }
 
     @Test
@@ -65,12 +66,12 @@ public class TrackerTest {
         Item item1 = new Item("test1", "testDescription1", 123L);
         Item item2 = new Item("test2", "testDescription2", 1234L);
         Item item3 = new Item("test1", "testDescription3", 12345L);
-        Item item[] = {item1, item3};
         tracker.add(item1);
         tracker.add(item2);
         tracker.add(item3);
 
-        Assert.assertThat(tracker.findByName("test1"), is(item));
+        Assert.assertThat(tracker.findByName("test1")[0], is(item1));
+        Assert.assertThat(tracker.findByName("test1")[1], is(item3));
     }
 
     @Test
@@ -82,8 +83,8 @@ public class TrackerTest {
         tracker.add(item1);
         tracker.add(item2);
         tracker.add(item3);
-        tracker.findAll()[1].setId("tester");
+        tracker.findAll()[1].setId("1");
 
-        Assert.assertThat(tracker.findById("tester"), is(item2));
+        Assert.assertThat(tracker.findById("1"), is(item2));
     }
 }

@@ -16,7 +16,7 @@ public class Tracker {
     }
 
     public void replace(String id, Item item) {
-        for (int i = 0; i <= position; i++) {
+        for (int i = 0; i < position; i++) {
             if (items[i].getId().equals(id)) {
                 items[i] = item;
             }
@@ -32,21 +32,21 @@ public class Tracker {
     }
 
     public Item[] findAll() {
-        Item it[] = new Item[position + 1];
-        System.arraycopy(items, 0, it, 0, position + 1);
+        Item[] it = new Item[position];
+        System.arraycopy(items, 0, it, 0, position);
         return it;
     }
 
     public Item[] findByName(String key) {
-        Item temp[] = new Item[items.length];
+        Item[] temp = new Item[position];
         int count = 0;
-        for (int i = 0; i < items.length; i++) {
+        for (int i = 0; i < position; i++) {
             if (items[i].getName().equals(key)) {
                 temp[count] = items[i];
                 count++;
             }
         }
-        Item it[] = new Item[count];
+        Item[] it = new Item[count];
         for (int i = 0; i < count; i++) {
             it[i] = temp[i];
         }
@@ -55,9 +55,9 @@ public class Tracker {
 
     public Item findById(String id) {
         Item result = null;
-        for (Item it : items) {
-            if(it.getId().equals(id)) {
-                result = it;
+        for (int i = 0; i < position; i++) {
+            if (items[i].getId().equals(id)) {
+                result = items[i];
             }
         }
         return result;
