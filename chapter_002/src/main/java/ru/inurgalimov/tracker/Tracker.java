@@ -29,6 +29,7 @@ public class Tracker {
             index++;
         }
         System.arraycopy(items, index + 1, items, index, position - index);
+        position--;
     }
 
     public Item[] findAll() {
