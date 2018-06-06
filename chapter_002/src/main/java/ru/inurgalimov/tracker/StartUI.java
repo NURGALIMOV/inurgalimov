@@ -13,10 +13,10 @@ public class StartUI {
     }
 
     public void init() {
-        menuTracker.fillActions();
+        this.menuTracker.fillActions();
         boolean exit = false;
         while (!exit) {
-            menuTracker.showMenu();
+            this.menuTracker.showMenu();
             String answer = this.input.ask("Введите пункт меню : ");
             if (Integer.valueOf(answer) >= 0 && Integer.valueOf(answer) < 6) {
                 menuTracker.select(Integer.valueOf(answer));

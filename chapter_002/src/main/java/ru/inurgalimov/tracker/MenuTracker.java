@@ -14,12 +14,9 @@ public class MenuTracker {
 
     public void showMenu() {
         System.out.println("Меню.");
-        System.out.println("0. Add new Item");
-        System.out.println("1. Show all items");
-        System.out.println("2. Edit item");
-        System.out.println("3. Delete item");
-        System.out.println("4. Find item by Id");
-        System.out.println("5. Find items by name");
+        for (UserAction action : this.actions) {
+            System.out.println(action.info());
+        }
         System.out.println("6. Exit Program");
     }
 
@@ -52,7 +49,7 @@ public class MenuTracker {
 
         @Override
         public String info() {
-            return String.format("%s. %s", this.key(), "Add new item.");
+            return String.format("%s. %s", this.key(), "Add new Item");
         }
     }
 
@@ -69,7 +66,7 @@ public class MenuTracker {
 
         @Override
         public String info() {
-            return String.format("%s. %s", this.key(), "Delete item.");
+            return String.format("%s. %s", this.key(), "Delete item");
         }
     }
 
@@ -82,15 +79,20 @@ public class MenuTracker {
         @Override
         public void execute(Input input, Tracker tracker) {
             String id = input.ask("Введите ID заявки для поиска:");
-            System.out.println("Имя заявки: " + tracker.findById(id).getName());
-            System.out.println("Описание заявки: " + tracker.findById(id).getDescription());
-            System.out.println("ID заявки: " + tracker.findById(id).getId() + "\n");
-            System.out.println();
+            Item resultFind = tracker.findById(id);
+            if (resultFind != null) {
+                System.out.println("Имя заявки: " + resultFind.getName());
+                System.out.println("Описание заявки: " + resultFind.getDescription());
+                System.out.println("ID заявки: " + resultFind.getId() + "\n");
+                System.out.println();
+            } else if (resultFind == null) {
+                System.out.println("Этой заявки нет в списке!");
+            }
         }
 
         @Override
         public String info() {
-            return String.format("%s. %s", this.key(), "Find item by Id.");
+            return String.format("%s. %s", this.key(), "Find item by Id");
         }
     }
 
@@ -113,7 +115,7 @@ public class MenuTracker {
 
         @Override
         public String info() {
-            return String.format("%s. %s", this.key(), "Find items by name.");
+            return String.format("%s. %s", this.key(), "Find items by name");
         }
     }
 
@@ -135,7 +137,7 @@ public class MenuTracker {
 
         @Override
         public String info() {
-            return String.format("%s. %s", this.key(), "Show all items.");
+            return String.format("%s. %s", this.key(), "Show all items");
         }
     }
 }
@@ -157,6 +159,6 @@ class EditItem implements UserAction {
 
     @Override
     public String info() {
-        return String.format("%s. %s", this.key(), "Edit item.");
+        return String.format("%s. %s", this.key(), "Edit item");
     }
 }
