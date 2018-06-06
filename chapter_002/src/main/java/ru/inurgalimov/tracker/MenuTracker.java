@@ -153,8 +153,9 @@ class EditItem implements UserAction {
         String id = input.ask("Введите ID заявки для корректировки:");
         String name = input.ask("Введите новое имя для заявки:");
         String desc = input.ask("Введите новое описание для заявки:");
-        tracker.findById(id).setName(name);
-        tracker.findById(id).setDescription(desc);
+        Item editItem = tracker.findById(id);
+        editItem.setName(name);
+        editItem.setDescription(desc);
     }
 
     @Override
