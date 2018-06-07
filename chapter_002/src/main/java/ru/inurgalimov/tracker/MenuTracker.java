@@ -5,7 +5,7 @@ import ru.inurgalimov.models.Item;
 public class MenuTracker {
     private Input input;
     private Tracker tracker;
-    private UserAction[] actions = new UserAction[6];
+    private UserAction[] actions = new UserAction[7];
 
     public MenuTracker(Input input, Tracker tracker) {
         this.input = input;
@@ -17,7 +17,6 @@ public class MenuTracker {
         for (UserAction action : this.actions) {
             System.out.println(action.info());
         }
-        System.out.println("6. Exit Program");
     }
 
     public void fillActions() {
@@ -27,10 +26,18 @@ public class MenuTracker {
         this.actions[3] = new DeleteItem();
         this.actions[4] = new FindId();
         this.actions[5] = new FindName();
+        this.actions[6] = new ExitMenu();
     }
 
     public void select(int key) {
         this.actions[key].execute(this.input, this.tracker);
+    }
+    public int[] rangeArray() {
+        int[] range = new int[this.actions.length];
+        for(int i = 0; i < this.actions.length; i++) {
+            range[i] = this.actions[i].key();
+        }
+        return range;
     }
 
 
@@ -52,6 +59,20 @@ public class MenuTracker {
             return String.format("%s. %s", this.key(), "Add new Item");
         }
     }
+    private class ExitMenu implements UserAction {
+        @Override
+        public int key() {
+            return 6;
+        }
+
+        @Override
+        public void execute(Input input, Tracker tracker) {}
+
+        @Override
+        public String info() {
+            return String.format("%s. %s", this.key(), "Exit Program");
+        }
+    }
 
     private class DeleteItem implements UserAction {
         @Override
@@ -61,7 +82,11 @@ public class MenuTracker {
 
         @Override
         public void execute(Input input, Tracker tracker) {
-            tracker.delete(input.ask("Введите ID заявки для удаления:"));
+            try {
+                tracker.delete(input.ask("Введите ID заявки для удаления:"));
+            } catch (NullPointerException npe) {
+                System.out.println("Такой заявки нет.");
+            }
         }
 
         @Override
@@ -150,12 +175,15 @@ class EditItem implements UserAction {
 
     @Override
     public void execute(Input input, Tracker tracker) {
-        String id = input.ask("Введите ID заявки для корректировки:");
-        String name = input.ask("Введите новое имя для заявки:");
-        String desc = input.ask("Введите новое описание для заявки:");
-        Item editItem = tracker.findById(id);
-        editItem.setName(name);
-        editItem.setDescription(desc);
+        Item editItem = tracker.findById(input.ask("Введите ID заявки для корректировки:"));
+        try {
+            editItem.getName();
+            editItem.setName(input.ask("Введите новое имя для заявки:"));
+            editItem.setDescription(input.ask("Введите новое описание для заявки:"));
+        } catch (NullPointerException npe) {
+            System.out.println("Такой заявки нет в списке.");
+        }
+
     }
 
     @Override

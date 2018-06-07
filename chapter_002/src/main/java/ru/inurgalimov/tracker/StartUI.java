@@ -1,10 +1,11 @@
 package ru.inurgalimov.tracker;
 
 public class StartUI {
-    private static final String EXIT = "6";
+    private static final int EXIT = 6;
     private final Input input;
     private final Tracker tracker;
     private final MenuTracker menuTracker;
+    private int[] range;
 
     public StartUI(Input input, Tracker tracker) {
         this.input = input;
@@ -14,22 +15,20 @@ public class StartUI {
 
     public void init() {
         this.menuTracker.fillActions();
+        this.range = this.menuTracker.rangeArray();
         boolean exit = false;
         while (!exit) {
             this.menuTracker.showMenu();
-            String answer = this.input.ask("Введите пункт меню : ");
-            if (Integer.valueOf(answer) >= 0 && Integer.valueOf(answer) < 6) {
-                menuTracker.select(Integer.valueOf(answer));
-            } else if (EXIT.equals(answer)) {
+            int answer = this.input.ask("Введите пункт меню : ", range);
+            menuTracker.select(answer);
+            if (EXIT == answer) {
                 System.out.println("Выход из программы!");
                 exit = true;
-            } else {
-                System.out.println("Вы ввели не корректное значение!");
             }
         }
     }
 
     public static void main(String[] args) {
-        new StartUI(new ConsoleInput(), new Tracker()).init();
+        new StartUI(new ValidateInput(), new Tracker()).init();
     }
 }
