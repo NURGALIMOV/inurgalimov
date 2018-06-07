@@ -32,9 +32,10 @@ public class MenuTracker {
     public void select(int key) {
         this.actions[key].execute(this.input, this.tracker);
     }
+
     public int[] rangeArray() {
         int[] range = new int[this.actions.length];
-        for(int i = 0; i < this.actions.length; i++) {
+        for (int i = 0; i < this.actions.length; i++) {
             range[i] = this.actions[i].key();
         }
         return range;
@@ -59,6 +60,7 @@ public class MenuTracker {
             return String.format("%s. %s", this.key(), "Add new Item");
         }
     }
+
     private class ExitMenu implements UserAction {
         @Override
         public int key() {
@@ -66,7 +68,8 @@ public class MenuTracker {
         }
 
         @Override
-        public void execute(Input input, Tracker tracker) {}
+        public void execute(Input input, Tracker tracker) {
+        }
 
         @Override
         public String info() {

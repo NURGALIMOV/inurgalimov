@@ -10,12 +10,13 @@ public class ConsoleInput implements Input {
         System.out.println(question);
         return scanner.nextLine();
     }
+
     @Override
     public int ask(String question, int[] range) {
         boolean exist = false;
         int key = Integer.valueOf(this.ask(question));
         for (int r : range) {
-            if(r == key) {
+            if (r == key) {
                 exist = true;
                 break;
             }
