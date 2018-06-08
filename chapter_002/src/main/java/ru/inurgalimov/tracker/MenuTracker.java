@@ -85,9 +85,10 @@ public class MenuTracker {
 
         @Override
         public void execute(Input input, Tracker tracker) {
-            try {
-                tracker.delete(input.ask("Введите ID заявки для удаления:"));
-            } catch (NullPointerException npe) {
+            String id = input.ask("Введите ID заявки для удаления:");
+            if(tracker.findById(id) != null) {
+                tracker.delete(id);
+            } else {
                 System.out.println("Такой заявки нет.");
             }
         }
@@ -179,11 +180,10 @@ class EditItem implements UserAction {
     @Override
     public void execute(Input input, Tracker tracker) {
         Item editItem = tracker.findById(input.ask("Введите ID заявки для корректировки:"));
-        try {
-            editItem.getName();
+        if (editItem != null) {
             editItem.setName(input.ask("Введите новое имя для заявки:"));
             editItem.setDescription(input.ask("Введите новое описание для заявки:"));
-        } catch (NullPointerException npe) {
+        } else {
             System.out.println("Такой заявки нет в списке.");
         }
 
