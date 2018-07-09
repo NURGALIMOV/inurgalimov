@@ -2,10 +2,13 @@ package ru.inurgalimov.tracker;
 
 import ru.inurgalimov.models.Item;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MenuTracker {
     private Input input;
     private Tracker tracker;
-    private UserAction[] actions = new UserAction[7];
+    private List<UserAction> actions = new ArrayList<>();
 
     public MenuTracker(Input input, Tracker tracker) {
         this.input = input;
@@ -20,23 +23,23 @@ public class MenuTracker {
     }
 
     public void fillActions() {
-        this.actions[0] = new AddItem(0, "Add new Item");
-        this.actions[1] = new MenuTracker.ShowItems(1, "Show all items");
-        this.actions[2] = new EditItem(2, "Edit item");
-        this.actions[3] = new DeleteItem(3, "Delete item");
-        this.actions[4] = new FindId(4, "Find item by Id");
-        this.actions[5] = new FindName(5, "Find items by name");
-        this.actions[6] = new ExitMenu(6, "Exit Program");
+        this.actions.add(new AddItem(0, "Add new Item"));
+        this.actions.add(new MenuTracker.ShowItems(1, "Show all items"));
+        this.actions.add(new EditItem(2, "Edit item"));
+        this.actions.add(new DeleteItem(3, "Delete item"));
+        this.actions.add(new FindId(4, "Find item by Id"));
+        this.actions.add(new FindName(5, "Find items by name"));
+        this.actions.add(new ExitMenu(6, "Exit Program"));
     }
 
     public void select(int key) {
-        this.actions[key].execute(this.input, this.tracker);
+        this.actions.get(key).execute(this.input, this.tracker);
     }
 
     public int[] rangeArray() {
-        int[] range = new int[this.actions.length];
-        for (int i = 0; i < this.actions.length; i++) {
-            range[i] = this.actions[i].key();
+        int[] range = new int[this.actions.size()];
+        for (int i = 0; i < this.actions.size(); i++) {
+            range[i] = this.actions.get(i).key();
         }
         return range;
     }
