@@ -22,7 +22,7 @@ public class SortUser {
         return userList;
     }
 
-    public List<User> sortByAllFields (List<User> userList) {
+    public List<User> sortByAllFields(List<User> userList) {
         userList.sort(new Comparator<User>() {
             @Override
             public int compare(User o1, User o2) {
