@@ -9,7 +9,7 @@ public class User implements Comparable<User> {
         this.age = age;
     }
 
-    public Integer getAge() {
+    public int getAge() {
         return age;
     }
 
@@ -19,6 +19,6 @@ public class User implements Comparable<User> {
 
     @Override
     public int compareTo(User o) {
-        return this.getAge().compareTo(o.getAge());
+        return Integer.compare(this.getAge(), o.getAge());
     }
 }
