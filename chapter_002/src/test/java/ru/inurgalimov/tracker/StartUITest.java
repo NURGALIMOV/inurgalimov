@@ -67,11 +67,11 @@ public class StartUITest {
         new StartUI(input, tracker).init();
         Assert.assertThat(
                 new String(out.toByteArray()),
-                is("Меню.\r\n0. Add new Item\r\n1. Show all items\r\n2. Edit item\r\n3. Delete item\r\n"
-                        + "4. Find item by Id\r\n5. Find items by name\r\n6. Exit Program\r\nИмя заявки: name\r\n"
-                        + "Описание заявки: test\r\nID заявки: " + item.getId() + "\n\r\n\r\nМеню.\r\n0. Add new "
-                        + "Item\r\n1. Show all items\r\n2. Edit item\r\n3. Delete item\r\n4. Find item by Id\r\n"
-                        + "5. Find items by name\r\n6. Exit Program\r\nВыход из программы!\n"));
+                is("Меню.\\n0. Add new Item\\n1. Show all items\\n2. Edit item\\n3. Delete item\\"
+                        + "n4. Find item by Id\\n5. Find items by name\\n6. Exit Program\\nИмя заявки: name\\"
+                        + "nОписание заявки: test\\nID заявки: 2659579898701039658\\n\\n\\nМеню.\\n0. Add new Item\\"
+                        + "n1. Show all items\\n2. Edit item\\n3. Delete item\\n4. Find item by Id\\"
+                        + "n5. Find items by name\\n6. Exit Program\\nВыход из программы!\\n"));
         System.setOut(stdout);
     }
 
