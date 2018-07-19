@@ -123,9 +123,9 @@ public class MenuTracker {
         @Override
         public void execute(Input input, Tracker tracker) {
             for (Item item : tracker.findAll()) {
-                System.out.println("Имя заявки: " + item.getName());
-                System.out.println("Описание заявки: " + item.getDescription());
-                System.out.println("ID заявки: " + item.getId() + "\n");
+                System.out.println("Name: " + item.getName());
+                System.out.println("Description: " + item.getDescription());
+                System.out.println("ID: " + item.getId() + "\n");
                 System.out.println();
             }
         }
