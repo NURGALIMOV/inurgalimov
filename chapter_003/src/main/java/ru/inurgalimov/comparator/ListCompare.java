@@ -9,26 +9,27 @@ public class ListCompare implements Comparator<String> {
         int result = 0;
         char[] leftArray = left.toCharArray();
         char[] rightArray = right.toCharArray();
-        int count = rightArray.length;
+        int count = 0;
         if (leftArray.length >= rightArray.length) {
+            count = rightArray.length;
+        } else {
             count = leftArray.length;
         }
         int temp;
-        try {
-            for (int i = 0; i < count; i++) {
-                temp = Character.compare(leftArray[i], rightArray[i]);
-                if (temp != 0) {
-                    result = temp;
-                    break;
-                }
-            }
-        } catch (ArrayIndexOutOfBoundsException ex) {
-            result = 1;
-            if (rightArray.length > leftArray.length) {
-                result = -1;
+        for (int i = 0; i < count; i++) {
+            temp = Character.compare(leftArray[i], rightArray[i]);
+            if (temp != 0) {
+                result = temp;
+                break;
             }
         }
-
+        if (leftArray.length != rightArray.length && result == 0) {
+            if (rightArray.length > leftArray.length) {
+                result = -1;
+            } else {
+                result = 1;
+            }
+        }
         return result;
     }
 }
