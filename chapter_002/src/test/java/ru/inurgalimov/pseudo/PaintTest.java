@@ -28,7 +28,7 @@ public class PaintTest {
     @Test
     public void whenDrawSquare() {
         new Paint().draw(new Square());
-        assertThat(new String(this.out.toByteArray()), is("****\n****\n****\n****\n\n"));
+        assertThat(new String(this.out.toByteArray()), is("****\n****\n****\n****\n\r\n"));
     }
 
     @Test
