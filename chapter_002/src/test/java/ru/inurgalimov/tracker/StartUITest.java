@@ -31,11 +31,16 @@ public class StartUITest {
         new StartUI(input, tracker).init();
         Assert.assertThat(
                 new String(out.toByteArray()),
-                is("Меню.\r\n0. Add new Item\r\n1. Show all items\r\n2. Edit item\r\n3. Delete item\r\n"
-                        + "4. Find item by Id\r\n5. Find items by name\r\n6. Exit Program\r\nName: name\r\n"
-                        + "Description: test\r\nID: " + item.getId() + "\n\r\n\r\nМеню.\r\n0. Add new "
-                        + "Item\r\n1. Show all items\r\n2. Edit item\r\n3. Delete item\r\n4. Find item by Id\r\n"
-                        + "5. Find items by name\r\n6. Exit Program\r\nВыход из программы!\r\n"));
+                is("Меню." + System.lineSeparator() + "0. Add new Item" + System.lineSeparator() + "1. Show all items"
+                        + System.lineSeparator() + "2. Edit item" + System.lineSeparator() + "3. Delete item" + System.lineSeparator()
+                        + "4. Find item by Id" + System.lineSeparator() + "5. Find items by name" + System.lineSeparator()
+                        + "6. Exit Program" + System.lineSeparator() + "Name: name" + System.lineSeparator()
+                        + "Description: test" + System.lineSeparator() + "ID: " + item.getId() + "\n" + System.lineSeparator()
+                        + System.lineSeparator() + "Меню." + System.lineSeparator() + "0. Add new Item" + System.lineSeparator()
+                        + "1. Show all items" + System.lineSeparator() + "2. Edit item" + System.lineSeparator()
+                        + "3. Delete item" + System.lineSeparator() + "4. Find item by Id" + System.lineSeparator()
+                        + "5. Find items by name" + System.lineSeparator() + "6. Exit Program" + System.lineSeparator()
+                        + "Выход из программы!" + System.lineSeparator()));
         System.setOut(stdout);
     }
 
@@ -67,11 +72,17 @@ public class StartUITest {
         new StartUI(input, tracker).init();
         Assert.assertThat(
                 new String(out.toByteArray()),
-                is("Меню.\r\n0. Add new Item\r\n1. Show all items\r\n2. Edit item\r\n3. Delete item\r\n"
-                        + "4. Find item by Id\r\n5. Find items by name\r\n6. Exit Program\r\nИмя заявки: name\r\n"
-                        + "Описание заявки: test\r\nID заявки: " + item.getId() + "\n\r\n\r\nМеню.\r\n0. Add new "
-                        + "Item\r\n1. Show all items\r\n2. Edit item\r\n3. Delete item\r\n4. Find item by Id\r\n"
-                        + "5. Find items by name\r\n6. Exit Program\r\nВыход из программы!\r\n"));
+                is("Меню." + System.lineSeparator() + "0. Add new Item" + System.lineSeparator()
+                        + "1. Show all items" + System.lineSeparator() + "2. Edit item" + System.lineSeparator()
+                        + "3. Delete item" + System.lineSeparator() + "4. Find item by Id" + System.lineSeparator()
+                        + "5. Find items by name" + System.lineSeparator() + "6. Exit Program" + System.lineSeparator()
+                        + "Имя заявки: name" + System.lineSeparator() + "Описание заявки: test" + System.lineSeparator()
+                        + "ID заявки: " + item.getId() + "\n" + System.lineSeparator() + System.lineSeparator()
+                        + "Меню." + System.lineSeparator() + "0. Add new Item" + System.lineSeparator()
+                        + "1. Show all items" + System.lineSeparator() + "2. Edit item" + System.lineSeparator()
+                        + "3. Delete item" + System.lineSeparator() + "4. Find item by Id" + System.lineSeparator()
+                        + "5. Find items by name" + System.lineSeparator() + "6. Exit Program" + System.lineSeparator()
+                        + "Выход из программы!" + System.lineSeparator()));
         System.setOut(stdout);
     }
 
@@ -84,11 +95,17 @@ public class StartUITest {
         new StartUI(input, tracker).init();
         Assert.assertThat(
                 new String(out.toByteArray()),
-                is("Меню.\r\n0. Add new Item\r\n1. Show all items\r\n2. Edit item\r\n3. Delete item\r\n"
-                        + "4. Find item by Id\r\n5. Find items by name\r\n6. Exit Program\r\nИмя заявки: name\r\n"
-                        + "Описание заявки: test\r\nID заявки: " + item.getId() + "\n\r\n\r\nМеню.\r\n0. Add new "
-                        + "Item\r\n1. Show all items\r\n2. Edit item\r\n3. Delete item\r\n4. Find item by Id\r\n"
-                        + "5. Find items by name\r\n6. Exit Program\r\nВыход из программы!\r\n"));
+                is("Меню." + System.lineSeparator() + "0. Add new Item" + System.lineSeparator()
+                        + "1. Show all items" + System.lineSeparator() + "2. Edit item" + System.lineSeparator()
+                        + "3. Delete item" + System.lineSeparator() + "4. Find item by Id" + System.lineSeparator()
+                        + "5. Find items by name" + System.lineSeparator() + "6. Exit Program" + System.lineSeparator()
+                        + "Имя заявки: name" + System.lineSeparator() + "Описание заявки: test" + System.lineSeparator()
+                        + "ID заявки: " + item.getId() + "\n" + System.lineSeparator() + System.lineSeparator()
+                        + "Меню." + System.lineSeparator() + "0. Add new Item" + System.lineSeparator()
+                        + "1. Show all items" + System.lineSeparator() + "2. Edit item" + System.lineSeparator()
+                        + "3. Delete item" + System.lineSeparator() + "4. Find item by Id" + System.lineSeparator()
+                        + "5. Find items by name" + System.lineSeparator() + "6. Exit Program" + System.lineSeparator()
+                        + "Выход из программы!" + System.lineSeparator()));
         System.setOut(stdout);
     }
 }
