@@ -5,8 +5,10 @@ import org.junit.Before;
 import org.junit.Test;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.StringJoiner;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
+
 
 public class PaintTest {
     private final PrintStream stdout = System.out;
@@ -27,12 +29,12 @@ public class PaintTest {
     @Test
     public void whenDrawSquare() {
         new Paint().draw(new Square());
-        assertThat(new String(this.out.toByteArray()), is("****\n****\n****\n****\n\n"));
+        assertThat(new String(this.out.toByteArray()), is("****\n****\n****\n****\n\r\n"));
     }
 
     @Test
     public void whenDrawTriangle() {
         new Paint().draw(new Triangle());
-        assertThat(new String(this.out.toByteArray()), is("  *  \n *** \n*****\n\n"));
+        assertThat(new String(this.out.toByteArray()), is("  *  \n *** \n*****\n\r\n"));
     }
 }
