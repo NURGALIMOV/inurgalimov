@@ -28,10 +28,8 @@ public class BankTransfers {
     public boolean transferMoney(String srcPassport, String srcRequisite,
                                  String destPassport, String dstRequisite, double amount) {
         boolean result = false;
-        User srcUser = searchByPassport(srcPassport);
-        User destUser = searchByPassport(destPassport);
-        Account srcAccount = searchByRequisitet(srcUser, srcRequisite);
-        Account dstAccount = searchByRequisitet(destUser, dstRequisite);
+        Account srcAccount = searchByRequisitet(srcPassport, srcRequisite);
+        Account dstAccount = searchByRequisitet(destPassport, dstRequisite);
         if (!srcAccount.equals(null) && srcAccount.getValue() >= amount) {
             result = true;
             srcAccount.setValue(srcAccount.getValue() - amount);
@@ -52,9 +50,9 @@ public class BankTransfers {
         return resultUser;
     }
 
-    public Account searchByRequisitet(User user, String requisitet) {
+    public Account searchByRequisitet(String passport, String requisitet) {
         Account resultAccount = null;
-        for (Account account : transfer.get(user)) {
+        for (Account account : transfer.get(searchByPassport(passport))) {
             if (account.getRequisites().equals(requisitet)) {
                 resultAccount = account;
             }
