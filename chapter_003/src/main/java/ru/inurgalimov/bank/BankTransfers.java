@@ -30,7 +30,7 @@ public class BankTransfers {
         boolean result = false;
         Account srcAccount = searchByRequisitet(srcPassport, srcRequisite);
         Account dstAccount = searchByRequisitet(destPassport, dstRequisite);
-        if (!srcAccount.equals(null) && srcAccount.getValue() >= amount) {
+        if (!srcAccount.equals(null) && srcAccount.getValue() >= amount && !dstAccount.equals(null)) {
             result = true;
             srcAccount.setValue(srcAccount.getValue() - amount);
             dstAccount.setValue(dstAccount.getValue() + amount);
