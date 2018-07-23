@@ -1,14 +1,29 @@
 package ru.inurgalimov.additional;
 
-public class Brackets {
-    private static final char ROUND1 = '(';
-    private static final char ROUND2 = ')';
-    private static final char SQUARE1 = '[';
-    private static final char SQUARE2 = ']';
-    private static final char BRACES1 = '{';
-    private static final char BRACES2 = '}';
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-    public static boolean validationTest(String text) {
+public class Brackets {
+    private final char ROUND1 = '(';
+    private final char ROUND2 = ')';
+    private final char SQUARE1 = '[';
+    private final char SQUARE2 = ']';
+    private final char BRACES1 = '{';
+    private final char BRACES2 = '}';
+
+    public List<Character> toParseTheBrackets(String line) {
+        List<Character> resultList = new ArrayList<>();
+        if (validationTest(line)) {
+            for (Character ch : printBrackets(line).toCharArray()) {
+                resultList.add(ch);
+            }
+        }
+        return resultList;
+    }
+
+    private boolean validationTest(String text) {
         boolean result = true;
         char[] charArray = text.toCharArray();
         char[] lastBrackets = new char[charArray.length];
@@ -26,7 +41,7 @@ public class Brackets {
         return result;
     }
 
-    public static String printBrackets(String text) {
+    private String printBrackets(String text) {
         if (validationTest(text)) {
             char[] charArray = text.toCharArray();
             String result = "";
@@ -37,7 +52,7 @@ public class Brackets {
             }
             return result;
         } else {
-            return "Строка не валидна!";
+            return "";
         }
     }
 }
