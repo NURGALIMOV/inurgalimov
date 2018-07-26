@@ -20,7 +20,7 @@ public class SortingDepartmentTest {
     @Test
     public void whenSortDescending() {
         String[] checkArray = new String[]{"K2", "K2\\SK1", "K2\\SK1\\SSK2", "K2\\SK1\\SSK1", "K1",
-                "K1\\SK2", "K1\\SK1", "K1\\SK1\\SSK2", "K1\\SK1\\SSK1",};
+                "K1\\SK2", "K1\\SK1", "K1\\SK1\\SSK2", "K1\\SK1\\SSK1"};
         SortingDepartment.sortDescending(testArray);
         assertThat(testArray, is(checkArray));
     }
