@@ -3,10 +3,10 @@ package ru.inurgalimov.additional;
 import java.util.*;
 
 public class SortingDepartment {
-    public static void SortAscending(String[] array) {
+    public static void sortAscending(String[] array) {
         Arrays.sort(array);
     }
-    public static void SortDescending(String[] array) {
+    public static void sortDescending(String[] array) {
         Arrays.sort(array, new Comparator<String>() {
             @Override
             public int compare(String s1, String s2) {
