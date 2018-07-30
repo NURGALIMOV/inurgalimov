@@ -3,6 +3,7 @@ package ru.inurgalimov.itertor;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class IteratorTwoDimensionalArray implements Iterator {
     private final Integer[] array;
@@ -24,6 +25,10 @@ public class IteratorTwoDimensionalArray implements Iterator {
 
     @Override
     public Object next() {
-        return array[index++];
+        try {
+            return array[index++];
+        } catch (ArrayIndexOutOfBoundsException exception) {
+            throw new NoSuchElementException();
+        }
     }
 }
