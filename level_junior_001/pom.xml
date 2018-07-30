@@ -9,11 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>level_junior</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>chapter_Jun_001</module>
-    </modules>
+    <artifactId>level_junior_001</artifactId>
 
 
 </project>
