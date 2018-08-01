@@ -19,9 +19,9 @@ public class IteratorEvenNumbers implements Iterator {
     @Override
     public Integer next() {
         Integer value = 0;
-        if(checkStep()) {
+        if (checkStep()) {
             value = numbers[index++];
-        } else if(index >= numbers.length) {
+        } else if (index >= numbers.length) {
             throw new NoSuchElementException();
         }
         return value;
