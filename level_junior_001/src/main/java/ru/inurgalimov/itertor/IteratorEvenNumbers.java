@@ -13,21 +13,6 @@ public class IteratorEvenNumbers implements Iterator {
 
     @Override
     public boolean hasNext() {
-        return checkStep();
-    }
-
-    @Override
-    public Integer next() {
-        Integer value = 0;
-        if (checkStep()) {
-            value = numbers[index++];
-        } else if (index >= numbers.length) {
-            throw new NoSuchElementException();
-        }
-        return value;
-    }
-
-    public boolean checkStep() {
         boolean result = false;
         for (; index < numbers.length; index++) {
             if (numbers[index] % 2 == 0) {
@@ -36,5 +21,16 @@ public class IteratorEvenNumbers implements Iterator {
             }
         }
         return result;
+    }
+
+    @Override
+    public Integer next() {
+        Integer value = 0;
+        if (hasNext()) {
+            value = numbers[index++];
+        } else if (index >= numbers.length) {
+            throw new NoSuchElementException();
+        }
+        return value;
     }
 }
