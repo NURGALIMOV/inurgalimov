@@ -1,34 +1,38 @@
 package ru.inurgalimov.itertor;
 
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 import java.util.NoSuchElementException;
 
 public class IteratorTwoDimensionalArray implements Iterator {
-    private final Integer[] array;
-    private int index = 0;
+    private int line;
+    private int cell;
+    private final int[][] array;
+
 
     public IteratorTwoDimensionalArray(int[][] array) {
-        List<Integer> tempList = new ArrayList<>();
-        for (int[] tempArray : array) {
-            for (int tempValue : tempArray) {
-                tempList.add(tempValue);
-            }
-        }
-        this.array = tempList.toArray(new Integer[tempList.size()]);
+        this.array = array;
+        line = 0;
+        cell = 0;
     }
+
     @Override
     public boolean hasNext() {
-        return array.length > index;
+        return !((line == array.length - 1) && (cell >= array[line].length));
     }
 
     @Override
     public Object next() {
-        try {
-            return array[index++];
-        } catch (ArrayIndexOutOfBoundsException exception) {
+        Integer result;
+        if (line < array.length) {
+            if (cell < array[line].length) {
+                result = array[line][cell++];
+            } else {
+                cell = 0;
+                result = array[++line][cell++];
+            }
+        } else {
             throw new NoSuchElementException();
         }
+        return result;
     }
 }
