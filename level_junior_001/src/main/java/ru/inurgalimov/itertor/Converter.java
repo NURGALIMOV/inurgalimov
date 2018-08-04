@@ -13,49 +13,46 @@ public class Converter {
     Iterator<Integer> convert(Iterator<Iterator<Integer>> it) {
         return new Iterator<Integer>() {
             private final Iterator<Iterator<Integer>> iterators = it;
-            private Iterator<Integer> iterator;
+            private Iterator<Integer> iterator = iterators.next();
 
             @Override
             public boolean hasNext() {
-                return check();
-            }
-
-            @Override
-            public Integer next() {
-                Integer integer = null;
-                if (!check()) {
-                    throw new NoSuchElementException();
-                } else if (check()) {
-                    integer = iterator.next();
-                }
-                return integer;
-            }
-
-            /**
-             * The method is needed to verify the next step
-             *
-             * @return boolean
-             */
-            private boolean check() {
-                boolean result = true;
-                if (iterator == null && iterators.hasNext()) {
+                boolean result = false;
+                /*if (iterator == null && iterators.hasNext()) {
                     iterator = iterators.next();
                     if (!iterator.hasNext()) {
-                        result = check();
+                        result = hasNext();
                     }
                 } else if (iterator != null && !iterator.hasNext()) {
                     if (iterators.hasNext()) {
                         iterator = iterators.next();
                         if (!iterator.hasNext()) {
-                            result = check();
+                            result = hasNext();
                         }
                     } else {
                         result = false;
                     }
                 } else if (!iterators.hasNext() && !iterator.hasNext()) {
                     result = false;
+                }*/
+                while (!iterator.hasNext()) {
+                    if(iterators.hasNext()) {
+                        iterator = iterators.next();
+                        result = true;
+                    }
                 }
                 return result;
+            }
+
+            @Override
+            public Integer next() {
+                Integer integer = null;
+                if (!hasNext()) {
+                    throw new NoSuchElementException();
+                } else if (hasNext()) {
+                    integer = iterator.next();
+                }
+                return integer;
             }
         };
     }

@@ -26,11 +26,10 @@ public class IteratorEvenNumbers implements Iterator {
     @Override
     public Integer next() {
         Integer value = 0;
-        if (hasNext()) {
-            value = numbers[index++];
-        } else if (index >= numbers.length) {
+        if (!hasNext()) {
             throw new NoSuchElementException();
         }
+        value = numbers[index++];
         return value;
     }
 }
