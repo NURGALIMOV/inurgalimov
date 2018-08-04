@@ -25,7 +25,7 @@ public class IteratorEvenNumbers implements Iterator {
 
     @Override
     public Integer next() {
-        Integer value = 0;
+        Integer value;
         if (!hasNext()) {
             throw new NoSuchElementException();
         }
