@@ -23,16 +23,14 @@ public class IteratorTwoDimensionalArray implements Iterator {
     @Override
     public Object next() {
         Integer result;
-        if (line < array.length) {
-            if (cell < array[line].length) {
-                result = array[line][cell++];
-            } else {
-                cell = 0;
-                result = array[++line][cell++];
-            }
-        } else {
+        if (!(line < array.length)) {
             throw new NoSuchElementException();
         }
+        if (!(cell < array[line].length)) {
+            cell = 0;
+            ++line;
+        }
+        result = array[line][cell++];
         return result;
     }
 }
