@@ -18,7 +18,7 @@ public class SimpleArray<T> implements Iterable {
         this.index = 0;
     }
 
-    public void add(T model) throws ArrayIndexOutOfBoundsException {
+    public void add(T model) {
         simpleArray[index++] = model;
     }
 
