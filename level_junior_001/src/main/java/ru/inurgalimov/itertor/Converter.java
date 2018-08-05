@@ -17,28 +17,15 @@ public class Converter {
 
             @Override
             public boolean hasNext() {
-                boolean result = false;
-                /*if (iterator == null && iterators.hasNext()) {
-                    iterator = iterators.next();
-                    if (!iterator.hasNext()) {
-                        result = hasNext();
-                    }
-                } else if (iterator != null && !iterator.hasNext()) {
-                    if (iterators.hasNext()) {
-                        iterator = iterators.next();
-                        if (!iterator.hasNext()) {
-                            result = hasNext();
-                        }
-                    } else {
-                        result = false;
-                    }
-                } else if (!iterators.hasNext() && !iterator.hasNext()) {
-                    result = false;
-                }*/
+                boolean result = true;
                 while (!iterator.hasNext()) {
-                    if(iterators.hasNext()) {
+                    while (iterators.hasNext()) {
                         iterator = iterators.next();
-                        result = true;
+                        break;
+                    }
+                    if(!iterators.hasNext() && !iterator.hasNext()) {
+                        result = false;
+                        break;
                     }
                 }
                 return result;
@@ -46,13 +33,10 @@ public class Converter {
 
             @Override
             public Integer next() {
-                Integer integer = null;
-                if (!hasNext()) {
+                if (!this.hasNext()) {
                     throw new NoSuchElementException();
-                } else if (hasNext()) {
-                    integer = iterator.next();
                 }
-                return integer;
+                return iterator.next();
             }
         };
     }
