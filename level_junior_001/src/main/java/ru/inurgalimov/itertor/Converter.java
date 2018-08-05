@@ -23,7 +23,7 @@ public class Converter {
                         iterator = iterators.next();
                         break;
                     }
-                    if(!iterators.hasNext() && !iterator.hasNext()) {
+                    if (!iterators.hasNext() && !iterator.hasNext()) {
                         result = false;
                         break;
                     }
