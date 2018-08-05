@@ -1,24 +1,13 @@
 package ru.inurgalimov.generic;
 
-public class RoleStore implements Store<Role> {
+/**
+ * @author Nurgalimov Ilshat
+ * @version 1.0
+ */
+public class RoleStore extends AbstractStore<Role> {
 
-    @Override
-    public void add(Role model) {
-
-    }
-
-    @Override
-    public boolean replace(String id, Role model) {
-        return false;
-    }
-
-    @Override
-    public boolean delete(String id) {
-        return false;
-    }
-
-    @Override
-    public Role findById(String id) {
-        return null;
+    public RoleStore(int size) {
+        this.simpleArray = new SimpleArray<Role>(size);
+        this.size = size;
     }
 }

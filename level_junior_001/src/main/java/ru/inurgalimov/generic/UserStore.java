@@ -1,24 +1,13 @@
 package ru.inurgalimov.generic;
 
-public class UserStore implements Store<User>{
+/**
+ * @author Nurgalimov Ilshat
+ * @version 1.0
+ */
+public class UserStore extends AbstractStore<User> {
 
-    @Override
-    public void add(User model) {
-
-    }
-
-    @Override
-    public boolean replace(String id, User model) {
-        return false;
-    }
-
-    @Override
-    public boolean delete(String id) {
-        return false;
-    }
-
-    @Override
-    public User findById(String id) {
-        return null;
+    public UserStore(int size) {
+        this.simpleArray = new SimpleArray<User>(size);
+        this.size = size;
     }
 }
