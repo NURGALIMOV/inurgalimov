@@ -10,9 +10,33 @@ public class NewLinkedList<E> implements Iterable<E> {
 
     private int count;
 
-
     public NewLinkedList() {
         this.count = 0;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    public void setHead(Node<E> head) {
+        this.head = head;
+    }
+
+    public void setTail(Node<E> tail) {
+        this.tail = tail;
+    }
+
+    public Node<E> getHead() {
+
+        return head;
+    }
+
+    public Node<E> getTail() {
+        return tail;
+    }
+
+    public int getCount() {
+        return count;
     }
 
     public void add(E value) {
@@ -71,9 +95,35 @@ public class NewLinkedList<E> implements Iterable<E> {
         };
     }
 
-    private class Node<E> {
-        E e;
-        Node<E> nextStep;
+    protected class Node<E> {
+        private E e;
+        private Node<E> nextStep;
+        private Node<E> lastStep;
+
+        public E getE() {
+            return e;
+        }
+
+        public void setE(E e) {
+            this.e = e;
+        }
+
+        public Node<E> getNextStep() {
+            return nextStep;
+        }
+
+        public void setNextStep(Node<E> nextStep) {
+            this.nextStep = nextStep;
+        }
+
+        public Node<E> getLastStep() {
+            return lastStep;
+        }
+
+        public void setLastStep(Node<E> lastStep) {
+            this.lastStep = lastStep;
+        }
+
         public Node(E e) {
             this.e = e;
         }
