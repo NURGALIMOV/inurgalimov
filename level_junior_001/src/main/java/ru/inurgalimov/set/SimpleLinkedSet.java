@@ -23,7 +23,7 @@ public class SimpleLinkedSet<E> implements Iterable<E> {
             boolean noDuplicate = true;
             Node check = head;
             while (true) {
-                if(check.value.equals(value)) {
+                if (check.value.equals(value)) {
                     noDuplicate = false;
                     break;
                 }
