@@ -57,6 +57,7 @@ public class DynamicList<E> implements Iterable<E> {
             }
         };
     }
+
     private void increaseTheSize() {
         Object[] tempArray = new Object[dynamicList.length * 2];
         System.arraycopy(dynamicList, 0, tempArray, 0, dynamicList.length);
