@@ -4,13 +4,13 @@ import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class NewLinkedList<E> implements Iterable<E> {
+public class SimpleLinkedList<E> implements Iterable<E> {
     private Node<E> head;
     private Node<E> tail;
 
     private int count;
 
-    public NewLinkedList() {
+    public SimpleLinkedList() {
         this.count = 0;
     }
 
@@ -81,12 +81,14 @@ public class NewLinkedList<E> implements Iterable<E> {
 
             @Override
             public E next() {
-                for (; hasNext(); iteratorStep++) {
+                while (hasNext()) {
                     if (iteratorNode == null) {
                         iteratorNode = head;
+                        iteratorStep++;
                         break;
                     }
                     iteratorNode = iteratorNode.nextStep;
+                    iteratorStep++;
                     break;
                 }
 

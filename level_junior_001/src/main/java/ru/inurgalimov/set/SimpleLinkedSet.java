@@ -1,5 +1,7 @@
 package ru.inurgalimov.set;
 
+import ru.inurgalimov.list.SimpleLinkedList;
+
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -7,70 +9,30 @@ import java.util.NoSuchElementException;
  * My version LinkedSet.
  *
  * @author Nurgalimov Ilshat
- * @version 1.0
+ * @version 2.0
  */
 public class SimpleLinkedSet<E> implements Iterable<E> {
-    private Node head;
-    private Node nextNode;
+    private SimpleLinkedList<E> simpleLinkedList;
+
+    public SimpleLinkedSet() {
+        this.simpleLinkedList = new SimpleLinkedList<E>();
+    }
 
     public void add(E value) {
-        Node tempNode = new Node(value);
-
-        if (head == null) {
-            head = tempNode;
-            nextNode = tempNode;
-        } else {
-            boolean noDuplicate = true;
-            Node check = head;
-            while (true) {
-                if (check.value.equals(value)) {
-                    noDuplicate = false;
-                    break;
-                }
-                if (check.next == null) {
-                    break;
-                }
-                check = check.next;
+        boolean checkAdd = true;
+        for (E forCheck : simpleLinkedList) {
+            if ((forCheck != null) && (forCheck.equals(value))) {
+                checkAdd = false;
+                break;
             }
-            if (noDuplicate) {
-                nextNode.next = tempNode;
-                nextNode = tempNode;
-            }
+        }
+        if (checkAdd) {
+            simpleLinkedList.add(value);
         }
     }
 
     @Override
     public Iterator<E> iterator() {
-        return new Iterator<E>() {
-            private Node<E> nextIterator = head;
-
-            @Override
-            public boolean hasNext() {
-                boolean hasNext = true;
-                if (nextIterator.next == null) {
-                    hasNext = false;
-
-                }
-                return hasNext;
-            }
-
-            @Override
-            public E next() {
-                Node temp = nextIterator;
-                if (hasNext()) {
-                    nextIterator = nextIterator.next;
-                }
-                return (E) temp.value;
-            }
-        };
-    }
-
-    private class Node<E> {
-        E value;
-        Node next;
-
-        public Node(E value) {
-            this.value = value;
-        }
+        return simpleLinkedList.iterator();
     }
 }

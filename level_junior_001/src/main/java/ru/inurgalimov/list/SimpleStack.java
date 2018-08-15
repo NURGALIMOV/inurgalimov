@@ -2,7 +2,7 @@ package ru.inurgalimov.list;
 
 import java.util.NoSuchElementException;
 
-public class SimpleStack<T> extends NewLinkedList<T> {
+public class SimpleStack<T> extends SimpleLinkedList<T> {
     public SimpleStack() {
         super();
     }

@@ -2,7 +2,7 @@ package ru.inurgalimov.list;
 
 import java.util.NoSuchElementException;
 
-public class SimpleQueue<T> extends NewLinkedList<T> {
+public class SimpleQueue<T> extends SimpleLinkedList<T> {
 
     public SimpleQueue() {
         super();
