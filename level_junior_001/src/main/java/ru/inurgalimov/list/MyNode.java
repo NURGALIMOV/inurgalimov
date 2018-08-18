@@ -3,7 +3,7 @@ package ru.inurgalimov.list;
 /**
  * @param <T> - generalized parameter
  * @author Nurgalimov Ilshat
- * @version 1.1
+ * @version 2.0
  */
 public class MyNode<T> {
     private T value;
@@ -13,24 +13,24 @@ public class MyNode<T> {
         this.value = value;
     }
 
+    /**
+     * The method implements the Floyd algorithm.
+     *
+     * @param first
+     * @return boolean
+     */
     public static boolean hasCycle(MyNode first) {
-        MyNode check = first;
-        int count = 1;
+        MyNode slow = first;
+        MyNode fast = first;
         boolean checkResult = false;
-        while (check.next != null) {
-            MyNode tempNode = first;
-            for (int i = count; i > 0; i--) {
-                if (check.next == tempNode) {
-                    checkResult = true;
-                    break;
-                }
-                tempNode = tempNode.next;
-            }
-            if (checkResult) {
+
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+            if (slow == fast) {
+                checkResult = true;
                 break;
             }
-            check = check.next;
-            count++;
         }
         return checkResult;
     }
