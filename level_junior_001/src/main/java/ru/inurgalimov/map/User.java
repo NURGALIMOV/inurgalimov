@@ -20,7 +20,8 @@ public class User {
     }
 
     @Override
-    public int hashCode() {
-        return this.name.hashCode() + children + this.birthday.hashCode();
+    public boolean equals(Object object) {
+        User user = (User) object;
+        return this.name.equals(user.name) && this.children == user.children && this.birthday.equals(user.birthday);
     }
 }
