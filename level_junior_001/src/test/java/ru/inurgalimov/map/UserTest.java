@@ -21,5 +21,6 @@ public class UserTest {
         testMap.put(one, 1);
         testMap.put(two, 1);
         System.out.println(testMap);
+        System.out.println(one.equals(two));
     }
 }
