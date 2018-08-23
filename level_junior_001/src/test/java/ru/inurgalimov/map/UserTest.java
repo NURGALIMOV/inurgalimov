@@ -19,7 +19,7 @@ public class UserTest {
 
         Map<User, Object> testMap = new HashMap<>();
         testMap.put(one, 1);
-        testMap.put(two, 1);
+        testMap.put(two, 2);
         System.out.println(testMap);
         System.out.println(one.equals(two));
     }
