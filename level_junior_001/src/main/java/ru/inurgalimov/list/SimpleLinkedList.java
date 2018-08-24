@@ -5,38 +5,12 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 public class SimpleLinkedList<E> implements Iterable<E> {
-    private Node<E> head;
-    private Node<E> tail;
-
-    private int count;
+    protected Node<E> head;
+    protected Node<E> tail;
+    protected int count;
 
     public SimpleLinkedList() {
         this.count = 0;
-    }
-
-    public void setCount(int count) {
-        this.count = count;
-    }
-
-    public void setHead(Node<E> head) {
-        this.head = head;
-    }
-
-    public void setTail(Node<E> tail) {
-        this.tail = tail;
-    }
-
-    public Node<E> getHead() {
-
-        return head;
-    }
-
-    public Node<E> getTail() {
-        return tail;
-    }
-
-    public int getCount() {
-        return count;
     }
 
     public void add(E value) {

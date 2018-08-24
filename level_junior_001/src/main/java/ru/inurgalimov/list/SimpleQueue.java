@@ -9,16 +9,16 @@ public class SimpleQueue<T> extends SimpleLinkedList<T> {
     }
 
     public T poll() {
-        if (this.getHead() == null) {
+        if (head == null) {
             throw new NoSuchElementException();
         }
-        Node node = this.getHead();
-        this.setHead(this.getHead().getNextStep());
+        Node node = head;
+        head = head.getNextStep();
         return (T) node.getE();
     }
 
     public void push(T value) {
-        this.add(value);
+        add(value);
     }
 
 }

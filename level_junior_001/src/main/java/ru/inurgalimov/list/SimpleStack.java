@@ -8,32 +8,30 @@ public class SimpleStack<T> extends SimpleLinkedList<T> {
     }
 
     public T poll() {
-        if (getTail() == null) {
+        if (tail == null) {
             throw new NoSuchElementException();
         }
-        Node n = getTail();
-        setTail(getTail().getLastStep());
+        Node n = tail;
+        tail = tail.getLastStep();
         return (T) n.getE();
     }
 
     public void push(T value) {
-        this.add(value);
+        add(value);
     }
 
     @Override
     public void add(T value) {
         Node n = new Node(value);
-        if (getHead() == null) {
-            setHead(n);
-            setTail(n);
+        if (head == null) {
+            head = n;
+            tail = n;
         } else {
-            Node temp = getTail();
-            getTail().setNextStep(n);
-            setTail(n);
-            getTail().setLastStep(temp);
+            Node temp = tail;
+            tail.setNextStep(n);
+            tail = n;
+            tail.setLastStep(temp);
         }
-        setCount(getCount() + 1);
+        count++;
     }
-
-
 }
