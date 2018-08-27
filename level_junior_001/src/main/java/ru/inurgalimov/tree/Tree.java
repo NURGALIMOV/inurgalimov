@@ -51,8 +51,8 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
     @Override
     public Iterator<E> iterator() {
         return new Iterator<E>() {
-            private final Node<E> ITNODE = root;
-            private Queue<Node<E>> queue = fillQueue(ITNODE);
+            private final Node<E> itNode = root;
+            private Queue<Node<E>> queue = fillQueue(itNode);
 
             public Queue<Node<E>> fillQueue(Node<E> eNode) {
                 if (queue == null) {
