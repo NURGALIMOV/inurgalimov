@@ -74,6 +74,9 @@ public class SimpleHashMap<K, V> implements Iterable {
 
             @Override
             public boolean hasNext() {
+                if (modCount != count) {
+                    throw new ConcurrentModificationException();
+                }
                 boolean result = false;
                 for (; index < simpleEntries.length; index++) {
                     if (simpleEntries[index] != null) {
@@ -87,9 +90,6 @@ public class SimpleHashMap<K, V> implements Iterable {
             @Override
             public SimpleEntry next() {
                 SimpleEntry stepIterator = null;
-                if (modCount != count) {
-                    throw new ConcurrentModificationException();
-                }
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
