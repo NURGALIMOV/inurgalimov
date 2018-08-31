@@ -90,12 +90,11 @@ public class SimpleHashMap<K, V> implements Iterable {
                 if (modCount != count) {
                     throw new ConcurrentModificationException();
                 }
-                if (hasNext()) {
-                    stepIterator = simpleEntries[index];
-                    index++;
-                } else {
+                if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
+                stepIterator = simpleEntries[index];
+                index++;
                 return stepIterator;
             }
         };
