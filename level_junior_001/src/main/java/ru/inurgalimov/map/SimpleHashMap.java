@@ -1,7 +1,9 @@
 package ru.inurgalimov.map;
 
 
+import java.util.ConcurrentModificationException;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class SimpleHashMap<K, V> implements Iterable {
     private SimpleEntry<K, V>[] simpleEntries;
@@ -68,6 +70,7 @@ public class SimpleHashMap<K, V> implements Iterable {
     public Iterator iterator() {
         return new Iterator() {
             int index = 0;
+            final int modCount = count;
 
             @Override
             public boolean hasNext() {
@@ -84,9 +87,14 @@ public class SimpleHashMap<K, V> implements Iterable {
             @Override
             public SimpleEntry next() {
                 SimpleEntry stepIterator = null;
+                if (modCount != count) {
+                    throw new ConcurrentModificationException();
+                }
                 if (hasNext()) {
                     stepIterator = simpleEntries[index];
                     index++;
+                } else {
+                    throw new NoSuchElementException();
                 }
                 return stepIterator;
             }

@@ -12,14 +12,6 @@ import java.util.Queue;
     Сколько удалено.
  */
 class Store {
-
-
-
-  Line.Info diff(List<User> previoues, List<User> current) {
-        return new Line.Info();
-      Queue
-    }
-
     static class User {
         int id;
         String name;
