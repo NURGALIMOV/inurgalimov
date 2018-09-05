@@ -9,12 +9,7 @@ public class SimpleQueue<T> extends SimpleLinkedList<T> {
     }
 
     public T poll() {
-        if (head == null) {
-            throw new NoSuchElementException();
-        }
-        Node node = head;
-        head = head.getNextStep();
-        return (T) node.getE();
+        return dropFirst();
     }
 
     public void push(T value) {

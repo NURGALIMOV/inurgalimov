@@ -5,9 +5,9 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 public class SimpleLinkedList<E> implements Iterable<E> {
-    protected Node<E> head;
-    protected Node<E> tail;
-    protected int count;
+    private Node<E> head;
+    private Node<E> tail;
+    private int count;
 
     public SimpleLinkedList() {
         this.count = 0;
@@ -18,7 +18,9 @@ public class SimpleLinkedList<E> implements Iterable<E> {
         if (head == null) {
             head = node;
             tail = node;
+            tail.setLastStep(head);
         } else {
+            node.setLastStep(tail);
             tail.nextStep = node;
             tail = node;
         }
@@ -36,6 +38,24 @@ public class SimpleLinkedList<E> implements Iterable<E> {
             throw new NoSuchElementException();
         }
         return resultNode.e;
+    }
+
+    public E dropFirst() {
+        if (head == null) {
+            throw new NoSuchElementException();
+        }
+        Node<E> tempNode = head;
+        head = head.nextStep;
+        return tempNode.getE();
+    }
+
+    public E dropLast() {
+        if (tail == null) {
+            throw new NoSuchElementException();
+        }
+        Node<E> tempNode = tail;
+        tail = tail.lastStep;
+        return tempNode.getE();
     }
 
     @Override
