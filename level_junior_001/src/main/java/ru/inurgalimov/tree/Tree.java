@@ -10,9 +10,11 @@ import java.util.*;
 
 public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
     private Node<E> root;
+    private int modCount;
 
     public Tree(E e) {
         this.root = new Node<E>(e);
+        modCount = 0;
     }
 
     @Override
@@ -27,6 +29,7 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
         if (result) {
             temp.get().add(new Node<>(child));
         }
+        modCount++;
         return result;
     }
 
@@ -48,18 +51,19 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
         return rsl;
     }
 
-    public boolean isBinary(Node<E> node) {
+    public boolean isBinary() {
         boolean result = true;
-        if (node == null) {
-            node = root;
-        }
-        if (node.leaves().isEmpty() || node.leaves().size() > 2) {
-            result = false;
-        } else {
-            for (Node<E> n : node.leaves()) {
-                if (!n.leaves().isEmpty()) {
-                    result = isBinary(n);
-                }
+        Optional<Node<E>> optional = Optional.empty();
+        Queue<Node<E>> checkQueue = new LinkedList<>();
+        checkQueue.offer(this.root);
+        while (!checkQueue.isEmpty()) {
+            Node<E> temp = checkQueue.poll();
+            if (temp.leaves().size() > 2) {
+                result = false;
+                break;
+            }
+            for (Node<E> child : temp.leaves()) {
+                checkQueue.offer(child);
             }
         }
         return result;
@@ -68,33 +72,44 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
     @Override
     public Iterator<E> iterator() {
         return new Iterator<E>() {
-            private Queue<Node<E>> queue = fillQueue(root);
-
-            public Queue<Node<E>> fillQueue(Node<E> eNode) {
-                if (queue == null) {
-                    queue = new LinkedList<>();
-                }
-                queue.add(eNode);
-                if (!eNode.leaves().isEmpty()) {
-                    for (Node<E> n : eNode.leaves()) {
-                        if (!n.leaves().isEmpty()) {
-                            fillQueue(n);
-                        } else {
-                            queue.add(n);
-                        }
-                    }
-                }
-                return queue;
-            }
+            private Node<E> rootIterator = root;
+            private int index = 0;
+            private final int modCountIterator = modCount;
 
             @Override
             public boolean hasNext() {
-                return !queue.isEmpty();
+                if (modCountIterator != modCount) {
+                    throw new ConcurrentModificationException();
+                }
+                return rootIterator != null;
             }
 
             @Override
             public E next() {
-                return queue.poll().getValue();
+                if (!hasNext()) {
+                    throw new NoSuchElementException();
+                }
+                E e = rootIterator.getValue();
+                if (!rootIterator.leaves().isEmpty()) {
+                    index = 0;
+                    rootIterator = rootIterator.leaves().get(index);
+                } else {
+                    do {
+                        rootIterator.setIndexForIterator(0);
+                        rootIterator = rootIterator.getParent();
+                        index = rootIterator.getIndexForIterator() + 1;
+                        rootIterator.setIndexForIterator(index);
+                        if (index >= rootIterator.leaves().size() && rootIterator == root) {
+                            rootIterator.setIndexForIterator(0);
+                            rootIterator = null;
+                            break;
+                        }
+                    } while (index >= rootIterator.leaves().size() && rootIterator.getParent() != null);
+                    if (hasNext()) {
+                        rootIterator = rootIterator.leaves().get(index);
+                    }
+                }
+                return e;
             }
         };
     }
