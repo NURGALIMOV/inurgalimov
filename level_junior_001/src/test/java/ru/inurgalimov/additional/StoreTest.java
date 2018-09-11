@@ -24,6 +24,7 @@ public class StoreTest {
         assertThat(info.getCountRemove(), is(0));
         assertThat(info.getCountMod(), is(0));
     }
+
     @Test
     public void whenRemoveFromList() {
         Store store = new Store();
@@ -39,6 +40,7 @@ public class StoreTest {
         assertThat(info.getCountRemove(), is(1));
         assertThat(info.getCountMod(), is(0));
     }
+
     @Test
     public void whenModElementInList() {
         Store store = new Store();
