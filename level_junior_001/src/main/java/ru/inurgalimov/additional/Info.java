@@ -1,10 +1,14 @@
 package ru.inurgalimov.additional;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Info {
-    private final List previoues;
-    private final List current;
+    private final List<Store.User> previoues;
+    private final List<Store.User> current;
+    private Map<Integer, String> pre;
+    private Map<Integer, String> cur;
     private int countAdd;
     private int countRemove;
     private int countMod;
@@ -15,21 +19,31 @@ public class Info {
         countAdd = 0;
         countMod = 0;
         countRemove = 0;
+        pre = addMap(previoues);
+        cur = addMap(current);
     }
 
     public void countingStatistics() {
-        int i = current.size() - previoues.size();
-        countAdd = i > 0 ? i : 0;
-        countRemove = i > 0 ? 0 : Math.abs(i);
-        for (Object user : previoues) {
-            Store.User u = (Store.User) user;
-            if (current.contains(u)) {
-                Store.User t = (Store.User) current.get(current.indexOf(u));
-                if (!u.name.equals(t.name)) {
-                    countMod++;
-                }
+        for (Store.User u : current) {
+            if (!pre.containsKey(u.id)) {
+                countAdd++;
             }
         }
+        for (Store.User u : previoues) {
+            if (!cur.containsKey(u.id)) {
+                countRemove++;
+            } else if (cur.containsKey(u.id) && !cur.get(u.id).equals(u.name)) {
+                countMod++;
+            }
+        }
+    }
+
+    private Map<Integer, String> addMap(List<Store.User> list) {
+        Map<Integer, String> tempMap = new HashMap<>();
+        for (Store.User u : list) {
+            tempMap.put(u.id, u.name);
+        }
+        return tempMap;
     }
 
     public int getCountAdd() {
