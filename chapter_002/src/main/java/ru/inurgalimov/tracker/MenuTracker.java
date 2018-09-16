@@ -4,6 +4,7 @@ import ru.inurgalimov.models.Item;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class MenuTracker {
     private Input input;
@@ -15,11 +16,8 @@ public class MenuTracker {
         this.tracker = tracker;
     }
 
-    public void showMenu() {
-        System.out.println("Меню.");
-        for (UserAction action : this.actions) {
-            System.out.println(action.info());
-        }
+    public void showMenu(Consumer<List<UserAction>> consumer) {
+        consumer.accept(this.actions);
     }
 
     public void fillActions() {

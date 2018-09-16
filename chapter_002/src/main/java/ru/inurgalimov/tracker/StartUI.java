@@ -18,7 +18,12 @@ public class StartUI {
         this.range = this.menuTracker.rangeArray();
         boolean exit = false;
         while (!exit) {
-            this.menuTracker.showMenu();
+            this.menuTracker.showMenu((a) -> {
+                System.out.println("Меню.");
+                for (UserAction action : a) {
+                    System.out.println(action.info());
+                }
+            });
             int answer = this.input.ask("Введите пункт меню : ", range);
             menuTracker.select(answer);
             if (EXIT == answer) {
