@@ -47,6 +47,7 @@ public class MenuTracker {
         public AddItem(int key, String name) {
             super(key, name);
         }
+
         @Override
         public void execute(Input input, Tracker tracker) {
             String name = input.ask("Введите, имя заявки:");
@@ -59,6 +60,7 @@ public class MenuTracker {
         public ExitMenu(int key, String name) {
             super(key, name);
         }
+
         @Override
         public void execute(Input input, Tracker tracker) {
         }
@@ -68,6 +70,7 @@ public class MenuTracker {
         public DeleteItem(int key, String name) {
             super(key, name);
         }
+
         @Override
         public void execute(Input input, Tracker tracker) {
             String id = input.ask("Введите ID заявки для удаления:");
@@ -83,6 +86,7 @@ public class MenuTracker {
         public FindId(int key, String name) {
             super(key, name);
         }
+
         @Override
         public void execute(Input input, Tracker tracker) {
             String id = input.ask("Введите ID заявки для поиска:");
@@ -102,9 +106,19 @@ public class MenuTracker {
         public FindName(int key, String name) {
             super(key, name);
         }
+
         @Override
         public void execute(Input input, Tracker tracker) {
-            Item[] it = tracker.findByName(input.ask("Введите имя заявки для поиска:"));
+            Item[] it = tracker.find(input.ask("Введите имя заявки для поиска:"), (a, b) -> {
+                List<Item> temp = new ArrayList<>();
+                for (Object o : a) {
+                    Item item = (Item) o;
+                    if (item.getName().equals(b)) {
+                        temp.add(item);
+                    }
+                }
+                return temp.toArray(new Item[temp.size()]);
+            });
             for (Item item : it) {
                 System.out.println("Имя заявки: " + item.getName());
                 System.out.println("Описание заявки: " + item.getDescription());
@@ -118,9 +132,11 @@ public class MenuTracker {
         public ShowItems(int key, String name) {
             super(key, name);
         }
+
         @Override
         public void execute(Input input, Tracker tracker) {
-            for (Item item : tracker.findAll()) {
+            for (Object o : tracker.find("", (a, b) -> a.toArray(new Item[a.size()]))) {
+                Item item = (Item) o;
                 System.out.println("Name: " + item.getName());
                 System.out.println("Description: " + item.getDescription());
                 System.out.println("ID: " + item.getId() + "\n");

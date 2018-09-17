@@ -5,6 +5,7 @@ import ru.inurgalimov.models.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.function.BiFunction;
 
 public class Tracker {
     private final List<Item> items = new ArrayList<>();
@@ -32,29 +33,23 @@ public class Tracker {
         }
     }
 
-    public Item[] findAll() {
-        return items.toArray(new Item[items.size()]);
-    }
-
-    public Item[] findByName(String key) {
-        List<Item> temp = new ArrayList<>();
-        for (Item item : items) {
-            if (item.getName().equals(key)) {
-                temp.add(item);
-            }
-        }
-        return temp.toArray(new Item[temp.size()]);
+    public <T> T find(String k, BiFunction<List, String, T> biFunction) {
+        return biFunction.apply(items, k);
     }
 
     public Item findById(String id) {
-        Item result = null;
-        for (int i = 0; i < items.size(); i++) {
-            if (items.get(i).getId().equals(id)) {
-                result = items.get(i);
-                break;
+        return find(id, (a, b) -> {
+            Item result = null;
+            Item it;
+            for (int i = 0; i < a.size(); i++) {
+                it = (Item) a.get(i);
+                if (it.getId().equals(id)) {
+                    result = it;
+                    break;
+                }
             }
-        }
-        return result;
+            return result;
+        });
     }
 
     private String generateId(long create) {
