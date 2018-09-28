@@ -3,6 +3,7 @@ package ru.inurgalimov.additional;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Info {
     private final List<Store.User> previoues;
@@ -24,26 +25,13 @@ public class Info {
     }
 
     public void countingStatistics() {
-        for (Store.User u : current) {
-            if (!pre.containsKey(u.id)) {
-                countAdd++;
-            }
-        }
-        for (Store.User u : previoues) {
-            if (!cur.containsKey(u.id)) {
-                countRemove++;
-            } else if (cur.containsKey(u.id) && !cur.get(u.id).equals(u.name)) {
-                countMod++;
-            }
-        }
+        countAdd = (int) current.stream().filter(x -> !pre.containsKey(x.id)).count();
+        countRemove = (int) previoues.stream().filter(x -> !cur.containsKey(x.id)).count();
+        countMod = (int) previoues.stream().filter(x -> cur.containsKey(x.id) && !cur.get(x.id).equals(x.name)).count();
     }
 
     private Map<Integer, String> addMap(List<Store.User> list) {
-        Map<Integer, String> tempMap = new HashMap<>();
-        for (Store.User u : list) {
-            tempMap.put(u.id, u.name);
-        }
-        return tempMap;
+        return list.stream().collect(Collectors.toMap(x -> x.id, u -> u.name));
     }
 
     public int getCountAdd() {
