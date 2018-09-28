@@ -2,6 +2,7 @@ package ru.inurgalimov.search;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class PhoneDictionary {
     private List<Person> persons = new ArrayList<Person>();
@@ -18,12 +19,10 @@ public class PhoneDictionary {
      */
     public List<Person> find(String key) {
         List<Person> result = new ArrayList<>();
-        for (Person person : persons) {
-            if (person.getName().contains(key) || person.getAddress().contains(key) || person.getPhone().contains(key)
-                    || person.getSurname().contains(key)) {
-                result.add(person);
-            }
-        }
+        result.addAll(persons.stream().filter(person -> person.getName().contains(key)).collect(Collectors.toList()));
+        result.addAll(persons.stream().filter(person -> person.getAddress().contains(key)).collect(Collectors.toList()));
+        result.addAll(persons.stream().filter(person -> person.getPhone().contains(key)).collect(Collectors.toList()));
+        result.addAll(persons.stream().filter(person -> person.getSurname().contains(key)).collect(Collectors.toList()));
         return result;
     }
 }

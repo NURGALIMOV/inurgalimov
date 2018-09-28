@@ -35,11 +35,7 @@ public class MenuTracker {
     }
 
     public int[] rangeArray() {
-        int[] range = new int[this.actions.size()];
-        for (int i = 0; i < this.actions.size(); i++) {
-            range[i] = this.actions.get(i).key();
-        }
-        return range;
+        return actions.stream().mapToInt(x -> x.key()).toArray();
     }
 
 
