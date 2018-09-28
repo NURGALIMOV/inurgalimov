@@ -3,26 +3,26 @@ package ru.inurgalimov.list;
 import java.util.NoSuchElementException;
 
 public class SimpleQueueNew<T> {
-    private SimpleStack<T> pollStack;
-    private SimpleStack<T> pushStack;
+    private SimpleStack<T> out;
+    private SimpleStack<T> in;
 
     public SimpleQueueNew() {
-        pollStack = new SimpleStack<T>();
-        pushStack = new SimpleStack<T>();
+        out = new SimpleStack<T>();
+        in = new SimpleStack<T>();
     }
 
     public T poll() {
-        if ((pollStack.getSize() == 0) && (pushStack.getSize() != 0)) {
-            while (pushStack.getSize() > 0) {
-                pollStack.push(pushStack.poll());
+        if ((out.getSize() == 0) && (in.getSize() != 0)) {
+            while (in.getSize() > 0) {
+                out.push(in.poll());
             }
-        } else if ((pollStack.getSize() == 0) && (pushStack.getSize() == 0)) {
+        } else if ((out.getSize() == 0) && (in.getSize() == 0)) {
             throw new NoSuchElementException();
         }
-        return pollStack.poll();
+        return out.poll();
     }
 
     public void push(T value) {
-        pushStack.push(value);
+        in.push(value);
     }
 }
