@@ -32,6 +32,7 @@
         <module>chapter_003</module>
         <module>chapter_004</module>
         <module>level_junior_001</module>
+        <module>level_junior_002</module>
     </modules>
 
     <build>
