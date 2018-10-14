@@ -12,7 +12,7 @@ public class RectangleMove implements Runnable {
     @Override
     public void run() {
         boolean checkFor = false;
-        boolean condition = true;
+        boolean condition = !Thread.currentThread().isInterrupted();
         while (condition) {
             if (this.rect.getX() == 0 || this.rect.getY() == 0) {
                 checkFor = false;
@@ -30,7 +30,7 @@ public class RectangleMove implements Runnable {
                 Thread.sleep(50);
             } catch (InterruptedException e) {
                 e.printStackTrace();
-                condition = false;
+                condition = Thread.currentThread().isInterrupted();
             }
         }
     }
