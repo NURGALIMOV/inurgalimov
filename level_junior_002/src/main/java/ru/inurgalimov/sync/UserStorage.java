@@ -2,10 +2,6 @@ package ru.inurgalimov.sync;
 
 import net.jcip.annotations.ThreadSafe;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-
 @ThreadSafe
 public class UserStorage {
 
