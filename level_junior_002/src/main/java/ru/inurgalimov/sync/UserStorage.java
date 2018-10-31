@@ -26,7 +26,7 @@ public class UserStorage {
 
     public synchronized boolean update(User user) {
         boolean result = false;
-        if(userArray[user.getId()] != null) {
+        if (userArray[user.getId()] != null) {
             result = true;
             userArray[user.getId()] = user;
         }
@@ -53,6 +53,7 @@ public class UserStorage {
             System.out.println("Операция не возможна! Одного из пользователей нет в структуре.");
         }
     }
+
     public User[] getUserArray() {
         return userArray;
     }
