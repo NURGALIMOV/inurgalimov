@@ -14,6 +14,7 @@ public class SimpleBlockingQueue<T> {
     private volatile int size;
     private final int minSize = 0;
     private final int maxSize = 10;
+    private volatile boolean change;
 
 
     public SimpleBlockingQueue() {
@@ -24,14 +25,16 @@ public class SimpleBlockingQueue<T> {
 
     public void offer(T value) {
         synchronized (this) {
-            while (size == maxSize) {
-                this.notify();
+            if(size == maxSize) {
+                setChange(true);
+            }
+            while (change) {
                 try {
                     this.wait();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                if(Thread.currentThread().interrupted()) {
+                if(Thread.currentThread().isInterrupted()) {
                     break;
                 }
             }
@@ -42,14 +45,16 @@ public class SimpleBlockingQueue<T> {
 
     public T poll() {
         synchronized (this) {
-            while (size == minSize) {
-                this.notify();
+            if (size == minSize) {
+                setChange(false);
+            }
+            while (!change) {
                 try {
                     this.wait();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                if(Thread.currentThread().interrupted()) {
+                if(Thread.currentThread().isInterrupted()) {
                     break;
                 }
             }
@@ -57,5 +62,14 @@ public class SimpleBlockingQueue<T> {
             --size;
             return t;
         }
+    }
+    public void setChange(boolean change) {
+        synchronized (this) {
+            this.change = change;
+            this.notify();
+        }
+    }
+    public int getSize() {
+        return this.size;
     }
 }
