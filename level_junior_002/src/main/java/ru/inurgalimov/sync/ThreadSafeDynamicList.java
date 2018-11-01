@@ -2,7 +2,6 @@ package ru.inurgalimov.sync;
 
 import net.jcip.annotations.GuardedBy;
 import net.jcip.annotations.ThreadSafe;
-import org.jetbrains.annotations.NotNull;
 import ru.inurgalimov.list.DynamicList;
 
 import java.util.ArrayList;
@@ -31,7 +30,7 @@ public class ThreadSafeDynamicList<E> implements Iterable<E> {
         return copy(this.dynamicList).iterator();
     }
 
-    private synchronized List<E> copy(@NotNull DynamicList dl) {
+    private synchronized List<E> copy(DynamicList dl) {
         List<E> tempArray = new ArrayList<E>();
         for (Object ob : dl) {
             tempArray.add((E) ob);
