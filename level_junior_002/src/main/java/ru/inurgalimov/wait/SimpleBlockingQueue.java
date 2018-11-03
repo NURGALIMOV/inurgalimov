@@ -25,17 +25,13 @@ public class SimpleBlockingQueue<T> {
 
     public void offer(T value) {
         synchronized (this) {
-            if(size == maxSize) {
-                setChange(true);
-            }
-            while (change) {
+            if (size == maxSize) setChange(true);
+            while (change && Thread.currentThread().isInterrupted()) {
                 try {
                     this.wait();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
-                }
-                if(Thread.currentThread().isInterrupted()) {
-                    break;
+                    Thread.currentThread().interrupt();
                 }
             }
             size++;
@@ -45,17 +41,13 @@ public class SimpleBlockingQueue<T> {
 
     public T poll() {
         synchronized (this) {
-            if (size == minSize) {
-                setChange(false);
-            }
-            while (!change) {
+            if (this.isEmpty()) setChange(false);
+            while (!change && Thread.currentThread().isInterrupted()) {
                 try {
                     this.wait();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
-                }
-                if(Thread.currentThread().isInterrupted()) {
-                    break;
+                    Thread.currentThread().interrupt();
                 }
             }
             T t = queue.poll();
@@ -63,13 +55,19 @@ public class SimpleBlockingQueue<T> {
             return t;
         }
     }
+
     public void setChange(boolean change) {
         synchronized (this) {
             this.change = change;
             this.notify();
         }
     }
+
     public int getSize() {
         return this.size;
+    }
+
+    public boolean isEmpty() {
+        return this.queue.isEmpty();
     }
 }

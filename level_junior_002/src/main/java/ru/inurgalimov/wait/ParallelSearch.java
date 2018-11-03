@@ -12,6 +12,11 @@ public class ParallelSearch {
         SimpleBlockingQueue<Integer> queue = new SimpleBlockingQueue<Integer>();
         final Thread consumer = new Thread(
                 () -> {
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                     while (true) {
                         Integer i = queue.poll();
                         System.out.println(i);
