@@ -25,7 +25,9 @@ public class SimpleBlockingQueue<T> {
 
     public void offer(T value) {
         synchronized (this) {
-            if (size == maxSize) setChange(true);
+            if (size == maxSize) {
+                setChange(true);
+            }
             while (change && Thread.currentThread().isInterrupted()) {
                 try {
                     this.wait();
@@ -41,7 +43,9 @@ public class SimpleBlockingQueue<T> {
 
     public T poll() {
         synchronized (this) {
-            if (this.isEmpty()) setChange(false);
+            if (this.isEmpty()) {
+                setChange(false);
+            }
             while (!change && Thread.currentThread().isInterrupted()) {
                 try {
                     this.wait();

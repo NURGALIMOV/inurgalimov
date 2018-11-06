@@ -10,7 +10,7 @@ public class SimpleBlockingQueueTest {
         SimpleBlockingQueue<Integer> testQueue = new SimpleBlockingQueue<Integer>();
 
         Thread producer = new Thread(() -> {
-            for(int i = 0; i <= 20; ) {
+            for (int i = 0; i <= 20;) {
                 testQueue.offer(++i);
                 System.out.println(Thread.currentThread().getName() + " вставляет " + i);
                 try {
@@ -22,13 +22,13 @@ public class SimpleBlockingQueueTest {
 
             Thread.currentThread().interrupt();
         });
-        Thread consumer  = new Thread(() -> {
+        Thread consumer = new Thread(() -> {
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            for (int i = 1; i <= 20; i++){
+            for (int i = 1; i <= 20; i++) {
                 System.out.println(Thread.currentThread().getName() + " вытаскивает " + testQueue.poll());
                 try {
                     Thread.sleep(1000);

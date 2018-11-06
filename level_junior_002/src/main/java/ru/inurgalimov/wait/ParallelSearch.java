@@ -20,7 +20,7 @@ public class ParallelSearch {
                     while (true) {
                         Integer i = queue.poll();
                         System.out.println(i);
-                        if(queue.getSize() == 0) {
+                        if (queue.getSize() == 0) {
                             break;
                         }
                     }
