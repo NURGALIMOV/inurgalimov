@@ -58,7 +58,7 @@ public class UserStorage {
     public synchronized int indexForFindUser(int id) {
         int result = -1;
         for (int i = 0; i < userArray.length; i++) {
-            if (userArray[i].getId() == id) {
+            if (userArray[i] != null && userArray[i].getId() == id) {
                 result = i;
                 break;
             }

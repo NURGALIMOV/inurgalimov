@@ -65,6 +65,9 @@ public class UserStorageTest {
         assertThat(test[0].getAmount(), is(250));
         assertThat(test[1].getAmount(), is(150));
         assertThat(test[2].getAmount(), is(200));
+        assertThat(userStorage.delete(test[0]), is(true));
+        assertThat(userStorage.update(new User(2, 900)), is(true));
+
     }
 
 }
