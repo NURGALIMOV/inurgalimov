@@ -11,7 +11,7 @@ public class ParallelSearch {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    while (true) {
+                    while (Thread.currentThread().isInterrupted()) {
                         Integer i = queue.poll();
                         System.out.println(i);
                         if (queue.getSize() == 0) {
@@ -31,6 +31,7 @@ public class ParallelSearch {
                             e.printStackTrace();
                         }
                     }
+                    consumer.interrupt();
                     queue.setChange(true);
                 }
 
