@@ -6,52 +6,64 @@ import net.jcip.annotations.ThreadSafe;
 public class UserStorage {
 
     private volatile User[] userArray;
+    private volatile int position;
 
     public UserStorage() {
         userArray = new User[1000];
+        position = 0;
     }
 
     public synchronized boolean add(User user) {
-        try {
-            userArray[user.getId()] = user;
-        } catch (ArrayIndexOutOfBoundsException arrEx) {
-            arrEx.printStackTrace();
-            User[] temp = new User[user.getId() + 1000];
+        if (position == userArray.length) {
+            User[] temp = new User[2 * position];
             System.arraycopy(userArray, 0, temp, 0, userArray.length);
             userArray = temp;
-            userArray[user.getId()] = user;
         }
+        userArray[position++] = user;
         return true;
     }
 
     public synchronized boolean update(User user) {
         boolean result = false;
-        if (userArray[user.getId()] != null) {
+        int index = indexForFindUser(user.getId());
+        if (index != -1) {
+            userArray[index] = user;
             result = true;
-            userArray[user.getId()] = user;
         }
         return result;
     }
 
     public synchronized boolean delete(User user) {
-        boolean result = true;
-        try {
-            userArray[user.getId()] = null;
-        } catch (ArrayIndexOutOfBoundsException arrEx) {
-            arrEx.printStackTrace();
-            result = false;
+        boolean result = false;
+        int index = indexForFindUser(user.getId());
+        if (index != -1) {
+            result = true;
+            userArray[index] = null;
         }
         return result;
     }
 
     public synchronized void transfer(int fromId, int toId, int amount) {
         try {
-            userArray[fromId].setAmount(userArray[fromId].getAmount() - amount);
-            userArray[toId].setAmount(userArray[toId].getAmount() + amount);
+            int indexFromId = indexForFindUser(fromId);
+            int indexToId = indexForFindUser(toId);
+            userArray[indexFromId].setAmount(userArray[indexFromId].getAmount() - amount);
+            userArray[indexToId].setAmount(userArray[indexToId].getAmount() + amount);
         } catch (ArrayIndexOutOfBoundsException arrEx) {
             arrEx.printStackTrace();
             System.out.println("Операция не возможна! Одного из пользователей нет в структуре.");
         }
+    }
+
+    public synchronized int indexForFindUser(int id) {
+        int result = -1;
+        for (int i = 0; i < userArray.length; i++) {
+            if (userArray[i].getId() == id) {
+                result = i;
+                break;
+            }
+        }
+        return result;
     }
 
     public User[] getUserArray() {
