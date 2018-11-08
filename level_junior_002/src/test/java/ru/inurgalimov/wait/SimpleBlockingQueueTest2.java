@@ -19,6 +19,7 @@ public class SimpleBlockingQueueTest2 {
                     IntStream.range(0, 5).forEach(
                             queue::offer
                     );
+                    queue.setChange(true);
                 }
         );
         producer.start();
