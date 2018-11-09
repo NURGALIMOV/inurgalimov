@@ -46,7 +46,7 @@ public class SimpleBlockingQueue<T> {
             if (this.isEmpty()) {
                 setChange(false);
             }
-            while (!change || !Thread.currentThread().isInterrupted()) {
+            while (!change || Thread.currentThread().isInterrupted()) {
                 try {
                     this.wait();
                 } catch (InterruptedException e) {
