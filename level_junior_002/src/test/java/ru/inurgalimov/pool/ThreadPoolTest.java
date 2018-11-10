@@ -2,6 +2,11 @@ package ru.inurgalimov.pool;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
 
 public class ThreadPoolTest {
@@ -9,21 +14,22 @@ public class ThreadPoolTest {
     @Test
     public void whenUseThreadPool() {
         ThreadPool threadPool = new ThreadPool();
-        for (int i = 0; i < Runtime.getRuntime().availableProcessors(); i++) {
+        List<Integer> lst = new ArrayList();
+        for (int i = 0; i < 8; i++) {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException iEx) {
+                iEx.printStackTrace();
+            }
             threadPool.work(() -> {
-                for (int j = 0; j < 10; j++) {
-                    System.out.println("Hello from " + Thread.currentThread().getName());
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException iEx) {
-                        iEx.printStackTrace();
-                        Thread.currentThread().interrupt();
-                    }
-                }
+                lst.add(1);
+                System.out.println("Hello from " + Thread.currentThread().getName());
             });
         }
         threadPool.shutdown();
-        System.out.println(Runtime.getRuntime().availableProcessors());
+        threadPool.joinForThreadPool();
+        assertThat(lst, is(Arrays.asList(1, 1, 1, 1, 1, 1, 1, 1)));
     }
+
 
 }

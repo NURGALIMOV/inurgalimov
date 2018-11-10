@@ -12,29 +12,25 @@ public class ThreadPool {
     public ThreadPool() {
         for (int i = 0; i < Runtime.getRuntime().availableProcessors(); i++) {
             this.threads.add(new Thread(() -> {
-                while (this.tasks.isEmpty() && !Thread.currentThread().isInterrupted()) {
-                    synchronized (this.tasks) {
-                        try {
-                            this.tasks.wait();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                            Thread.currentThread().interrupt();
-                        }
+                while (!Thread.currentThread().isInterrupted()) {
+                    try {
+                        this.tasks.poll().run();
+                    } catch (Exception iEx) {
+                        break;
                     }
-
                 }
-                this.tasks.poll().run();
+
             }));
-            this.threads.get(i).start();
         }
+        for (Thread th : threads) {
+            th.start();
+        }
+
     }
 
     public void work(Runnable job) {
-        synchronized (this.tasks) {
-            this.tasks.offer(job);
-            this.tasks.setChange(true);
-            this.tasks.notifyAll();
-        }
+        this.tasks.offer(job);
+        this.tasks.setChange(true);
     }
 
     public void shutdown() {
