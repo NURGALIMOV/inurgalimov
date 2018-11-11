@@ -14,6 +14,7 @@ public class CacheStorageModel {
     }
 
     public Base update(Base model) {
+        while (storage.get(model.getId()) == null);
         int tempVersion = storage.get(model.getId()).getVersion();
         return storage.computeIfPresent(model.getId(), (key, value) -> {
             storage.get(key).setVersion(storage.get(key).getVersion() + 1);
