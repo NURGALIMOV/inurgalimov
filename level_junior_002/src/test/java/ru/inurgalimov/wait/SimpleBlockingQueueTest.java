@@ -5,8 +5,8 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class SimpleBlockingQueueTest {
-//    @Test
-//    public void whenUseBlockingQueue() {
+    @Test
+    public void whenUseBlockingQueue() {
 //        SimpleBlockingQueue<Integer> testQueue = new SimpleBlockingQueue<Integer>();
 //
 //        Thread producer = new Thread(() -> {
@@ -45,6 +45,5 @@ public class SimpleBlockingQueueTest {
 //        } catch (InterruptedException e) {
 //            e.printStackTrace();
 //        }
-//    }
-
+    }
 }
