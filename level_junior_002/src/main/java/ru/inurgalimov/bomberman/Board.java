@@ -4,21 +4,21 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class Board {
-    private final int SIZE;
-    private final ReentrantLock[][] BOARD;
+    private final int size;
+    private final ReentrantLock[][] board;
 
     public Board(int size) {
-        this.SIZE = size;
-        this.BOARD = new ReentrantLock[SIZE][SIZE];
-        for (int i = 0; i < SIZE; i++) {
-            for (int j = 0; j < SIZE; j++) {
-                BOARD[i][j] = new ReentrantLock();
+        this.size = size;
+        this.board = new ReentrantLock[this.size][this.size];
+        for (int i = 0; i < this.size; i++) {
+            for (int j = 0; j < this.size; j++) {
+                board[i][j] = new ReentrantLock();
             }
         }
         new Thread(() -> {
             Thread.currentThread().setName("Player 2");
-            int i = SIZE - 1;
-            int j = SIZE - 1;
+            int i = this.size - 1;
+            int j = this.size - 1;
             int[][][] threadArr2 = {{{-1, -1}, {-1, 0}, {-1, 1}},
                     {{0, -1}, null, {0, 1}},
                     {{1, -1}, {1, 0}, {1, 1}}};
@@ -33,7 +33,7 @@ public class Board {
                     t1 = this.nextStep(threadArr2, k, l);
                     k = k + t1[0];
                     l = l + t1[1];
-                    condition = !this.move(BOARD[i][j], BOARD[k][l]);
+                    condition = !this.move(board[i][j], board[k][l]);
                 }
                 System.out.println(Thread.currentThread().getName() + " перешел на ячейку [" + k + "][" + l + "].");
                 i = k;
@@ -68,7 +68,7 @@ public class Board {
                     t1 = this.nextStep(threadArr1, k, l);
                     k = k + t1[0];
                     l = l + t1[1];
-                    condition = !this.move(BOARD[i][j], BOARD[k][l]);
+                    condition = !this.move(board[i][j], board[k][l]);
                 }
                 System.out.println(Thread.currentThread().getName() + " перешел на ячейку [" + k + "][" + l + "].");
                 i = k;
@@ -105,8 +105,8 @@ public class Board {
         boolean check = false;
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                if (temp[i][j] != null && k + temp[i][j][0] >= 0 && k + temp[i][j][0] < SIZE
-                        && l + temp[i][j][1] >= 0 && l + temp[i][j][1] < SIZE) {
+                if (temp[i][j] != null && k + temp[i][j][0] >= 0 && k + temp[i][j][0] < size
+                        && l + temp[i][j][1] >= 0 && l + temp[i][j][1] < size) {
                     result = temp[i][j];
                     temp[i][j] = null;
                     check = true;
