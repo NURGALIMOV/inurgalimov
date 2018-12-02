@@ -1,6 +1,5 @@
 package ru.inurgalimov.list;
 
-import com.sun.org.apache.xalan.internal.xsltc.runtime.Node;
 import org.junit.Test;
 import org.junit.Before;
 
@@ -27,6 +26,7 @@ public class SimpleArrayListTest {
     public void whenAddThreeElementsThenUseGetSizeResultThree() {
         assertThat(list.getSize(), is(3));
     }
+
     @Test
     public void whenDeleteOneElement() {
         Integer result = list.delete();
