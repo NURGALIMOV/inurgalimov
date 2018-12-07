@@ -49,7 +49,9 @@ public class Board {
     }
 
     public Thread monsterThread() {
-        return new Thread(new Monster(board, this));
+        Thread tempMonster = new Thread(new Monster(board, this));
+        tempMonster.setDaemon(true);
+        return tempMonster;
     }
 
     public int[] nextStep(int[][][] temp, int k, int l) {

@@ -10,7 +10,6 @@ public class Game {
 
         try {
             player.join();
-            monster.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
