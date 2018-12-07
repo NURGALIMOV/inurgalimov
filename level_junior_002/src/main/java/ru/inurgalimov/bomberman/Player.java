@@ -19,9 +19,13 @@ public class Player implements Runnable {
         Thread.currentThread().setName(playerName);
         int i = 0;
         int j = 0;
+        Scanner sc = new Scanner(System.in);
         while (true) {
             boolean condition = true;
-            Scanner sc = new Scanner(System.in);
+            if (boardArr[i][j].hasQueuedThreads()) {
+                System.out.println("Game over!!!");
+                break;
+            }
             int k = 0;
             int l = 0;
             while (condition) {
@@ -41,7 +45,7 @@ public class Player implements Runnable {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            sc.close();
         }
+        sc.close();
     }
 }
