@@ -152,5 +152,9 @@ public class TrackerVersionFourTest {
         tracker.delete("test2");
         tracker.delete("1");
     }
-
+    @Test
+    public void whenCheckSingleton() {
+        TrackerVersionFour trackerTest = TrackerVersionFour.TRACKER_VERSION_FOUR;
+        Assert.assertThat((tracker == trackerTest), is(true));
+    }
 }
