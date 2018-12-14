@@ -11,19 +11,12 @@ import static org.junit.Assert.*;
 public class StudentTest {
     @Test
     public void whenSortAndRemoveExtrasFromTheList() {
-        List<Student> testList = new ArrayList();
         Student student1 = new Student("Илшат", 5);
         Student student2 = new Student("Иван", 2);
         Student student3 = new Student("Вася", 4);
         Student student4 = new Student("Андрей", 5);
-        testList.add(student1);
-        testList.add(student2);
-        testList.add(student3);
-        testList.add(student4);
-        testList.add(null);
-        List<Student> checkList = new ArrayList<>();
-        checkList.add(student1);
-        checkList.add(student4);
-        assertThat(Student.levelOf(testList, 4), is(checkList));
+
+        assertThat(Student.levelOf(List.of(student1, student2, student3, student4), 4),
+                is(List.of(student1, student4)));
     }
 }
