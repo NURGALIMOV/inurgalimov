@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class PriorityQueue {
-    private LinkedList<Task> tasks = new LinkedList<>();
+    private LinkedList<Task> tasks = new LinkedList<Task>();
 
     /**
      * Метод должен вставлять в нужную позицию элемент.
