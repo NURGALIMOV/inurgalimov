@@ -18,13 +18,13 @@ public class PriorityQueue {
      */
     public void put(Task task) {
         tasks.add(task);
-        List list = tasks.stream().sorted(new Comparator<Task>() {
+        var list = tasks.stream().sorted(new Comparator<Task>() {
             @Override
             public int compare(Task o1, Task o2) {
                 return o1.getPriority() - o2.getPriority();
             }
         }).collect(Collectors.toList());
-        LinkedList<Task> linkedList = new LinkedList<>();
+        var linkedList = new LinkedList<Task>();
         linkedList.addAll(list);
         tasks = linkedList;
     }
