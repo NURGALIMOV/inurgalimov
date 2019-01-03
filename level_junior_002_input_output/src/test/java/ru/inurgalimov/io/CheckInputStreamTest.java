@@ -10,19 +10,31 @@ import static org.junit.Assert.*;
 public class CheckInputStreamTest {
     @Test
     public void whenWeCheckAnEvenNumber() {
-        System.setIn(new ByteArrayInputStream("100".getBytes()));
-        assertThat(new CheckInputStream().isNumber(System.in), is(true));
+        try(ByteArrayInputStream bIn = new ByteArrayInputStream("100".getBytes())) {
+            System.setIn(bIn);
+            assertThat(new CheckInputStream().isNumber(System.in), is(true));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
     public void whenWeCheckNotAnEvenNumber() {
-        System.setIn(new ByteArrayInputStream("5".getBytes()));
-        assertThat(new CheckInputStream().isNumber(System.in), is(false));
+        try(ByteArrayInputStream bIn = new ByteArrayInputStream("5".getBytes())) {
+            System.setIn(bIn);
+            assertThat(new CheckInputStream().isNumber(System.in), is(false));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
     public void whenWeCheckNotANumber() {
-        System.setIn(new ByteArrayInputStream("k".getBytes()));
-        assertThat(new CheckInputStream().isNumber(System.in), is(false));
+        try(ByteArrayInputStream bIn = new ByteArrayInputStream("k".getBytes())) {
+            System.setIn(bIn);
+            assertThat(new CheckInputStream().isNumber(System.in), is(false));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
