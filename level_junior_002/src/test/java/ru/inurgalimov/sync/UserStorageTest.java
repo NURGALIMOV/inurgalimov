@@ -49,8 +49,23 @@ public class UserStorageTest {
     @Test
     public void userStorageMultithreadTest() {
         thread1.start();
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         thread2.start();
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         thread3.start();
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         User[] test = userStorage.getUserArray();
 
         try {
