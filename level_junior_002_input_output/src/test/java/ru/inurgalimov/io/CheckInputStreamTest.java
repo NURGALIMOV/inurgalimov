@@ -37,4 +37,17 @@ public class CheckInputStreamTest {
             e.printStackTrace();
         }
     }
+
+    @Test
+    public void whenWePassWordsThroughTheFilter() {
+        try (ByteArrayInputStream bIn = new ByteArrayInputStream("hello to all programmers".getBytes());
+             OutputStream os = new ByteArrayOutputStream();) {
+            System.setIn(bIn);
+            String[] abuse = {"programmers"};
+            new CheckInputStream().dropAbuses(System.in, os, abuse);
+            assertThat("hello to all ".equals(os.toString()), is(true));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
