@@ -5,7 +5,7 @@ import java.util.Arrays;
 
 /**
  * @author Nurgalimov Ilshat
- * @version 1.01.2019
+ * @version 5.01.2019
  */
 public class CheckInputStream {
     /**
@@ -41,22 +41,11 @@ public class CheckInputStream {
     public void dropAbuses(InputStream in, OutputStream out, String[] abuse) {
         try (BufferedReader br = new BufferedReader(new InputStreamReader(in));
              BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(out))) {
-            Arrays.stream(br.readLine().split("\\W")).filter(a -> {
-                boolean result = true;
-                for (String s : abuse) {
-                    if (s.equals(a)) {
-                        result = false;
-                        break;
-                    }
-                }
-                return result;
-            }).forEach(a -> {
-                try {
+            for (String a : br.readLine().split("\\W")) {
+                if (!Arrays.stream(abuse).allMatch(b -> a.equals(b))) {
                     bw.write(a + " ");
-                } catch (IOException e) {
-                    e.printStackTrace();
                 }
-            });
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
