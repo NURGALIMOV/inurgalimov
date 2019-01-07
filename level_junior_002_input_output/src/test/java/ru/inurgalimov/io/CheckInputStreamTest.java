@@ -3,6 +3,7 @@ package ru.inurgalimov.io;
 import org.junit.Test;
 
 import java.io.*;
+import java.net.URL;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
