@@ -3,7 +3,6 @@ package ru.inurgalimov.io;
 import org.junit.Test;
 
 import java.io.*;
-import java.net.URL;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
@@ -50,5 +49,12 @@ public class CheckInputStreamTest {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Test
+    public void whenITesting() {
+        File f1 = new File("src/main/java/", "source.txt");
+        File f2 = new File("src/main/java/", "distance.txt");
+        new CheckInputStream().sort(f1, f2);
     }
 }
