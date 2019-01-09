@@ -50,11 +50,4 @@ public class CheckInputStreamTest {
             e.printStackTrace();
         }
     }
-
-    @Test
-    public void whenITesting() {
-        File f1 = new File("src/main/java/", "source.txt");
-        File f2 = new File("src/main/java/", "distance.txt");
-        new CheckInputStream().sort(f1, f2);
-    }
 }
