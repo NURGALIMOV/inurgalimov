@@ -5,7 +5,7 @@ import java.util.*;
 
 /**
  * @author Nurgalimov Ilshat
- * @version 09.01.2019
+ * @version 10.01.2019
  */
 
 public class SortingFile {
@@ -82,39 +82,38 @@ public class SortingFile {
      * @return возвращаем конечный файл.
      */
     private void combineFiles(List<File> files, RandomAccessFile writeDistance) throws FileNotFoundException, IOException {
+        File tempFile;
+        int tempCount = 0;
         while (files.size() != 1) {
-            for (int k = 0, j = 1; j < files.size(); k = k + 2, j = j + 2) {
-                try (RandomAccessFile r1 = new RandomAccessFile(files.get(k), "r");
-                     RandomAccessFile r2 = new RandomAccessFile(files.get(j), "rw")) {
-                    List<String> l1 = new ArrayList<>();
-                    List<String> l2 = new ArrayList<>();
-                    String s1 = r1.readLine();
-                    String s2 = r2.readLine();
-                    while (s1 != null || s2 != null) {
-                        if (s1 != null) {
-                            l1.add(s1);
-                            s1 = r1.readLine();
-                        }
-                        if (s2 != null) {
-                            l2.add(s2);
+            tempFile = new File("src/main/resources/", "tempFile" + tempCount++ + ".txt");
+            try (RandomAccessFile r1 = new RandomAccessFile(files.get(0), "r");
+                 RandomAccessFile r2 = new RandomAccessFile(files.get(1), "rw");
+                 RandomAccessFile r3 = new RandomAccessFile(tempFile, "rw")) {
+                String s1 = r1.readLine();
+                String s2 = r2.readLine();
+                String s3;
+                while (s1 != null || s2 != null) {
+                    if (s1 != null && s2 != null) {
+                        r3.write(s1.length() < s2.length() ? (s1 + "\n").getBytes() : (s2 + "\n").getBytes());
+                        s3 = s1.length() < s2.length() ? (s1 = r1.readLine()) : (s2 = r2.readLine());
+                        continue;
+                    } else {
+                        if (s1 == null) {
+                            r3.write((s2 + "\n").getBytes());
                             s2 = r2.readLine();
                         }
-                    }
-                    List<String> list = new ArrayList<>();
-                    for (int a = 0, b = 0; a < l1.size() && b < l2.size(); ) {
-                        list.add(l1.get(a).length() < l2.get(b).length() ? l1.get(a++) : l2.get(b++));
-                    }
-                    r2.seek(0);
-                    for (String s : list) {
-                        r2.write((s + "\n").getBytes());
+                        if (s2 == null) {
+                            r3.write((s1 + "\n").getBytes());
+                            s1 = r1.readLine();
+                        }
                     }
                 }
             }
-
-            for (int h = 0; h < files.size(); h++) {
-                files.get(h).delete();
-                files.remove(h);
-            }
+            files.get(0).delete();
+            files.get(1).delete();
+            files.remove(0);
+            files.remove(0);
+            files.add(tempFile);
         }
         try (RandomAccessFile raf = new RandomAccessFile(files.get(0), "r")) {
             String t;
