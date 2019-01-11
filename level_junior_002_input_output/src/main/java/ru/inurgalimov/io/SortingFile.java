@@ -91,11 +91,14 @@ public class SortingFile {
                  RandomAccessFile r3 = new RandomAccessFile(tempFile, "rw")) {
                 String s1 = r1.readLine();
                 String s2 = r2.readLine();
-                String s3;
                 while (s1 != null || s2 != null) {
                     if (s1 != null && s2 != null) {
                         r3.write(s1.length() < s2.length() ? (s1 + "\n").getBytes() : (s2 + "\n").getBytes());
-                        s3 = s1.length() < s2.length() ? (s1 = r1.readLine()) : (s2 = r2.readLine());
+                        if (s1.length() < s2.length()) {
+                            s1 = r1.readLine();
+                        } else {
+                            s2 = r2.readLine();
+                        }
                         continue;
                     } else {
                         if (s1 == null) {
