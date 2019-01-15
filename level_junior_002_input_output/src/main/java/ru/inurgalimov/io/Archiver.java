@@ -6,8 +6,8 @@ import java.util.zip.ZipOutputStream;
 
 public class Archiver {
     public static void main(String[] args) throws Exception {
-        ZipOutputStream out = new ZipOutputStream(new FileOutputStream(new File("C:/java/", "archive.zip")));
-        File file = new File("C:/java/test");
+        ZipOutputStream out = new ZipOutputStream(new FileOutputStream("archive.zip"));
+        File file = new File("C:/java/TestTask");
         doZip(file, out);
         out.close();
     }
