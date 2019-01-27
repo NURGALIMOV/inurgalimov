@@ -2,12 +2,10 @@ package ru.inurgalimov.io;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
-public class СonsoleСhatTest {
+public class ChatTest {
     @Test
     public void whenWeCommunicateWithTheClient() {
-        СonsoleСhat chat = new СonsoleСhat();
+        Chat chat = new Chat();
         chat.communication("C:\\java\\inurgalimov\\level_junior_002_input_output\\src\\main\\resources", "source.txt");
 
     }

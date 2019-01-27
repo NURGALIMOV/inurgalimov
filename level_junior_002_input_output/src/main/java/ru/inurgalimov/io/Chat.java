@@ -7,7 +7,7 @@ import java.util.Scanner;
  * @author Nurgalimov Ilsha
  * @version 25.01.2019
  */
-public class СonsoleСhat {
+public class Chat {
     public void communication(String answerPath, String answerName) {
         try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
              RandomAccessFile input = new RandomAccessFile(new File(answerPath, answerName), "r");
