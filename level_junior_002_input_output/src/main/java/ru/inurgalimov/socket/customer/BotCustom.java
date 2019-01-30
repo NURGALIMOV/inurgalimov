@@ -18,18 +18,20 @@ public class BotCustom {
             e.printStackTrace();
         }
     }
+
     public void start() throws IOException {
         try (PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
              BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));) {
             Scanner console = new Scanner(System.in);
+            String str;
             do {
                 out.println("hello");
-                String str = in.readLine();
-                while (!(str).isEmpty()) {
+                str = in.readLine();
+                while (str != null) {
                     System.out.println(str);
                     str = in.readLine();
                 }
-            } while (true);
+            } while (str != null);
         }
     }
 }

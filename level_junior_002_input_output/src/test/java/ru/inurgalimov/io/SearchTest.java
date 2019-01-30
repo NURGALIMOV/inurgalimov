@@ -42,7 +42,7 @@ public class SearchTest {
         }
         List<String> list = new ArrayList<String>();
         list.add(".txt");
-        List<File> resultList = new Search().files(parentDirectory.getParent(), list);
+        List<File> resultList = new Search().files(parentDirectory.getPath(), list);
         assertThat(resultList.get(0).equals(testFile1), is(true));
         assertThat(resultList.get(1).equals(testFile4), is(true));
         assertThat(resultList.get(2).equals(testFile5), is(true));

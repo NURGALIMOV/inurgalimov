@@ -8,11 +8,12 @@ import java.util.Scanner;
  * @version 25.01.2019
  */
 public class Chat {
-    public void communication(String answerPath, String answerName) {
+    public static void main(String[] args) {
         try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-             RandomAccessFile input = new RandomAccessFile(new File(answerPath, answerName), "r");
+             RandomAccessFile input =
+                     new RandomAccessFile(new File("src/main/resources/", "source.txt"), "r");
              FileOutputStream output = new FileOutputStream(new File("src/main/resources/", "log.txt"))) {
-            System.out.println("Введите слово");
+            System.out.println("Введите слово:");
             String messageClient = bufferedReader.readLine();
             while (!messageClient.equals("закончить")) {
                 output.write((messageClient + "\n").getBytes());
@@ -22,9 +23,11 @@ public class Chat {
                         output.write((messageClient + "\n").getBytes());
                     }
                 } else {
-                    input.seek((long) Math.random() * input.length());
-                    String[] answer = input.readLine().split("\\w");
-                    String s = answer[(int) Math.random() * answer.length];
+                    long l = (long) (0 + Math.random() * input.length());
+                    input.seek(l);
+                    String[] answer = input.readLine().split(" ");
+                    int i = (int) (0 + Math.random() * answer.length);
+                    String s = answer[i];
                     System.out.println(s);
                     output.write((s + "\n").getBytes());
                     messageClient = bufferedReader.readLine();
