@@ -23,11 +23,9 @@ public class Chat {
                         output.write((messageClient + "\n").getBytes());
                     }
                 } else {
-                    long l = (long) (0 + Math.random() * input.length());
-                    input.seek(l);
+                    input.seek((long) (0 + Math.random() * input.length()));
                     String[] answer = input.readLine().split(" ");
-                    int i = (int) (0 + Math.random() * answer.length);
-                    String s = answer[i];
+                    String s = answer[(int) (0 + Math.random() * answer.length)];
                     System.out.println(s);
                     output.write((s + "\n").getBytes());
                     messageClient = bufferedReader.readLine();
