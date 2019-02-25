@@ -11,8 +11,9 @@ public class ServerTest {
     public void ServerSteart() {
         try {
             Server server = new Server("C:\\", 5000);
-            server.start();
-        } catch (IOException e) {
+            String[] arg = {"C:\\", "5000"};
+            server.main(arg);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
