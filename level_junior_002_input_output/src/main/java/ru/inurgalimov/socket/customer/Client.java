@@ -28,7 +28,7 @@ public class Client {
 
     public static void main(String[] args) {
         Client client = new Client(args[0], Integer.parseInt(args[1]));
-        try (Scanner scanner = new Scanner(System.in)) {
+        try {
             client.start(client.socket);
         } catch (Exception e) {
             e.printStackTrace();
