@@ -56,8 +56,8 @@ public class Server {
                 sendMessageToClient(out, CONTINUE);
                 messageFromClient = reader.readLine();
                 System.out.println(messageFromClient);
-                if (!messageFromClient.toLowerCase().equals(EXIT)) {
-                    if (messageFromClient.equals(PATHPARENT)) {
+                if (!EXIT.equals(messageFromClient.toLowerCase())) {
+                    if (PATHPARENT.equals(messageFromClient)) {
                         if (currentFile.equals(file)) {
                             continue;
                         } else {
@@ -71,7 +71,7 @@ public class Server {
                         currentFile = currentFile.getParentFile();
                     }
                 }
-            } while (!messageFromClient.toLowerCase().equals(EXIT));
+            } while (!EXIT.equals(messageFromClient.toLowerCase()));
             sendMessageToClient(out, EXIT);
         }
     }

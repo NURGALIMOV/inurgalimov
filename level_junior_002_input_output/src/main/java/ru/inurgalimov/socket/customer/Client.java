@@ -51,16 +51,16 @@ public class Client {
                 while (true) {
                     while (true) {
                         messageFromServer = reader.readLine();
-                        if (messageFromServer.toLowerCase().equals(EXIT) ||
-                                messageFromServer.toLowerCase().equals(CONTINUE)) {
+                        if (EXIT.equals(messageFromServer.toLowerCase()) ||
+                                CONTINUE.equals(messageFromServer.toLowerCase())) {
                             break;
                         }
                         System.out.println(messageFromServer);
-                        if (messageFromServer.equals(DOWNLOAD)) {
+                        if (DOWNLOAD.equals(messageFromServer)) {
                             receiveFile(in, reader.readLine(), reader.readLine());
                         }
                     }
-                    if (messageFromServer.toLowerCase().equals(EXIT)) {
+                    if (EXIT.equals(messageFromServer.toLowerCase())) {
                         break;
                     }
                     out.write((scanner.nextLine() + LN).getBytes());
