@@ -1,18 +1,16 @@
 package ru.inurgalimov.socket.server;
 
-        import com.google.common.base.Joiner;
-        import org.junit.Test;
+import org.junit.Test;
 
-        import java.io.ByteArrayInputStream;
-        import java.io.ByteArrayOutputStream;
-        import java.io.File;
-        import java.io.IOException;
-        import java.net.Socket;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.net.Socket;
 
-        import static org.hamcrest.core.Is.is;
-        import static org.junit.Assert.*;
-        import static org.mockito.Mockito.mock;
-        import static org.mockito.Mockito.when;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class ServerTest {
     @Test
@@ -32,5 +30,4 @@ public class ServerTest {
         }
         assertThat(out.toString(), is(output));
     }
-
 }

@@ -17,6 +17,7 @@ import static org.mockito.Mockito.when;
 
 public class ClientTest {
     private final String ln = System.getProperty("line.separator");
+
     @Test
     public void clientStart() {
         Socket socket = mock(Socket.class);
@@ -34,7 +35,5 @@ public class ClientTest {
         }
         assertThat(out.toString(), is("...\r\n"));
         System.setOut(stdout);
-
     }
-
 }

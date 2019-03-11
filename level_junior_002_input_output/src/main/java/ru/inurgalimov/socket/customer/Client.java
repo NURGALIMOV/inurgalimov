@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 /**
  * @author Ilshat Nurgalimov
- * @version 01.03.2019
+ * @version 11.03.2019
  */
 public class Client {
     private Socket socket;
@@ -15,12 +15,13 @@ public class Client {
     private String DOWNLOAD = "download";
     private String CONTINUE = "continue";
     private String FINISH = "finish";
-    private String PATH = "level_junior_002_input_output\\src\\main\\resources";
+    private String PATH;
     private final String LN = System.getProperty("line.separator");
 
     public Client(String adress, int port) {
         try {
             this.socket = new Socket(InetAddress.getByName(adress), port);
+            this.PATH = determineThePath();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -28,6 +29,7 @@ public class Client {
 
     public static void main(String[] args) {
         Client client = new Client(args[0], Integer.parseInt(args[1]));
+        System.out.println(client.PATH);
         try {
             client.start(client.socket);
         } catch (Exception e) {
@@ -100,5 +102,19 @@ public class Client {
             }
         }
         System.out.println(FINISH);
+    }
+
+    /**
+     * Определяем путь для файла.
+     *
+     * @return возвращаем путь в виде строки.
+     */
+    private String determineThePath() {
+        File file = new File(Client.class.getResource("\\").getFile());
+        while (!"target".equals(file.getName())) {
+            file = file.getParentFile();
+        }
+        String path = file.getParent() + "\\src\\main\\resources";
+        return path;
     }
 }
