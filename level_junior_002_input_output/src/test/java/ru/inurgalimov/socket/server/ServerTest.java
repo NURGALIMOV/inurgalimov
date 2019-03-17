@@ -15,7 +15,7 @@ import static org.mockito.Mockito.when;
 public class ServerTest {
     @Test
     public void testServer() {
-        String output = "log.txt\r\nsource.txt\r\ncontinue\r\nexit\r\n";
+        String output = "log.txt\r\nsource.txt\r\nproceed\r\nexit\r\n";
         Socket socket = mock(Socket.class);
         ByteArrayInputStream in = new ByteArrayInputStream("exit".getBytes());
         ByteArrayOutputStream out = new ByteArrayOutputStream();

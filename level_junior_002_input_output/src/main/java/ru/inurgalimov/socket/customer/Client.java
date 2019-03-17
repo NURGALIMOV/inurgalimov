@@ -11,17 +11,17 @@ import java.util.Scanner;
  */
 public class Client {
     private Socket socket;
-    private String EXIT = "exit";
-    private String DOWNLOAD = "download";
-    private String CONTINUE = "continue";
-    private String FINISH = "finish";
-    private String PATH;
-    private final String LN = System.getProperty("line.separator");
+    private static final String EXIT = "exit";
+    private static final String DOWNLOAD = "download";
+    private static final String PROCEED = "proceed";
+    private static final String FINISH = "finish";
+    private String path;
+    private static final String LN = System.getProperty("line.separator");
 
     public Client(String adress, int port) {
         try {
             this.socket = new Socket(InetAddress.getByName(adress), port);
-            this.PATH = determineThePath();
+            this.path = path();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -29,7 +29,7 @@ public class Client {
 
     public static void main(String[] args) {
         Client client = new Client(args[0], Integer.parseInt(args[1]));
-        System.out.println(client.PATH);
+        System.out.println(client.path);
         try {
             client.start(client.socket);
         } catch (Exception e) {
@@ -54,7 +54,7 @@ public class Client {
                     while (true) {
                         messageFromServer = reader.readLine();
                         if (EXIT.equals(messageFromServer.toLowerCase()) ||
-                                CONTINUE.equals(messageFromServer.toLowerCase())) {
+                                PROCEED.equals(messageFromServer.toLowerCase())) {
                             break;
                         }
                         System.out.println(messageFromServer);
@@ -91,7 +91,7 @@ public class Client {
         int length = Integer.parseInt(size);
         byte[] buffer = new byte[1024];
         try (FileOutputStream fileOutputStream =
-                     new FileOutputStream(new File(PATH, name))) {
+                     new FileOutputStream(new File(path, name))) {
             int temp;
             while (length > 0) {
                 temp = in.read(buffer);
@@ -109,7 +109,7 @@ public class Client {
      *
      * @return возвращаем путь в виде строки.
      */
-    private String determineThePath() {
+    private String path() {
         File file = new File(Client.class.getResource("\\").getFile());
         while (!"target".equals(file.getName())) {
             file = file.getParentFile();

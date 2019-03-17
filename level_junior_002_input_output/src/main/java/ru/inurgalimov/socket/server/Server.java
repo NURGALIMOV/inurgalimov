@@ -13,11 +13,11 @@ import java.util.List;
 public class Server {
     private File file;
     private ServerSocket serverSocket;
-    private final String CONTINUE = "continue";
-    private final String EXIT = "exit";
-    private final String DOWNLOAD = "download";
-    private final String PATHPARENT = "...";
-    private final String LN = System.getProperty("line.separator");
+    private static final String PROCEED = "proceed";
+    private static final String EXIT = "exit";
+    private static final String DOWNLOAD = "download";
+    private static final String PATHPARENT = "...";
+    private static final String LN = System.getProperty("line.separator");
 
     public Server(String path, int port) {
         try {
@@ -52,8 +52,8 @@ public class Server {
             String messageFromClient = EXIT;
             do {
                 list = Arrays.asList(currentFile.listFiles());
-                outputForPrintFileName(out, list);
-                sendMessageToClient(out, CONTINUE);
+                print(out, list);
+                sendMessage(out, PROCEED);
                 messageFromClient = reader.readLine();
                 System.out.println(messageFromClient);
                 if (!EXIT.equals(messageFromClient.toLowerCase())) {
@@ -72,7 +72,7 @@ public class Server {
                     }
                 }
             } while (!EXIT.equals(messageFromClient.toLowerCase()));
-            sendMessageToClient(out, EXIT);
+            sendMessage(out, EXIT);
         }
     }
 
@@ -84,11 +84,11 @@ public class Server {
      * @throws IOException
      */
     private void sendFile(OutputStream out, File file) throws IOException {
-        sendMessageToClient(out, DOWNLOAD);
-        sendMessageToClient(out, file.getName());
+        sendMessage(out, DOWNLOAD);
+        sendMessage(out, file.getName());
         try (FileInputStream fileInputStream = new FileInputStream(file)) {
             int size = fileInputStream.available();
-            sendMessageToClient(out, size + "");
+            sendMessage(out, size + "");
             byte[] buffer = new byte[1024];
             int temp;
             while (size > 0) {
@@ -108,18 +108,18 @@ public class Server {
      * @param list - лист файлов текущей директории.
      * @throws IOException
      */
-    private void outputForPrintFileName(OutputStream out, List<File> list) throws IOException {
+    private void print(OutputStream out, List<File> list) throws IOException {
         for (File f : list) {
             out.write((f.getName() + LN).getBytes());
         }
     }
 
     /**
-     * Проверка выбронного файла на предмет наличия.
+     * Проверка выбранного файла на предмет наличия.
      *
      * @param file    - текущая директория.
      * @param list    - лист файлов текущей директории.
-     * @param message - сообщение от клиента, кторое должно содержать наименование новой директории для перехода или
+     * @param message - сообщение от клиента, которое должно содержать наименование новой директории для перехода или
      *                закачки.
      * @return - если с указанный в сообщение файл находим, возвращаем его, если нет возвращаем текущий файл.
      */
@@ -141,7 +141,7 @@ public class Server {
      * @param message - сообщение для клиента.
      * @throws IOException
      */
-    private void sendMessageToClient(OutputStream out, String message) throws IOException {
+    private void sendMessage(OutputStream out, String message) throws IOException {
         out.write((message + LN).getBytes());
     }
 }
