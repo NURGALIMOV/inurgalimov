@@ -4,7 +4,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 /**
  * 1. Создать программу для поиска файла.
@@ -37,10 +39,16 @@ public class FileSearch {
 
     protected File[] search() {
         File[] listFile = file.listFiles((a, b) -> {
+            b = this.fileName;
             boolean check = false;
-            for (File f : a.listFiles()) {
-                if(f.getName().contains(b)) {
-                    check = true;
+            Queue<File> queue = new LinkedList<>();
+            Arrays.stream(a.listFiles()).forEach(c -> queue.offer(c));
+            while (!queue.isEmpty()) {
+                File f = queue.poll();
+                if (f.isFile()) {
+                    check = f.getName().contains(b);
+                } else if (!f.listFiles()[0].equals(f)){
+                    queue.offer(f);
                 }
             }
             return check;
@@ -51,7 +59,7 @@ public class FileSearch {
     protected void writeLog(File[] files) throws IOException {
         FileOutputStream fos = new FileOutputStream(result);
         for (File f : files) {
-            fos.write((f.getAbsolutePath() + "\n").getBytes());
+            fos.write((f.getAbsolutePath() + f.getName() + "\n").getBytes());
         }
     }
 }

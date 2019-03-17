@@ -20,7 +20,7 @@ import java.io.IOException;
  */
 public class FileSearchStart {
     public static void main(String[] args) {
-        FileSearch fileSearch = new FileSearch("C:\\", "1.txt", "-m", "C:\\soft\\log.txt");
+        FileSearch fileSearch = new FileSearch("C:\\Хатын\\резида", "1.txt", "-m", "C:\\soft\\log.txt");
         try {
             fileSearch.writeLog(fileSearch.search());
         } catch (IOException e) {
