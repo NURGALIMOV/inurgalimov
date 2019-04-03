@@ -19,6 +19,7 @@ public class Server {
     private static final String PATHPARENT = "...";
     private static final String LN = System.getProperty("line.separator");
 
+
     public Server(String path, int port) {
         try {
             this.file = new File(path);
@@ -64,7 +65,7 @@ public class Server {
                             currentFile = currentFile.getParentFile();
                         }
                     } else {
-                        currentFile = checkMessage(currentFile, list, messageFromClient);
+                        currentFile = nextDirectory(currentFile, list, messageFromClient);
                     }
                     if (currentFile.isFile()) {
                         sendFile(out, currentFile);
@@ -123,7 +124,7 @@ public class Server {
      *                закачки.
      * @return - если с указанный в сообщение файл находим, возвращаем его, если нет возвращаем текущий файл.
      */
-    private File checkMessage(File file, List<File> list, String message) {
+    private File nextDirectory(File file, List<File> list, String message) {
         File result = file;
         for (File f : list) {
             if (f.getName().equals(message)) {
