@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 /**
  * @author Ilshat Nurgalimov
- * @version 11.03.2019
+ * @version 03.04.2019
  */
 public class Client {
     private Socket socket;

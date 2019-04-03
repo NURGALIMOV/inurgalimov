@@ -1,14 +1,17 @@
 package ru.inurgalimov.socket.server;
 
+import ru.inurgalimov.socket.NextDirectory;
+import ru.inurgalimov.socket.SimpleActionServer;
+import ru.inurgalimov.socket.UpDirectory;
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author Ilshat Nurgalimov
- * @version 01.03.2019
+ * @version 03.04.2019
  */
 public class Server {
     private File file;
@@ -16,14 +19,15 @@ public class Server {
     private static final String PROCEED = "proceed";
     private static final String EXIT = "exit";
     private static final String DOWNLOAD = "download";
-    private static final String PATHPARENT = "...";
     private static final String LN = System.getProperty("line.separator");
-
+    private Map<String, SimpleActionServer> actions = new HashMap<>();
 
     public Server(String path, int port) {
         try {
             this.file = new File(path);
             this.serverSocket = new ServerSocket(port);
+            actions.put("...", new UpDirectory());
+            actions.put("next", new NextDirectory());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -57,16 +61,15 @@ public class Server {
                 sendMessage(out, PROCEED);
                 messageFromClient = reader.readLine();
                 System.out.println(messageFromClient);
-                if (!EXIT.equals(messageFromClient.toLowerCase())) {
-                    if (PATHPARENT.equals(messageFromClient)) {
-                        if (currentFile.equals(file)) {
-                            continue;
-                        } else {
-                            currentFile = currentFile.getParentFile();
-                        }
-                    } else {
-                        currentFile = nextDirectory(currentFile, list, messageFromClient);
-                    }
+                String[] message = messageFromClient.split(" ");
+
+                if (!EXIT.equals(message[0].toLowerCase())) {
+                    currentFile = actions.get(
+                            message[0]).action(
+                                    currentFile, file, messageFromClient.replaceAll(
+                                            message[0] + " ", ""
+                            )
+                    );
                     if (currentFile.isFile()) {
                         sendFile(out, currentFile);
                         currentFile = currentFile.getParentFile();
@@ -113,26 +116,6 @@ public class Server {
         for (File f : list) {
             out.write((f.getName() + LN).getBytes());
         }
-    }
-
-    /**
-     * Проверка выбранного файла на предмет наличия.
-     *
-     * @param file    - текущая директория.
-     * @param list    - лист файлов текущей директории.
-     * @param message - сообщение от клиента, которое должно содержать наименование новой директории для перехода или
-     *                закачки.
-     * @return - если с указанный в сообщение файл находим, возвращаем его, если нет возвращаем текущий файл.
-     */
-    private File nextDirectory(File file, List<File> list, String message) {
-        File result = file;
-        for (File f : list) {
-            if (f.getName().equals(message)) {
-                result = f;
-                break;
-            }
-        }
-        return result;
     }
 
     /**
