@@ -11,7 +11,9 @@ public class ConfigTest {
 
     @Test
     public void whenCheckConfig() {
-        Config cfg = new Config("app.properties");
+        String temp = this.getClass().getResource("\\").getFile();
+        String path = temp.substring(0, temp.indexOf("target")) + "src\\main\\resources\\";
+        Config cfg = new Config(path + "app.properties");
         cfg.load();
 
         assertThat(cfg.value("hibernate.dialect"), is("org.hibernate.dialect.PostgreSQLDialect"));
