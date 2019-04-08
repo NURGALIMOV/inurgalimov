@@ -3,10 +3,15 @@ package ru.inurgalimov.test;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.FileVisitResult;
+import java.nio.file.Path;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Arrays;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * 1. Создать программу для поиска файла.
@@ -24,42 +29,49 @@ import java.util.Queue;
  * @author Nurgalimov Ilshat
  * @version 13.03.2019
  */
-public class FileSearch {
-    private File file;
+public class FileSearch extends SimpleFileVisitor<Path> {
+    private File root;
     private String fileName;
     private String searchRule;
     private File result;
 
     public FileSearch(String directory, String fileName, String searchRule, String result) {
-        this.file = new File(directory);
+        this.root = new File(directory);
         this.fileName = fileName;
         this.searchRule = searchRule;
         this.result = new File(result);
     }
 
-    protected File[] search() {
-        File[] listFile = file.listFiles((a, b) -> {
-            b = this.fileName;
-            boolean check = false;
-            Queue<File> queue = new LinkedList<>();
-            Arrays.stream(a.listFiles()).forEach(c -> queue.offer(c));
-            while (!queue.isEmpty()) {
-                File f = queue.poll();
-                if (f.isFile()) {
-                    check = f.getName().contains(b);
-                } else if (!f.listFiles()[0].equals(f)){
-                    queue.offer(f);
+    @Override
+    public FileVisitResult visitFile(Path path, BasicFileAttributes attrs) throws IOException {
+        File file = path.toFile();
+        switch (searchRule) {
+            case "-m":
+                if (file.getName().contains(this.fileName)) {
+                    this.writeLog(file);
                 }
-            }
-            return check;
-        });
-        return listFile;
+                break;
+            case "-f":
+                if (this.fileName.equals(file.getName())) {
+                    this.writeLog(file);
+                }
+                break;
+            case "-r":
+                Pattern pattern = Pattern.compile(fileName);
+                Matcher matcher = pattern.matcher(file.getName());
+                if (matcher.find()) {
+                    this.writeLog(file);
+                }
+                break;
+            default:
+                throw new UnsupportedOperationException("not known search key");
+        }
+        return FileVisitResult.CONTINUE;
     }
 
-    protected void writeLog(File[] files) throws IOException {
-        FileOutputStream fos = new FileOutputStream(result);
-        for (File f : files) {
-            fos.write((f.getAbsolutePath() + f.getName() + "\n").getBytes());
+    protected void writeLog(File file) throws IOException {
+        try (FileOutputStream fos = new FileOutputStream(result, true)) {
+            fos.write((file.getAbsolutePath() + "\n").getBytes());
         }
     }
 }

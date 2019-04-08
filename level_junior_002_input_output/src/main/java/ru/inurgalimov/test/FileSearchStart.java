@@ -1,6 +1,10 @@
 package ru.inurgalimov.test;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 1. Создать программу для поиска файла.
@@ -19,12 +23,35 @@ import java.io.IOException;
  * @version 13.03.2019
  */
 public class FileSearchStart {
+    private Map<String, String> map = new HashMap<>();
+
+    public FileSearchStart(String d, String n, String o) {
+        this.map.put("-d", d);
+        this.map.put("-n", n);
+        this.map.put("-m", "-m");
+        this.map.put("-f", "-f");
+        this.map.put("-r", "-r");
+        this.map.put("-o", o);
+    }
+
     public static void main(String[] args) {
-        FileSearch fileSearch = new FileSearch("C:\\Хатын\\резида", "1.txt", "-m", "C:\\soft\\log.txt");
+        FileSearchStart fss = new FileSearchStart(args[1], args[3], args[6]);
+
         try {
-            fileSearch.writeLog(fileSearch.search());
-        } catch (IOException e) {
+            FileSearch fileSearch = new FileSearch(fss.validate(args[0]), fss.validate(args[2]),
+                    fss.validate(args[4]), fss.validate(args[5]));
+            Files.walkFileTree(Paths.get(fss.validate("-d")), fileSearch);
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private String validate(String key) throws Exception {
+        String result = map.get(key);
+        if (result == null) {
+            throw new UnsupportedOperationException("Invalid key entered");
+        }
+        return result;
     }
 }
