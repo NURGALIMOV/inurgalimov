@@ -8,10 +8,10 @@ import java.util.function.Consumer;
 
 public class MenuTracker {
     private Input input;
-    private Tracker tracker;
+    private ITracker tracker;
     private List<UserAction> actions = new ArrayList<>();
 
-    public MenuTracker(Input input, Tracker tracker) {
+    public MenuTracker(Input input, ITracker tracker) {
         this.input = input;
         this.tracker = tracker;
     }
@@ -45,7 +45,7 @@ public class MenuTracker {
         }
 
         @Override
-        public void execute(Input input, Tracker tracker) {
+        public void execute(Input input, ITracker tracker) {
             String name = input.ask("Введите, имя заявки:");
             String desc = input.ask("Введите, описание заявки:");
             tracker.add(new Item(name, desc));
@@ -58,7 +58,7 @@ public class MenuTracker {
         }
 
         @Override
-        public void execute(Input input, Tracker tracker) {
+        public void execute(Input input, ITracker tracker) {
         }
     }
 
@@ -68,7 +68,7 @@ public class MenuTracker {
         }
 
         @Override
-        public void execute(Input input, Tracker tracker) {
+        public void execute(Input input, ITracker tracker) {
             String id = input.ask("Введите ID заявки для удаления:");
             if (tracker.findById(id) != null) {
                 tracker.delete(id);
@@ -84,7 +84,7 @@ public class MenuTracker {
         }
 
         @Override
-        public void execute(Input input, Tracker tracker) {
+        public void execute(Input input, ITracker tracker) {
             String id = input.ask("Введите ID заявки для поиска:");
             Item resultFind = tracker.findById(id);
             if (resultFind != null) {
@@ -104,7 +104,7 @@ public class MenuTracker {
         }
 
         @Override
-        public void execute(Input input, Tracker tracker) {
+        public void execute(Input input, ITracker tracker) {
             Item[] it = tracker.find(input.ask("Введите имя заявки для поиска:"), (a, b) -> {
                 List<Item> temp = new ArrayList<>();
                 for (Object o : a) {
@@ -130,7 +130,7 @@ public class MenuTracker {
         }
 
         @Override
-        public void execute(Input input, Tracker tracker) {
+        public void execute(Input input, ITracker tracker) {
             for (Object o : tracker.find("", (a, b) -> a.toArray(new Item[a.size()]))) {
                 Item item = (Item) o;
                 System.out.println("Name: " + item.getName());
@@ -149,7 +149,7 @@ class EditItem extends BaseAction {
     }
 
     @Override
-    public void execute(Input input, Tracker tracker) {
+    public void execute(Input input, ITracker tracker) {
         Item editItem = tracker.findById(input.ask("Введите ID заявки для корректировки:"));
         if (editItem != null) {
             editItem.setName(input.ask("Введите новое имя для заявки:"));

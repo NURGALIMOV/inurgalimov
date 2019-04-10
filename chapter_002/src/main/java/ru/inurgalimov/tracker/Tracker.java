@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.function.BiFunction;
 
-public class Tracker {
+public class Tracker implements ITracker {
     private final List<Item> items = new ArrayList<>();
     private static final Random RN = new Random();
 
@@ -31,6 +31,16 @@ public class Tracker {
                 items.remove(i);
             }
         }
+    }
+
+    @Override
+    public Item[] findAll() {
+        return new Item[0];
+    }
+
+    @Override
+    public Item[] findByName(String key) {
+        return new Item[0];
     }
 
     public <T> T find(String k, BiFunction<List, String, T> biFunction) {
