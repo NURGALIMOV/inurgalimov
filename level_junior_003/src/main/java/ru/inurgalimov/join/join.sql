@@ -48,3 +48,18 @@ insert into car (model, color, body_id, motor_id, transmission_id) values ('toyo
 insert into car (model, color, body_id, motor_id, transmission_id) values ('toyota', 'white', 1, 1, 1);
 insert into car (model, color, body_id, motor_id, transmission_id) values ('toyota', 'white', 2, 2, 1);
 insert into car (model, color, body_id, motor_id, transmission_id) values ('toyota', 'white', 2, 2, 1);
+--1. Вывести список всех машин и все привязанные к ним детали.
+select * from car as c
+left outer join body as b on c.body_id = b.id
+left outer join motor as m on c.motor_id = m.id
+left outer join transmission as t on c.transmission_id = t.id;
+--2. Вывести отдельно детали, которые не используются в машине, кузова, двигатели, коробки передач.
+insert into motor (number_cylinders, powers, fuel) values (8, 120, 'petrol');
+insert into body (color, model) values ('black', 'sedan');
+insert into transmission (model, number_steps) values ('mechanical', 6);
+select * from body where id not in (select body_id from car);
+select * from body as b left outer join car as c on b.id = c.body_id where c.id is null;
+select * from motor where id not in (select motor_id from car);
+select * from motor as m left outer join car as c on m.id = c.motor_id where c.id is null;
+select * from transmission where id not in (select transmission_id from car);
+select * from transmission as t left outer join car as c on t.id = c.transmission_id where c.id is null;
