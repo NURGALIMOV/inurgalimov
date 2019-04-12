@@ -7,7 +7,7 @@ import java.util.function.BiFunction;
 
 public enum TrackerVersionFour {
     TRACKER_VERSION_FOUR;
-    private Tracker tracker;
+    private ITracker tracker;
 
     private TrackerVersionFour() {
         tracker = new Tracker();

@@ -3,11 +3,11 @@ package ru.inurgalimov.tracker;
 public class StartUI {
     private static final int EXIT = 6;
     private final Input input;
-    private final Tracker tracker;
+    private final ITracker tracker;
     private final MenuTracker menuTracker;
     private int[] range;
 
-    public StartUI(Input input, Tracker tracker) {
+    public StartUI(Input input, ITracker tracker) {
         this.input = input;
         this.tracker = tracker;
         this.menuTracker = new MenuTracker(input, tracker);

@@ -6,10 +6,10 @@ import java.util.List;
 import java.util.function.BiFunction;
 
 public class TrackerVersionOne {
-    private Tracker tracker;
+    private ITracker tracker;
     private static TrackerVersionOne trackerVersionOne;
 
-    private TrackerVersionOne(Tracker tracker) {
+    private TrackerVersionOne(ITracker tracker) {
         this.tracker = tracker;
     }
 
