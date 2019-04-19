@@ -3,10 +3,31 @@ package ru.inurgalimov.trackersql;
 import org.junit.Test;
 import ru.inurgalimov.models.Item;
 
+import java.io.InputStream;
+import java.sql.*;
+import java.util.Properties;
+
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
 
 public class TrackerSQLTest {
+
+    public Connection init() {
+        try (InputStream in = TrackerSQL.class.getClassLoader().getResourceAsStream("app.properties")) {
+            Properties config = new Properties();
+            config.load(in);
+            Class.forName(config.getProperty("driver-class-name"));
+            return DriverManager.getConnection(
+                    config.getProperty("url"),
+                    config.getProperty("username"),
+                    config.getProperty("password")
+
+            );
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
     @Test
     public void checkConnection() {
         try (TrackerSQL sql = new TrackerSQL()) {
@@ -15,9 +36,10 @@ public class TrackerSQLTest {
             e.printStackTrace();
         }
     }
+
     @Test
-    public void checkAdd() {
-        try (TrackerSQL sql = new TrackerSQL()) {
+    public void checkAdd() throws Exception {
+        try (TrackerSQL sql = new TrackerSQL(ConnectionRollback.create(this.init()))) {
             Item item = new Item("test", "test", 12345);
             item.setId("test");
             sql.init();
@@ -28,7 +50,6 @@ public class TrackerSQLTest {
             assertThat(result.getName(), is(item.getName()));
             assertThat(result.getDescription(), is(item.getDescription()));
             assertThat(result.getCreate(), is(item.getCreate()));
-            sql.delete(item.getId());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -36,7 +57,7 @@ public class TrackerSQLTest {
 
     @Test
     public void checkReplace() {
-        try (TrackerSQL sql = new TrackerSQL()) {
+        try (TrackerSQL sql = new TrackerSQL(ConnectionRollback.create(this.init()))) {
             Item item1 = new Item("test1", "test1", 12345);
             Item item2 = new Item("test2", "test2", 54321);
             item1.setId("test");
@@ -49,7 +70,6 @@ public class TrackerSQLTest {
             assertThat(result.getName(), is(item2.getName()));
             assertThat(result.getDescription(), is(item2.getDescription()));
             assertThat(result.getCreate(), is(item2.getCreate()));
-            sql.delete(item1.getId());
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -18,10 +18,10 @@ import java.util.function.BiFunction;
  */
 
 public class TrackerSQL implements ITracker, AutoCloseable {
-    private static Connection connection;
+    private final Connection connection;
     private boolean state = false;
 
-    public boolean init() {
+    public TrackerSQL() {
         try (InputStream in = TrackerSQL.class.getClassLoader().getResourceAsStream("app.properties")) {
             Properties config = new Properties();
             config.load(in);
@@ -34,13 +34,19 @@ public class TrackerSQL implements ITracker, AutoCloseable {
         } catch (Exception e) {
             throw new IllegalStateException(e);
         }
+    }
+    public TrackerSQL(Connection connection) {
+        this.connection = connection;
+    }
+
+    public boolean init() {
         return this.connection != null;
     }
 
     @Override
     public Item add(Item item) {
-        try (PreparedStatement pst = connection.prepareStatement("INSERT INTO item (id, name, description, creates)" +
-                "VALUES (?, ?, ?, ?)")) {
+        try (PreparedStatement pst = connection.prepareStatement("INSERT INTO item (id, name, description, creates)"
+                + "VALUES (?, ?, ?, ?)")) {
             pst.setString(1, item.getId());
             pst.setString(2, item.getName());
             pst.setString(3, item.getDescription());
@@ -55,8 +61,8 @@ public class TrackerSQL implements ITracker, AutoCloseable {
     @Override
     public void replace(String id, Item item) {
         item.setId(id);
-        try (PreparedStatement pst = connection.prepareStatement("UPDATE item AS i " +
-                "SET name = ?, description = ?, creates = ? WHERE i.id = id")) {
+        try (PreparedStatement pst = connection.prepareStatement("UPDATE item AS i "
+                + "SET name = ?, description = ?, creates = ? WHERE i.id = id")) {
             pst.setString(1, item.getName());
             pst.setString(2, item.getDescription());
             pst.setLong(3, item.getCreate());
@@ -133,12 +139,12 @@ public class TrackerSQL implements ITracker, AutoCloseable {
 
     public boolean initTable() {
         try (Statement statement = connection.createStatement()) {
-            this.state = statement.execute("CREATE TABLE IF NOT EXISTS item(" +
-                    "id VARCHAR(2000) PRIMARY KEY," +
-                    "name VARCHAR(2000)," +
-                    "description VARCHAR(2000)," +
-                    "creates BIGINT" +
-                    ");"
+            this.state = statement.execute("CREATE TABLE IF NOT EXISTS item("
+                    + "id VARCHAR(2000) PRIMARY KEY,"
+                    + "name VARCHAR(2000),"
+                    + "description VARCHAR(2000),"
+                    + "creates BIGINT"
+                    + ");"
             );
         } catch (Exception e) {
             e.printStackTrace();
