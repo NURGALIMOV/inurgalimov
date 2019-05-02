@@ -2,29 +2,29 @@ package ru.inurgalimov.calculator;
 
 /**
  * @author Ilshat Nurgalimov
- * @since 04.05.2018
+ * @since 13.05.2019
  */
 public class Calculator {
     private double result;
 
     //сумма
-    public void add(double first, double second) {
-        this.result = first + second;
+    public void add(Parametr p) {
+        this.result = p.getFirst() + p.getSecond();
     }
 
     //Вычитание
-    public void subtract(double first, double second) {
-        this.result = first - second;
+    public void subtract(Parametr p) {
+        this.result = p.getFirst() - p.getSecond();
     }
 
     //деление
-    public void div(double first, double second) {
-        this.result = first / second;
+    public void div(Parametr p) {
+        this.result = p.getFirst() / p.getSecond();
     }
 
     //умножение
-    public void multiple(double first, double second) {
-        this.result = first * second;
+    public void multiple(Parametr p) {
+        this.result = p.getFirst() * p.getSecond();
     }
 
     public double getResult() {
