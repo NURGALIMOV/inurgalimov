@@ -1,29 +1,29 @@
 package ru.inurgalimov;
 
 import org.apache.commons.lang.math.NumberUtils;
+import ru.inurgalimov.calculator.Calculatable;
 import ru.inurgalimov.calculator.Calculator;
+import ru.inurgalimov.calculator.EngineeringСalculator;
 import ru.inurgalimov.calculator.Parametr;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 import java.util.function.Consumer;
 
 /**
  * Пользовательский интерфейс для класса Calculator.
  *
  * @author Ilshat Nurgalimov
- * @since 02.05.2019
+ * @since 17.05.2019
  */
 public class InteractCalc {
     /**
      * Поле класса InteractCalc, будет использован для вычеслений.
      */
-    private final Calculator calculator;
+    private final Calculatable calculator;
     /**
      * Поле класса InteractCalc, содержит список возможных действий.
      */
@@ -34,21 +34,27 @@ public class InteractCalc {
      *
      * @param calculator - инециализируем поле класса, для дальнейших вычислений.
      */
-    public InteractCalc(final Calculator calculator) {
+    public InteractCalc(final Calculatable calculator) {
         this.calculator = calculator;
         action = new HashMap();
-        action.put("+", this.calculator :: add);
-        action.put("-", this.calculator :: subtract);
-        action.put("/", this.calculator :: div);
-        action.put("*", this.calculator :: multiple);
+        action.put("+", this.calculator::add);
+        action.put("-", this.calculator::subtract);
+        action.put("/", this.calculator::div);
+        action.put("*", this.calculator::multiple);
+        action.put("pow", this.calculator::pow);
+        action.put("sqrt", this.calculator::sqrt);
+        action.put("sin", this.calculator::sin);
+        action.put("tan", this.calculator::tan);
+        action.put("cos", this.calculator::cos);
     }
 
     /**
      * Запуск программы.
+     *
      * @param args - список параметров при запуске программы, в данной реализации не требуется.
      */
     public static void main(String[] args) {
-        InteractCalc interactCalc = new InteractCalc(new Calculator());
+        InteractCalc interactCalc = new InteractCalc(new EngineeringСalculator());
         interactCalc.start();
     }
 
@@ -100,7 +106,14 @@ public class InteractCalc {
      * Вывод возможных действий.
      */
     public void printMenu() {
-        System.out.println("Список возможных действий в этой программе: +, -, /, *");
+        System.out.println("Список возможных действий в этой программе:");
+        for (String s : this.action.keySet()) {
+            System.out.print(String.format("<%s> ", s));
+        }
+        System.out.println();
+        System.out.println("Если расчеты нужны только для одного числа, такие как sin(угла), "
+                + "учитывается только первое число. "
+                + "Второе не будет учитываться, для продолжения работы введите любое число");
     }
 
     /**
