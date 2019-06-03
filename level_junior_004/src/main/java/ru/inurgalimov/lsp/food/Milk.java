@@ -16,6 +16,6 @@ public class Milk extends Food {
      * @param price - стоимость продукта.
      */
     public Milk(String name, int price) {
-        super(name, EXPAIRE, price);
+        super(name, EXPAIRE, price, false);
     }
 }

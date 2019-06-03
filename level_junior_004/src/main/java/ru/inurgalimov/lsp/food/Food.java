@@ -36,19 +36,28 @@ public abstract class Food {
     protected int disscount;
 
     /**
+     * Возможность переработки.
+     */
+    protected boolean canReproduct;
+
+    /**
      * Конструктор.
      *
      * @param name    - наименование продукта.
      * @param expaire - время в миллисекундах истечения срока хранения с даты изготовления.
      * @param price   - стоимость продукта.
+     * @param canReproduct   - возможность переработки.
      */
-    public Food(String name, long expaire, int price) {
+    public Food(String name, long expaire, int price, boolean canReproduct) {
         this.name = name;
         this.createDate = new Date();
         this.expaireDate = new Date(createDate.getTime() + expaire);
         this.price = price;
         this.disscount = 0;
+        this.canReproduct = canReproduct;
     }
+
+
 
     public String getName() {
         return name;
@@ -76,5 +85,9 @@ public abstract class Food {
 
     public void setDisscount(int disscount) {
         this.disscount = disscount;
+    }
+
+    public boolean isCanReproduct() {
+        return canReproduct;
     }
 }
