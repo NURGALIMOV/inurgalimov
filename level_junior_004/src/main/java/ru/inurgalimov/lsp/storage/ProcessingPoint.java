@@ -2,13 +2,15 @@ package ru.inurgalimov.lsp.storage;
 
 import ru.inurgalimov.lsp.food.Food;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Центр переработки.
  *
  * @author Ilshat Nurgalimov
- * @since 03.06.2019
+ * @since 05.06.2019
  */
 public class ProcessingPoint implements Storage {
     /**
@@ -49,5 +51,22 @@ public class ProcessingPoint implements Storage {
     @Override
     public boolean check(Food food) {
         return false;
+    }
+
+    /**
+     * Повторная проверка продуктов.
+     *
+     * @return - возвращается список продуктов не прошедших повторную проверку.
+     */
+    @Override
+    public List<Food> resort() {
+        List<Food> result = new ArrayList<>();
+        for (Food food : recast.values()) {
+            if(!add(food)) {
+                recast.remove(food.getName());
+                result.add(food);
+            }
+        }
+        return result;
     }
 }

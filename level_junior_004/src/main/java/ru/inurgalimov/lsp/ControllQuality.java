@@ -11,7 +11,7 @@ import java.util.List;
  * Класс обработчик перераспределения продуктов в место использования.
  *
  * @author Ilshat Nurgalimov
- * @since 03.06.2019
+ * @since 05.06.2019
  */
 public class ControllQuality {
     /**
@@ -37,5 +37,16 @@ public class ControllQuality {
      */
     public void add(Storage storage) {
         stores.add(storage);
+    }
+
+    /**
+     * Повторное перераспределение продуктов.
+     */
+    public void resort() {
+        for (Storage storage : stores) {
+            for (Food food : storage.resort()) {
+                transfer(food);
+            }
+        }
     }
 }

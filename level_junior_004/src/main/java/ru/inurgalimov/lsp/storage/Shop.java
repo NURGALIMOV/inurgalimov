@@ -2,13 +2,15 @@ package ru.inurgalimov.lsp.storage;
 
 import ru.inurgalimov.lsp.food.Food;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Магазин
  *
  * @author Ilshat Nurgalimov
- * @since 03.06.2019
+ * @since 05.06.2019
  */
 public class Shop implements Storage{
     /**
@@ -62,5 +64,22 @@ public class Shop implements Storage{
     @Override
     public boolean check(Food food) {
         return this.foods.get(food.getName()) != null;
+    }
+
+    /**
+     * Повторная проверка продуктов.
+     *
+     * @return - возвращается список продуктов не прошедших повторную проверку.
+     */
+    @Override
+    public List<Food> resort() {
+        List<Food> result = new ArrayList<>();
+        for (Food food : foods.values()) {
+            if(!add(food)) {
+                foods.remove(food.getName());
+                result.add(food);
+            }
+        }
+        return result;
     }
 }

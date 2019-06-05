@@ -6,9 +6,9 @@ import ru.inurgalimov.lsp.food.Food;
  * Интерфейс для хранилищ.
  *
  * @author Ilshat Nurgalimov.
- * @since 29.05.2019
+ * @since 05.06.2019
  */
-public interface Storage {
+public interface Storage extends Resort {
 
     /**
      * Метод добавления в хранилище.

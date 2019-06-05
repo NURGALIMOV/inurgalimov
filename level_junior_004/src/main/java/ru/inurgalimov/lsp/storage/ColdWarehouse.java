@@ -2,7 +2,9 @@ package ru.inurgalimov.lsp.storage;
 
 import ru.inurgalimov.lsp.food.Food;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Холодный склад.
@@ -55,5 +57,22 @@ public class ColdWarehouse implements Storage {
     @Override
     public boolean check(Food food) {
         return fridge.get(food.getName()) != null;
+    }
+
+    /**
+     * Повторная проверка продуктов.
+     *
+     * @return - возвращается список продуктов не прошедших повторную проверку.
+     */
+    @Override
+    public List<Food> resort() {
+        List<Food> result = new ArrayList<>();
+        for (Food food : fridge.values()) {
+            if(!add(food)) {
+                fridge.remove(food.getName());
+                result.add(food);
+            }
+        }
+        return result;
     }
 }
