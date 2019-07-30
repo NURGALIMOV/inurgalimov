@@ -95,6 +95,7 @@
         <module>level_junior_003</module>
         <module>level_junior_002_input_output</module>
         <module>level_junior_004</module>
+        <module>level_junior_005</module>
     </modules>
 
     <build>
