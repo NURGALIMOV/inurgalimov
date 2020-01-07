@@ -1,4 +1,18 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE web-app [
+        <!ELEMENT web-app (servlet|servlet-mapping)*>
+        <!ATTLIST web-app
+                xmlns CDATA #REQUIRED
+                xmlns:xsi CDATA #REQUIRED
+                xsi:schemaLocation CDATA #REQUIRED
+                version CDATA #REQUIRED>
+        <!ELEMENT servlet (servlet-name|servlet-class|load-on-startup)*>
+        <!ELEMENT servlet-name (#PCDATA)>
+        <!ELEMENT servlet-class (#PCDATA)>
+        <!ELEMENT load-on-startup (#PCDATA)>
+        <!ELEMENT servlet-mapping (servlet-name|url-pattern)*>
+        <!ELEMENT url-pattern (#PCDATA)>
+        ]>
 <web-app xmlns="http://java.sun.com/xml/ns/j2ee"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee
@@ -13,6 +27,18 @@
     <servlet-class>ru.inurgalimov.crud.presentation.UserServlet</servlet-class>
     <load-on-startup>0</load-on-startup>
 </servlet>
+<servlet>
+    <servlet-name>UsersServlet</servlet-name>
+    <servlet-class>ru.inurgalimov.crud.presentation.UsersServlet</servlet-class>
+</servlet>
+<servlet>
+    <servlet-name>UserCreateServlet</servlet-name>
+    <servlet-class>ru.inurgalimov.crud.presentation.UserCreateServlet</servlet-class>
+</servlet>
+<servlet>
+    <servlet-name>UserUpdateServlet</servlet-name>
+    <servlet-class>ru.inurgalimov.crud.presentation.UserUpdateServlet</servlet-class>
+</servlet>
 <servlet-mapping>
     <servlet-name>EchoServlet</servlet-name>
     <url-pattern>/echo</url-pattern>
@@ -20,5 +46,17 @@
 <servlet-mapping>
     <servlet-name>UserServlet</servlet-name>
     <url-pattern>/users</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+    <servlet-name>UsersServlet</servlet-name>
+    <url-pattern>/list</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+    <servlet-name>UserCreateServlet</servlet-name>
+    <url-pattern>/create</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+    <servlet-name>UserUpdateServlet</servlet-name>
+    <url-pattern>/edit</url-pattern>
 </servlet-mapping>
 </web-app>
