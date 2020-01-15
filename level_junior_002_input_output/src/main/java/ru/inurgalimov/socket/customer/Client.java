@@ -53,8 +53,8 @@ public class Client {
                 while (true) {
                     while (true) {
                         messageFromServer = reader.readLine();
-                        if (EXIT.equals(messageFromServer.toLowerCase()) ||
-                                PROCEED.equals(messageFromServer.toLowerCase())) {
+                        if (EXIT.equals(messageFromServer.toLowerCase())
+                                || PROCEED.equals(messageFromServer.toLowerCase())) {
                             break;
                         }
                         System.out.println(messageFromServer);

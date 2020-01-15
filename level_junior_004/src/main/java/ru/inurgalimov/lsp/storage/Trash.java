@@ -63,7 +63,7 @@ public class Trash implements Storage {
     public List<Food> resort() {
         List<Food> result = new ArrayList<>();
         for (Food food : foods.values()) {
-            if(!add(food)) {
+            if (!add(food)) {
                 foods.remove(food.getName());
                 result.add(food);
             }

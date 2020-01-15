@@ -7,11 +7,11 @@ package ru.inurgalimov.calculator;
  * @since 17.05.2019
  */
 
-public class EngineeringСalculator implements Calculatable {
+public class EngineeringCalculator implements Calculatable {
 
     private final Calculator calculator;
 
-    public EngineeringСalculator() {
+    public EngineeringCalculator() {
         calculator = new Calculator();
     }
 

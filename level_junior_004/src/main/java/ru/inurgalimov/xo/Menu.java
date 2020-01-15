@@ -18,7 +18,7 @@ public class Menu {
     /**
      * Для ввода из консоли.
      */
-    private static final Scanner sc = new Scanner(System.in);
+    private static final Scanner SC = new Scanner(System.in);
 
     /**
      * Начальные данные для игры.
@@ -43,16 +43,16 @@ public class Menu {
                 "Выберите размерность игрового поля, по умолчанию размер 3x3. "
                         + "Если размер по умолчанию устраивает, введите 'y':"
         );
-        config.put(bundle.getString("size"), sc.nextLine());
+        config.put(bundle.getString("size"), SC.nextLine());
 
         System.out.println(
                 "Введите количество побед, который будет результирующим при выявлении победителя. "
                         + "По умолчанию 1, если количество устраивает, введите 'y':"
         );
-        config.put(bundle.getString("number_of_wins"), sc.nextLine());
+        config.put(bundle.getString("number_of_wins"), SC.nextLine());
 
         System.out.println("Кто начинает игру первым. Если игрок введите 'user', если машина 'machine':");
-        config.put(bundle.getString("first_move"), sc.nextLine());
+        config.put(bundle.getString("first_move"), SC.nextLine());
     }
 
     public Map<String, String> getConfig() {

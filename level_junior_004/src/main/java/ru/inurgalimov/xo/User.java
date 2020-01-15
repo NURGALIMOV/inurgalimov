@@ -6,7 +6,7 @@ public class User implements Player {
 
     private final String symbol;
     private final Field field;
-    private static final Scanner sc = new Scanner(System.in);
+    private static final Scanner SC = new Scanner(System.in);
     private int x;
     private int y;
 
@@ -29,8 +29,8 @@ public class User implements Player {
     public int[] input() {
         int[] result = new int[2];
         System.out.println("Введите следующий шаг:");
-        result[0] = sc.nextInt();
-        result[1] = sc.nextInt();
+        result[0] = SC.nextInt();
+        result[1] = SC.nextInt();
         return result;
     }
 }

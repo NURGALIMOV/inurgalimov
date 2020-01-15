@@ -69,7 +69,7 @@ public class UserServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html; charset=utf-8");
 
-        try(PrintWriter pw = new PrintWriter(resp.getOutputStream())) {
+        try (PrintWriter pw = new PrintWriter(resp.getOutputStream())) {
             pw.append(String.format("Users:%s", LINE_SEPARATOR));
             validate.findAll().forEach(user -> {
                 pw.append(String.format("User ID - %s%s", user.getId(), LINE_SEPARATOR));

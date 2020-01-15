@@ -8,7 +8,7 @@
         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
     <preConditions>
-        <runningAs username="postgres"/>
+        <runningAs username="ilshat"/>
     </preConditions>
 
     <changeSet id="1" author="Ilshat">

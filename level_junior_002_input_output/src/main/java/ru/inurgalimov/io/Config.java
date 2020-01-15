@@ -25,9 +25,9 @@ public class Config {
     }
 
     public void load() {
-        try(BufferedReader read = new BufferedReader(new FileReader(this.path))) {
+        try (BufferedReader read = new BufferedReader(new FileReader(this.path))) {
             read.lines().forEach(a ->  {
-                if(!a.startsWith("#") && !a.equals("")) {
+                if (!a.startsWith("#") && !a.equals("")) {
                     String[] temp = a.split("=");
                     values.put(temp[0], temp[1]);
                 }

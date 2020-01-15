@@ -12,7 +12,7 @@ import java.util.List;
  * @author Ilshat Nurgalimov
  * @since 05.06.2019
  */
-public class Shop implements Storage{
+public class Shop implements Storage {
     /**
      * Минималный процент израсходования срока годности для добавления в хранилище.
      */
@@ -75,7 +75,7 @@ public class Shop implements Storage{
     public List<Food> resort() {
         List<Food> result = new ArrayList<>();
         for (Food food : foods.values()) {
-            if(!add(food)) {
+            if (!add(food)) {
                 foods.remove(food.getName());
                 result.add(food);
             }

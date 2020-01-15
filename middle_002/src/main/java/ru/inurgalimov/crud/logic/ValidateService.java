@@ -9,7 +9,7 @@ import java.util.Collection;
 /**
  * Валидация данных.
  */
-public class ValidateService implements Validate{
+public class ValidateService implements Validate {
 
     /** Единственный экземпляр класса. */
     public static final ValidateService INSTANCE = new ValidateService();

@@ -2,8 +2,7 @@ package ru.inurgalimov;
 
 import org.apache.commons.lang.math.NumberUtils;
 import ru.inurgalimov.calculator.Calculatable;
-import ru.inurgalimov.calculator.Calculator;
-import ru.inurgalimov.calculator.EngineeringСalculator;
+import ru.inurgalimov.calculator.EngineeringCalculator;
 import ru.inurgalimov.calculator.Parametr;
 
 import java.io.BufferedReader;
@@ -54,7 +53,7 @@ public class InteractCalc {
      * @param args - список параметров при запуске программы, в данной реализации не требуется.
      */
     public static void main(String[] args) {
-        InteractCalc interactCalc = new InteractCalc(new EngineeringСalculator());
+        InteractCalc interactCalc = new InteractCalc(new EngineeringCalculator());
         interactCalc.start();
     }
 

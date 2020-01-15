@@ -29,7 +29,7 @@ public class SimpleCache implements ICache {
 
     @Override
     public <T> void set(T t) {
-        try(InputStream in = new FileInputStream((File) t)) {
+        try (InputStream in = new FileInputStream((File) t)) {
             cache.put(((File) t).getName(), new SoftReference(in.readAllBytes()));
         } catch (IOException e) {
             e.printStackTrace();

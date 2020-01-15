@@ -41,17 +41,17 @@ public class MemoryStore implements Store {
     @Override
     public boolean update(User user) {
         User old = storage.get(user.getId());
-        if(old != null) {
+        if (old != null) {
             String temp = user.getName();
-            if((temp != null) && !old.getName().equals(temp)) {
+            if ((temp != null) && !old.getName().equals(temp)) {
                 old.setName(temp);
             }
             temp = user.getLogin();
-            if((temp != null) && !old.getLogin().equals(temp)) {
+            if ((temp != null) && !old.getLogin().equals(temp)) {
                 old.setLogin(temp);
             }
             temp = user.getEmail();
-            if((temp != null) && !old.getEmail().equals(temp)) {
+            if ((temp != null) && !old.getEmail().equals(temp)) {
                 old.setEmail(temp);
             }
             storage.replace(user.getId(), old);

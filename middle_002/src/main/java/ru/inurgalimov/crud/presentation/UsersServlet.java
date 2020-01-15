@@ -30,15 +30,15 @@ public class UsersServlet extends HttpServlet {
         resp.setContentType("text/html; charset=utf-8");
         StringBuilder table =
                 new StringBuilder("<table style='border: 1p solid black;' cellpadding='1' cellspacing='1' border='1'>");
-        table.append("<tr>" +
-                      "<th>User ID</th>" +
-                      "<th>User name</th>" +
-                      "<th>User login</th>" +
-                      "<th>User email</th>" +
-                      "<th>User create date</th>" +
-                      "<th>edit</th>" +
-                      "<th>delete</th>" +
-                "</tr>");
+        table.append("<tr>"
+                + "<th>User ID</th>"
+                + "<th>User name</th>"
+                + "<th>User login</th>"
+                + "<th>User email</th>"
+                + "<th>User create date</th>"
+                + "<th>edit</th>"
+                + "<th>delete</th>"
+                + "</tr>");
         validate.findAll().forEach(user -> {
             table.append("<tr>");
             table.append("<td>" + user.getId() + "</td>");
@@ -46,31 +46,31 @@ public class UsersServlet extends HttpServlet {
             table.append("<td>" + user.getLogin() + "</td>");
             table.append("<td>" + user.getEmail() + "</td>");
             table.append("<td>" + user.getCreateDate() + "</td>");
-            table.append(String.format("<td>" +
-                                        "<form action='%s/edit' method='get'>" +
-                                            "<input type='hidden' name='id' value='%s'/>" +
-                                            "<input type='submit' value='edit'></form>" +
-                                    "</td>", req.getContextPath(), user.getId()));
-            table.append(String.format("<td>" +
-                                        "<form action='%s/list' method='post'>" +
-                                            "<input type='hidden' name='id' value='%s'/>" +
-                                            "<input type='submit' value='delete'></form>" +
-                                    "</td>", req.getContextPath(), user.getId()));
+            table.append(String.format("<td>"
+                    + "<form action='%s/edit' method='get'>"
+                    + "<input type='hidden' name='id' value='%s'/>"
+                    + "<input type='submit' value='edit'></form>"
+                    + "</td>", req.getContextPath(), user.getId()));
+            table.append(String.format("<td>"
+                    + "<form action='%s/list' method='post'>"
+                    + "<input type='hidden' name='id' value='%s'/>"
+                    + "<input type='submit' value='delete'></form>"
+                    + "</td>", req.getContextPath(), user.getId()));
             table.append("</tr>");
         });
         table.append("</table>");
 
-        try(PrintWriter pw = new PrintWriter(resp.getOutputStream())) {
-            pw.append("<!DOCTYPE html>" +
-                    "<html lang=\"en\">" +
-                    "<head>" +
-                    "    <meta charset=\"UTF-8\">" +
-                    "    <title>Users</title>" +
-                    "</head>" +
-                    "<body>" +
-                    table.toString() +
-                    "</body>" +
-                    "</html>");
+        try (PrintWriter pw = new PrintWriter(resp.getOutputStream())) {
+            pw.append("<!DOCTYPE html>"
+                    + "<html lang=\"en\">"
+                    + "<head>"
+                    + "    <meta charset=\"UTF-8\">"
+                    + "    <title>Users</title>"
+                    + "</head>"
+                    + "<body>"
+                    + table.toString()
+                    + "</body>"
+                    + "</html>");
             pw.flush();
         } catch (IOException io) {
             LOGGER.error("Ошибка чтения/записи!", io);

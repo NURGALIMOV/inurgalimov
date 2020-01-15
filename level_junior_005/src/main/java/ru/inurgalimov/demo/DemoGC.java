@@ -23,7 +23,7 @@ public class DemoGC {
 
     public static void main(String[] args) {
         long start = System.currentTimeMillis();
-        for(int i = 0; i < 100000; i++) {
+        for (int i = 0; i < 100000; i++) {
             new User("a");
         }
         long end = System.currentTimeMillis();

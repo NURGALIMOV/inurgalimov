@@ -36,7 +36,7 @@ public class ProcessingPoint implements Storage {
     @Override
     public boolean add(Food food) {
         boolean result = trash.add(food);
-        if(result && food.isCanReproduct()) {
+        if (result && food.isCanReproduct()) {
             recast.put(food.getName(), food);
         }
         return result;
@@ -62,7 +62,7 @@ public class ProcessingPoint implements Storage {
     public List<Food> resort() {
         List<Food> result = new ArrayList<>();
         for (Food food : recast.values()) {
-            if(!add(food)) {
+            if (!add(food)) {
                 recast.remove(food.getName());
                 result.add(food);
             }

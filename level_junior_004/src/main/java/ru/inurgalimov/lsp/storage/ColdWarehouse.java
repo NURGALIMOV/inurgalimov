@@ -68,7 +68,7 @@ public class ColdWarehouse implements Storage {
     public List<Food> resort() {
         List<Food> result = new ArrayList<>();
         for (Food food : fridge.values()) {
-            if(!add(food)) {
+            if (!add(food)) {
                 fridge.remove(food.getName());
                 result.add(food);
             }

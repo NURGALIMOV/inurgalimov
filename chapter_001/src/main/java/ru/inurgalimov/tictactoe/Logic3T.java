@@ -4,7 +4,7 @@ public class Logic3T {
     private final Figure3T[][] table;
 
     public Logic3T(Figure3T[][] table) {
-        this.table = table;
+        this.table = table.clone();
     }
 
     public boolean isWinnerX() {

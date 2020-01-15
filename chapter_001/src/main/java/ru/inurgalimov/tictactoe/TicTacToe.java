@@ -18,8 +18,8 @@ import javafx.stage.Stage;
 
 public class TicTacToe extends Application {
     private static final String JOB4J = "Крестики-нолики www.job4j.ru";
-    private final int size = 3;
-    private final Figure3T[][] cells = new Figure3T[size][size];
+    private static final int SIZE = 3;
+    private final Figure3T[][] cells = new Figure3T[SIZE][SIZE];
     private final Logic3T logic = new Logic3T(cells);
 
     private Figure3T buildRectangle(int x, int y, int size) {
@@ -59,13 +59,13 @@ public class TicTacToe extends Application {
         return gap;
     }
 
-    private void checkWinner() {
-        if (this.logic.isWinnerX()) {
-            this.showAlert("Победили Крестики! Начните новую Игру!");
-        } else if (this.logic.isWinnerO()) {
-            this.showAlert("Победили Нолики! Начните новую Игру!");
-        }
-    }
+//    private void checkWinner() {
+//        if (this.logic.isWinnerX()) {
+//            this.showAlert("Победили Крестики! Начните новую Игру!");
+//        } else if (this.logic.isWinnerO()) {
+//            this.showAlert("Победили Нолики! Начните новую Игру!");
+//        }
+//    }
 
     private Group buildMarkX(double x, double y, int size) {
         Group group = new Group();
@@ -104,8 +104,8 @@ public class TicTacToe extends Application {
 
     private Group buildGrid() {
         Group panel = new Group();
-        for (int y = 0; y != this.size; y++) {
-            for (int x = 0; x != this.size; x++) {
+        for (int y = 0; y != this.SIZE; y++) {
+            for (int x = 0; x != this.SIZE; x++) {
                 Figure3T rect = this.buildRectangle(x, y, 50);
                 this.cells[y][x] = rect;
                 panel.getChildren().add(rect);

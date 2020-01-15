@@ -35,18 +35,18 @@ public class UserCreateServlet extends HttpServlet {
                 .append("User email : <input type='text' name='email'/><br/>")
                 .append("<input type='submit' value='create'></form>");
 
-        try(PrintWriter pw = new PrintWriter(resp.getOutputStream())) {
-            pw.append("<!DOCTYPE html>" +
-                      "<html lang=\"en\">" +
-                      "<head>" +
-                      "    <meta charset=\"UTF-8\">" +
-                      "    <title>Create user</title>" +
-                      "</head>" +
-                      "<body>" +
-                      form.toString() +
-                      "<br/>" +
-                      "</body>" +
-                      "</html>");
+        try (PrintWriter pw = new PrintWriter(resp.getOutputStream())) {
+            pw.append("<!DOCTYPE html>"
+                    + "<html lang=\"en\">"
+                    + "<head>"
+                    + "    <meta charset=\"UTF-8\">"
+                    + "    <title>Create user</title>"
+                    + "</head>"
+                    + "<body>"
+                    + form.toString()
+                    + "<br/>"
+                    + "</body>"
+                    + "</html>");
             pw.flush();
         } catch (IOException io) {
             LOGGER.error("Ошибка чтения/записи!", io);

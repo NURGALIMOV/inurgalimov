@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Brackets {
-    private final char r1 = '(';
-    private final char r2 = ')';
-    private final char s1 = '[';
-    private final char s2 = ']';
-    private final char b1 = '{';
-    private final char b2 = '}';
+    private static final char R1 = '(';
+    private static final char R2 = ')';
+    private static final char S1 = '[';
+    private static final char S2 = ']';
+    private static final char B1 = '{';
+    private static final char B2 = '}';
 
     public List<Character> toParseTheBrackets(String line) {
         List<Character> resultList = new ArrayList<>();
@@ -26,12 +26,12 @@ public class Brackets {
         char[] charArray = text.toCharArray();
         char[] lastBrackets = new char[charArray.length];
         for (int i = 0, k = 0; i < charArray.length; i++) {
-            if (charArray[i] == r1 || charArray[i] == s1 || charArray[i] == b1) {
+            if (charArray[i] == R1 || charArray[i] == S1 || charArray[i] == B1) {
                 lastBrackets[k++] = charArray[i];
                 continue;
-            } else if ((charArray[i] == r2 && lastBrackets[--k] != r1)
-                    || (charArray[i] == s2 && lastBrackets[--k] != s1)
-                    || (charArray[i] == b2 && lastBrackets[--k] != b1)) {
+            } else if ((charArray[i] == R2 && lastBrackets[--k] != R1)
+                    || (charArray[i] == S2 && lastBrackets[--k] != S1)
+                    || (charArray[i] == B2 && lastBrackets[--k] != B1)) {
                 result = false;
                 break;
             }
@@ -44,7 +44,7 @@ public class Brackets {
             char[] charArray = text.toCharArray();
             String result = "";
             for (char ch : charArray) {
-                if (ch == r1 || ch == s1 || ch == b1 || ch == r2 || ch == s2 || ch == b2) {
+                if (ch == R1 || ch == S1 || ch == B1 || ch == R2 || ch == S2 || ch == B2) {
                     result = result + ch;
                 }
             }

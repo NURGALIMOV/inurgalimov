@@ -17,7 +17,7 @@ public class AnalizyTest {
         String temp = analizy.getClass().getResource("\\").getFile();
         String path = temp.substring(0, temp.indexOf("target")) + "src\\main\\resources\\";
         analizy.unavailable(path + "server.txt", path + "target.txt");
-        try(BufferedReader reader = new BufferedReader(new FileReader(path + "target.txt"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(path + "target.txt"))) {
             assertThat(reader.readLine(), is("10:58:01;10:59:01;"));
             assertThat(reader.readLine(), is("11:01:02;11:02:02;"));
         }
