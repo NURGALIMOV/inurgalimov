@@ -184,7 +184,7 @@
             </activation>
             <properties>
                 <db.url>jdbc:postgresql://localhost/tracker</db.url>
-                <db.username>ilshat</db.username>
+                <db.username>postgres</db.username>
                 <db.password></db.password>
                 <db.driver>org.postgresql.Driver</db.driver>
             </properties>
