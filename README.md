@@ -2,10 +2,4 @@
 [![codecov](https://codecov.io/gh/NURGALIMOV/inurgalimov/branch/master/graph/badge.svg)](https://codecov.io/gh/NURGALIMOV/inurgalimov)
 
 # inurgalimov
-Прохожу обучение на http://job4j.ru. В конечном итоге после этих курсов хочу освоить язык программирования JAVA.
-
-Создания новой ветки через IDEA
-
-В курсе производилась работа с ветками git
-
-Объединение зафиксированных изменений
+Прохожу обучение на http://job4j.ru. Репозиторий содержит результат выполненных задач. 
