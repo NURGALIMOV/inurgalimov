@@ -1,0 +1,174 @@
+package ru.inurgalimov.crud.persistent;
+
+import org.apache.commons.dbcp2.BasicDataSource;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import ru.inurgalimov.crud.model.User;
+
+import java.io.InputStream;
+import java.sql.*;
+import java.util.*;
+
+/**
+ * Хранилище пользователей в базе данных.
+ */
+public class DBStore implements Store {
+
+    /** Логгер. */
+    private static final Logger LOGGER = LogManager.getLogger(DBStore.class.getName());
+
+    /** Пул коннектов. */
+    private static final BasicDataSource SOURCE = new BasicDataSource();
+
+    /** Единственный экземпляр класса. */
+    private static final DBStore INSTANCE = new DBStore();
+
+    /**
+     * Конструктор.
+     */
+    private DBStore() {
+        init();
+    }
+
+    /**
+     * Инициализация.
+     */
+    private void init() {
+        try (InputStream in = DBStore.class.getClassLoader().getResourceAsStream("db.properties")) {
+            Properties config = new Properties();
+            config.load(in);
+            SOURCE.setDriverClassName(config.getProperty("driver-class-name"));
+            SOURCE.setUrl(config.getProperty("url"));
+            SOURCE.setUsername(config.getProperty("username"));
+            SOURCE.setPassword(config.getProperty("password"));
+            SOURCE.setMinIdle(5);
+            SOURCE.setMaxIdle(10);
+            SOURCE.setMaxOpenPreparedStatements(100);
+            try (Connection connection = SOURCE.getConnection();
+                 Statement statement = connection.createStatement()) {
+                statement.execute("CREATE TABLE IF NOT EXISTS users ("
+                        + "id VARCHAR(2000) PRIMARY KEY,"
+                        + "name VARCHAR(2000),"
+                        + "login VARCHAR(2000),"
+                        + "email VARCHAR(2000),"
+                        + "creates BIGINT"
+                        + ");"
+                );
+            }
+        } catch (Exception e) {
+            LOGGER.error("Ошиибка инициализации.", e);
+        }
+    }
+
+    /**
+     * Возвращает единственный экземпляр класса.
+     *
+     * @return экземпляр класса.
+     */
+    public static DBStore getInstance() {
+        return INSTANCE;
+    }
+
+    @Override
+    public User add(User user) {
+        try (Connection connection = SOURCE.getConnection();
+             PreparedStatement pst = connection.prepareStatement("INSERT INTO users (id, name, login, email, creates)"
+                     + "VALUES (?, ?, ?, ?, ?)")) {
+                pst.setString(1, user.getId().toString());
+                pst.setString(2, user.getName());
+                pst.setString(3, user.getLogin());
+                pst.setString(4, user.getEmail());
+                pst.setLong(5, user.getCreateDate().getTime());
+                pst.executeUpdate();
+        } catch (Exception e) {
+            LOGGER.error("Ошибка записи данных в БД.", e);
+        }
+        return user;
+    }
+
+    @Override
+    public boolean update(User user) {
+        boolean result = false;
+        User old = findById(user);
+        if (old != null) {
+            try (Connection connection = SOURCE.getConnection();
+                 PreparedStatement pst = connection.prepareStatement("UPDATE users AS i "
+                         + "SET name = ?, login = ?, email = ? WHERE i.id = ?")) {
+                String newName =  user.getName();
+                String oldName = old.getName();
+                pst.setString(1, ((newName != null) && !oldName.equals(newName)) ? newName : oldName);
+
+                String newLogin =  user.getLogin();
+                String oldLogin = old.getLogin();
+                pst.setString(2, ((newLogin != null) && !oldLogin.equals(newLogin)) ? newLogin : oldLogin);
+
+                String newEmail =  user.getEmail();
+                String oldEmail = old.getEmail();
+                pst.setString(3, ((newEmail != null) && !oldEmail.equals(newEmail)) ? newEmail : oldEmail);
+
+                pst.setString(4, user.getId().toString());
+                pst.executeUpdate();
+                result = true;
+            } catch (Exception e) {
+                LOGGER.error("Ошибка при обновлении данных пользователя.", e);
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public boolean delete(User user) {
+        boolean result = true;
+        try (Connection connection = SOURCE.getConnection();
+             PreparedStatement pst = connection.prepareStatement("DELETE FROM users AS i WHERE i.id = ?")) {
+            pst.setString(1, user.getId().toString());
+            pst.executeUpdate();
+            result = findById(user) == null;
+        } catch (Exception e) {
+            LOGGER.error("Ошибка удаления данных из БД.", e);
+        }
+        return result;
+    }
+
+    @Override
+    public Collection<User> findAll() {
+        List<User> result = new ArrayList<>();
+        try (Connection connection = SOURCE.getConnection();
+             Statement st = connection.createStatement()) {
+            ResultSet rst = st.executeQuery("SELECT * FROM users");
+            while (rst.next()) {
+                User user = new User(
+                        rst.getString("name"),
+                        rst.getString("login"),
+                        rst.getString("email"),
+                        UUID.fromString(rst.getString("id")));
+                user.getCreateDate().setTime(rst.getLong("creates"));
+                result.add(user);
+            }
+        } catch (Exception e) {
+            LOGGER.error("Ошибка при получении списка пользователей.", e);
+        }
+        return result;
+    }
+
+    @Override
+    public User findById(User user) {
+        User result = null;
+        try (Connection connection = SOURCE.getConnection();
+             PreparedStatement pst = connection.prepareStatement("SELECT * FROM users AS i WHERE i.id = ?")) {
+            pst.setString(1, user.getId().toString());
+            ResultSet rst = pst.executeQuery();
+            while (rst.next()) {
+                result = new User(
+                        rst.getString("name"),
+                        rst.getString("login"),
+                        rst.getString("email"),
+                        UUID.fromString(rst.getString("id")));
+                result.getCreateDate().setTime(rst.getLong("creates"));
+            }
+        } catch (Exception e) {
+            LOGGER.error("Ошибка при поиске пользователя.", e);
+        }
+        return result;
+    }
+}
