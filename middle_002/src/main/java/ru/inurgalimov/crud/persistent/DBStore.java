@@ -14,13 +14,19 @@ import java.util.*;
  */
 public class DBStore implements Store {
 
-    /** Логгер. */
+    /**
+     * Логгер.
+     */
     private static final Logger LOGGER = LogManager.getLogger(DBStore.class.getName());
 
-    /** Пул коннектов. */
+    /**
+     * Пул коннектов.
+     */
     private static final BasicDataSource SOURCE = new BasicDataSource();
 
-    /** Единственный экземпляр класса. */
+    /**
+     * Единственный экземпляр класса.
+     */
     private static final DBStore INSTANCE = new DBStore();
 
     /**
@@ -51,6 +57,7 @@ public class DBStore implements Store {
                         + "name VARCHAR(2000),"
                         + "login VARCHAR(2000),"
                         + "email VARCHAR(2000),"
+                        + "photoId VARCHAR (2000),"
                         + "creates BIGINT"
                         + ");"
                 );
@@ -72,14 +79,15 @@ public class DBStore implements Store {
     @Override
     public User add(User user) {
         try (Connection connection = SOURCE.getConnection();
-             PreparedStatement pst = connection.prepareStatement("INSERT INTO users (id, name, login, email, creates)"
-                     + "VALUES (?, ?, ?, ?, ?)")) {
-                pst.setString(1, user.getId().toString());
-                pst.setString(2, user.getName());
-                pst.setString(3, user.getLogin());
-                pst.setString(4, user.getEmail());
-                pst.setLong(5, user.getCreateDate().getTime());
-                pst.executeUpdate();
+             PreparedStatement pst = connection.prepareStatement(
+                     "INSERT INTO users (id, name, login, email, photoId, creates) VALUES (?, ?, ?, ?, ?, ?)")) {
+            pst.setString(1, user.getId().toString());
+            pst.setString(2, user.getName());
+            pst.setString(3, user.getLogin());
+            pst.setString(4, user.getEmail());
+            pst.setString(5, user.getPhotoId());
+            pst.setLong(6, user.getCreateDate().getTime());
+            pst.executeUpdate();
         } catch (Exception e) {
             LOGGER.error("Ошибка записи данных в БД.", e);
         }
@@ -94,15 +102,15 @@ public class DBStore implements Store {
             try (Connection connection = SOURCE.getConnection();
                  PreparedStatement pst = connection.prepareStatement("UPDATE users AS i "
                          + "SET name = ?, login = ?, email = ? WHERE i.id = ?")) {
-                String newName =  user.getName();
+                String newName = user.getName();
                 String oldName = old.getName();
                 pst.setString(1, ((newName != null) && !oldName.equals(newName)) ? newName : oldName);
 
-                String newLogin =  user.getLogin();
+                String newLogin = user.getLogin();
                 String oldLogin = old.getLogin();
                 pst.setString(2, ((newLogin != null) && !oldLogin.equals(newLogin)) ? newLogin : oldLogin);
 
-                String newEmail =  user.getEmail();
+                String newEmail = user.getEmail();
                 String oldEmail = old.getEmail();
                 pst.setString(3, ((newEmail != null) && !oldEmail.equals(newEmail)) ? newEmail : oldEmail);
 
@@ -142,6 +150,7 @@ public class DBStore implements Store {
                         rst.getString("login"),
                         rst.getString("email"),
                         UUID.fromString(rst.getString("id")));
+                user.setPhotoId(rst.getString("photoId"));
                 user.getCreateDate().setTime(rst.getLong("creates"));
                 result.add(user);
             }
@@ -164,6 +173,7 @@ public class DBStore implements Store {
                         rst.getString("login"),
                         rst.getString("email"),
                         UUID.fromString(rst.getString("id")));
+                result.setPhotoId(rst.getString("photoId"));
                 result.getCreateDate().setTime(rst.getLong("creates"));
             }
         } catch (Exception e) {

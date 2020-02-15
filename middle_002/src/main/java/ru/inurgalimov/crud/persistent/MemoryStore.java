@@ -11,10 +11,14 @@ import java.util.concurrent.ConcurrentMap;
  */
 public class MemoryStore implements Store {
 
-    /** Единственный экземпляр класса. */
+    /**
+     * Единственный экземпляр класса.
+     */
     public static final MemoryStore INSTANCE = new MemoryStore();
 
-    /** Хранилище пользователей. */
+    /**
+     * Хранилище пользователей.
+     */
     private final ConcurrentMap<UUID, User> storage = new ConcurrentHashMap<>();
 
     /**

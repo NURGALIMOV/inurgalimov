@@ -15,13 +15,19 @@ import java.io.PrintWriter;
 import java.util.UUID;
 
 public class UserUpdateServlet extends HttpServlet {
-    /** Сепаратор для текущей системы */
+    /**
+     * Сепаратор для текущей системы
+     */
     private static final String LINE_SEPARATOR = System.lineSeparator();
 
-    /** Логгер. */
+    /**
+     * Логгер.
+     */
     private static final Logger LOGGER = LogManager.getLogger(UserUpdateServlet.class.getName());
 
-    /** Сервис валидации данных. */
+    /**
+     * Сервис валидации данных.
+     */
     private final Validate validate = ValidateService.getInstance();
 
     @Override

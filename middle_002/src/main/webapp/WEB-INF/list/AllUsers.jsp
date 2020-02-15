@@ -3,7 +3,7 @@
 <%@ page import="java.util.UUID" %>
 <%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <meta charset=\"UTF-8\">
@@ -36,11 +36,20 @@
             <td>
                 <form action="${pageContext.servletContext.contextPath}/list" method="post">
                     <input type="hidden" name="id" value="<c:out value="${user.id}"></c:out>"/>
+                    <input type="hidden" name="photoId" value="<c:out value="${user.photoId}"></c:out>"/>
                     <input type='submit' value='delete'>
                 </form>
             </td>
+            <td>
+                <a href="${pageContext.servletContext.contextPath}/download?name=<c:out value="${user.photoId}"></c:out>">Download</a>
+            </td>
+            <td>
+                <img src="${pageContext.servletContext.contextPath}/download?name=<c:out value="${user.photoId}"></c:out>"
+                     width="50px"
+                     height="50px"/>
+            </td>
         </tr>
     </c:forEach>
-    </table>
+</table>
 </body>
 </html>

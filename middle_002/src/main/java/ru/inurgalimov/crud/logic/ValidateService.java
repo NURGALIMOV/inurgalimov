@@ -11,10 +11,14 @@ import java.util.Collection;
  */
 public class ValidateService implements Validate {
 
-    /** Единственный экземпляр класса. */
+    /**
+     * Единственный экземпляр класса.
+     */
     public static final ValidateService INSTANCE = new ValidateService();
 
-    /** Хранилище пользователей. */
+    /**
+     * Хранилище пользователей.
+     */
     private final Store store = DBStore.getInstance();
 
     /**

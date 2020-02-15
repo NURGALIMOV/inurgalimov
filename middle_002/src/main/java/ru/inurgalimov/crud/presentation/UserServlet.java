@@ -22,31 +22,49 @@ import java.util.function.Consumer;
  */
 public class UserServlet extends HttpServlet {
 
-    /** Сепаратор для текущей системы */
+    /**
+     * Сепаратор для текущей системы
+     */
     private static final String LINE_SEPARATOR = System.lineSeparator();
 
-    /** Логгер. */
+    /**
+     * Логгер.
+     */
     private static final Logger LOGGER = LogManager.getLogger(UserServlet.class.getName());
 
-    /** Константа для получения действия. */
+    /**
+     * Константа для получения действия.
+     */
     private static final String ACTION = "action";
 
-    /** Константа для получения имени пользователя. */
+    /**
+     * Константа для получения имени пользователя.
+     */
     private static final String NAME = "name";
 
-    /** Константа для получения логина пользователя. */
+    /**
+     * Константа для получения логина пользователя.
+     */
     private static final String LOGIN = "login";
 
-    /** Константа для получения почты пользователя. */
+    /**
+     * Константа для получения почты пользователя.
+     */
     private static final String EMAIL = "email";
 
-    /** Константа для получения ID пользователя. */
+    /**
+     * Константа для получения ID пользователя.
+     */
     private static final String ID = "id";
 
-    /** Сервис валидации данных. */
+    /**
+     * Сервис валидации данных.
+     */
     private final Validate validate = ValidateService.getInstance();
 
-    /** Выполняемые действия сервлетом. */
+    /**
+     * Выполняемые действия сервлетом.
+     */
     private final Map<String, Consumer<String[]>> actions = new HashMap();
 
     {
@@ -93,10 +111,10 @@ public class UserServlet extends HttpServlet {
                 args -> {
                     throw new UnsupportedOperationException(String.format("Операция %s не доступна.", action));
                 }).accept(new String[]{
-                    req.getParameter(NAME),
-                    req.getParameter(LOGIN),
-                    req.getParameter(EMAIL),
-                    req.getParameter(ID)
-            });
+                req.getParameter(NAME),
+                req.getParameter(LOGIN),
+                req.getParameter(EMAIL),
+                req.getParameter(ID)
+        });
     }
 }

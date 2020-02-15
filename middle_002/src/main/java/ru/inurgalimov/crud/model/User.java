@@ -9,28 +9,50 @@ import java.util.UUID;
  */
 public class User implements Serializable {
 
-    /** ID пользователя */
+    /**
+     * ID пользователя
+     */
     private UUID id;
-    
-    /** Имя пользователя */
+
+    /**
+     * Имя пользователя
+     */
     private String name;
 
-    /** Логин пользователя */
+    /**
+     * Логин пользователя
+     */
     private String login;
 
-    /** Почта пользователя */
+    /**
+     * Почта пользователя
+     */
     private String email;
 
-    /** Дата создания пользователя */
+    /**
+     * Дата создания пользователя
+     */
     private Date createDate;
+
+    /**
+     * Имя файла
+     */
+    private String photoId;
+
+    /**
+     * Конструктор.
+     */
+    public User() {
+        this("", "", "", null);
+    }
 
     /**
      * Конструктор.
      *
-     * @param aName имя пользователя.
+     * @param aName  имя пользователя.
      * @param aLogin логин пользователя.
      * @param aEmail почта пользователя.
-     * @param aID ID пользователя.
+     * @param aID    ID пользователя.
      */
     public User(String aName, String aLogin, String aEmail, UUID aID) {
         id = (aID != null) ? aID : UUID.randomUUID();
@@ -43,7 +65,7 @@ public class User implements Serializable {
     /**
      * Конструктор.
      *
-     * @param aName имя пользователя.
+     * @param aName  имя пользователя.
      * @param aLogin логин пользователя.
      * @param aEmail почта пользователя.
      */
@@ -121,5 +143,23 @@ public class User implements Serializable {
      */
     public Date getCreateDate() {
         return createDate;
+    }
+
+    /**
+     * Возвращает имя файла.
+     *
+     * @return имя файла.
+     */
+    public String getPhotoId() {
+        return photoId;
+    }
+
+    /**
+     * Устанавливает имя файла.
+     *
+     * @param photoId имя файла.
+     */
+    public void setPhotoId(String photoId) {
+        this.photoId = photoId;
     }
 }
