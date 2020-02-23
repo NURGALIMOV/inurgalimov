@@ -40,6 +40,16 @@ public class User implements Serializable {
     private String photoId;
 
     /**
+     * Пароль УЗ.
+     */
+    private String password;
+
+    /**
+     * Роль.
+     */
+    private Role role;
+
+    /**
      * Конструктор.
      */
     public User() {
@@ -161,5 +171,41 @@ public class User implements Serializable {
      */
     public void setPhotoId(String photoId) {
         this.photoId = photoId;
+    }
+
+    /**
+     * Возвращает пароль УЗ.
+     *
+     * @return пароль УЗ.
+     */
+    public String getPassword() {
+        return password;
+    }
+
+    /**
+     * Устанавливает пароль для УЗ.
+     *
+     * @param password пароль для УЗ.
+     */
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    /**
+     * Возвращает роль пользователя.
+     *
+     * @return роль пользователя.
+     */
+    public Role getRole() {
+        return role;
+    }
+
+    /**
+     * Устанавливает роль пользователя.
+     *
+     * @param role роль пользователя.
+     */
+    public void setRole(Role role) {
+        this.role = role;
     }
 }

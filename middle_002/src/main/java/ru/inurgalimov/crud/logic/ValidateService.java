@@ -5,6 +5,7 @@ import ru.inurgalimov.crud.persistent.DBStore;
 import ru.inurgalimov.crud.persistent.Store;
 
 import java.util.Collection;
+import java.util.Objects;
 
 /**
  * Валидация данных.
@@ -60,5 +61,11 @@ public class ValidateService implements Validate {
     @Override
     public User findById(User user) {
         return store.findById(user);
+    }
+
+    @Override
+    public boolean isCredentional(String login, String password) {
+        return (!Objects.isNull(login) && !Objects.isNull(password)) && findAll().stream()
+                .anyMatch(user -> ((login.equals(user.getLogin())) && (password.equals(user.getPassword()))));
     }
 }

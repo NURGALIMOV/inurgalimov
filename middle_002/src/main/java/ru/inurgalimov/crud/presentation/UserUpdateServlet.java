@@ -4,7 +4,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ru.inurgalimov.crud.logic.Validate;
 import ru.inurgalimov.crud.logic.ValidateService;
+import ru.inurgalimov.crud.model.Role;
 import ru.inurgalimov.crud.model.User;
+import ru.inurgalimov.crud.utils.Utils;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -12,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Objects;
 import java.util.UUID;
 
 public class UserUpdateServlet extends HttpServlet {
@@ -46,7 +49,15 @@ public class UserUpdateServlet extends HttpServlet {
                 .append(user.getEmail()).append("'/><br/>")
                 .append("User id : <input type='text' name='id' value='")
                 .append(user.getId()).append("'/><br/>")
-                .append("<input type='submit' value='edit'></form>");
+                .append("User password : <input type='text' name='password' value='")
+                .append(user.getPassword()).append("'/><br/>");
+        if (((Role) req.getSession().getAttribute(Utils.KEY_FOR_GET_ROLE)).equals(Role.ADMINISTRATOR)) {
+            form.append("<select name='role'>")
+                    .append("<option value='admin'>admin</option>")
+                    .append("<option value = 'user' > user </option >")
+                    .append("</select >");
+        }
+        form.append("<input type='submit' value='edit'></form>");
 
         try (PrintWriter pw = new PrintWriter(resp.getOutputStream())) {
             pw.append("<!DOCTYPE html>"
@@ -68,11 +79,23 @@ public class UserUpdateServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        validate.update(new User(
+        User user = new User(
                 req.getParameter("name"),
                 req.getParameter("login"),
                 req.getParameter("email"),
-                UUID.fromString(req.getParameter("id"))));
-        resp.sendRedirect(String.format("%s/list", req.getContextPath()));
+                UUID.fromString(req.getParameter("id")));
+        user.setPassword(req.getParameter("password"));
+        String role = req.getParameter("role");
+        if (Objects.nonNull(role) && !role.isEmpty()) {
+            user.setRole(role.equals("admin") ? Role.ADMINISTRATOR : Role.USER);
+        } else {
+            user.setRole(Role.USER);
+        }
+        validate.update(user);
+        if (((Role) req.getSession().getAttribute(Utils.KEY_FOR_GET_ROLE)).equals(Role.ADMINISTRATOR)) {
+            resp.sendRedirect(String.format("%s/list", req.getContextPath()));
+        } else {
+            resp.sendRedirect(String.format("%s/", req.getContextPath()));
+        }
     }
 }

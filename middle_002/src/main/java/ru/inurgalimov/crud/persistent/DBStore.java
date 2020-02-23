@@ -3,6 +3,7 @@ package ru.inurgalimov.crud.persistent;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import ru.inurgalimov.crud.model.Role;
 import ru.inurgalimov.crud.model.User;
 
 import java.io.InputStream;
@@ -19,6 +20,8 @@ public class DBStore implements Store {
      */
     private static final Logger LOGGER = LogManager.getLogger(DBStore.class.getName());
 
+    private static final UUID ADMIN_ID = UUID.fromString("d66541c4-a9db-3308-8c67-bbf87dc0df8b");
+
     /**
      * Пул коннектов.
      */
@@ -34,6 +37,12 @@ public class DBStore implements Store {
      */
     private DBStore() {
         init();
+        User admin = new User("admin", "admin", "admin@admin.ru", ADMIN_ID);
+        admin.setRole(Role.ADMINISTRATOR);
+        admin.setPassword("admin");
+        if(findById(admin) == null) {
+            add(admin);
+        }
     }
 
     /**
@@ -58,7 +67,9 @@ public class DBStore implements Store {
                         + "login VARCHAR(2000),"
                         + "email VARCHAR(2000),"
                         + "photoId VARCHAR (2000),"
-                        + "creates BIGINT"
+                        + "creates BIGINT,"
+                        + "role VARCHAR,"
+                        + "password VARCHAR"
                         + ");"
                 );
             }
@@ -80,13 +91,16 @@ public class DBStore implements Store {
     public User add(User user) {
         try (Connection connection = SOURCE.getConnection();
              PreparedStatement pst = connection.prepareStatement(
-                     "INSERT INTO users (id, name, login, email, photoId, creates) VALUES (?, ?, ?, ?, ?, ?)")) {
+                     "INSERT INTO users (id, name, login, email, photoId, creates, role, password) " +
+                             "VALUES (?, ?, ?, ?, ?, ?, ?, ?)")) {
             pst.setString(1, user.getId().toString());
             pst.setString(2, user.getName());
             pst.setString(3, user.getLogin());
             pst.setString(4, user.getEmail());
             pst.setString(5, user.getPhotoId());
             pst.setLong(6, user.getCreateDate().getTime());
+            pst.setString(7, user.getRole().getRoleName());
+            pst.setString(8, user.getPassword());
             pst.executeUpdate();
         } catch (Exception e) {
             LOGGER.error("Ошибка записи данных в БД.", e);
@@ -101,7 +115,7 @@ public class DBStore implements Store {
         if (old != null) {
             try (Connection connection = SOURCE.getConnection();
                  PreparedStatement pst = connection.prepareStatement("UPDATE users AS i "
-                         + "SET name = ?, login = ?, email = ? WHERE i.id = ?")) {
+                         + "SET name = ?, login = ?, email = ?, role = ?, password = ? WHERE i.id = ?")) {
                 String newName = user.getName();
                 String oldName = old.getName();
                 pst.setString(1, ((newName != null) && !oldName.equals(newName)) ? newName : oldName);
@@ -114,7 +128,16 @@ public class DBStore implements Store {
                 String oldEmail = old.getEmail();
                 pst.setString(3, ((newEmail != null) && !oldEmail.equals(newEmail)) ? newEmail : oldEmail);
 
-                pst.setString(4, user.getId().toString());
+                String newRole = user.getRole().getRoleName();
+                String oldRole = old.getRole().getRoleName();
+                pst.setString(4, ((newRole != null) && !oldRole.equals(newRole)) ? newRole : oldRole);
+
+                String newPassword = user.getPassword();
+                String oldPassword = old.getPassword();
+                pst.setString(5, ((newPassword != null) && !oldPassword.equals(newPassword)) ?
+                        newPassword : oldPassword);
+
+                pst.setString(6, user.getId().toString());
                 pst.executeUpdate();
                 result = true;
             } catch (Exception e) {
@@ -152,6 +175,15 @@ public class DBStore implements Store {
                         UUID.fromString(rst.getString("id")));
                 user.setPhotoId(rst.getString("photoId"));
                 user.getCreateDate().setTime(rst.getLong("creates"));
+                user.setRole(Arrays.stream(Role.values()).filter(role -> {
+                    try {
+                        return role.getRoleName().equals(rst.getString("role"));
+                    } catch (SQLException e) {
+                        LOGGER.error("Ошибка при получении списка пользователей.", e);
+                    }
+                    return false;
+                }).findFirst().orElse(Role.USER));
+                user.setPassword(rst.getString("password"));
                 result.add(user);
             }
         } catch (Exception e) {
@@ -175,6 +207,15 @@ public class DBStore implements Store {
                         UUID.fromString(rst.getString("id")));
                 result.setPhotoId(rst.getString("photoId"));
                 result.getCreateDate().setTime(rst.getLong("creates"));
+                result.setRole(Arrays.stream(Role.values()).filter(role -> {
+                    try {
+                        return role.getRoleName().equals(rst.getString("role"));
+                    } catch (SQLException e) {
+                        LOGGER.error("Ошибка при поиске пользователя.", e);
+                    }
+                    return false;
+                }).findFirst().orElse(Role.USER));
+                result.setPassword(rst.getString("password"));
             }
         } catch (Exception e) {
             LOGGER.error("Ошибка при поиске пользователя.", e);

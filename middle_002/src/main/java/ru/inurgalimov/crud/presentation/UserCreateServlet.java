@@ -8,6 +8,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ru.inurgalimov.crud.logic.Validate;
 import ru.inurgalimov.crud.logic.ValidateService;
+import ru.inurgalimov.crud.model.Role;
 import ru.inurgalimov.crud.model.User;
 
 import javax.servlet.ServletContext;
@@ -48,6 +49,9 @@ public class UserCreateServlet extends HttpServlet {
         actions.put("name", (s, u) -> u.setName(s));
         actions.put("login", (s, u) -> u.setLogin(s));
         actions.put("email", (s, u) -> u.setEmail(s));
+        actions.put("role", (s, u) -> u.setRole(s.equals("user") ? Role.USER : Role.ADMINISTRATOR));
+        actions.put("password", (s, u) -> u.setPassword(s));
+        actions.put("file", (s, u) -> u.setPhotoId(""));
     }
 
     /**
@@ -74,7 +78,7 @@ public class UserCreateServlet extends HttpServlet {
             }
             User newUser = new User();
             for (FileItem item : upload.parseRequest(req)) {
-                if (!item.isFormField()) {
+                if (!item.isFormField() && !item.getName().isEmpty()) {
                     Files.copy(item.getInputStream(), dir.resolve(Paths.get(item.getName())),
                             StandardCopyOption.REPLACE_EXISTING);
                     newUser.setPhotoId(item.getName());

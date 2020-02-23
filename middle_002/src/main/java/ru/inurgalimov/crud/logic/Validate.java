@@ -46,4 +46,12 @@ public interface Validate {
      * @return возвращает найденного пользователя.
      */
     User findById(User user);
+
+    /**
+     * Возвращает признак наличия пользователя, имеющего такой логин и пароль.
+     * @param login логин.
+     * @param password пароль.
+     * @return признак наличия пользователя, имеющего такой логин и пароль.
+     */
+    boolean isCredentional(String login, String password);
 }

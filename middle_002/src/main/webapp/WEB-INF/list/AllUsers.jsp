@@ -51,5 +51,11 @@
         </tr>
     </c:forEach>
 </table>
+<form action="${pageContext.servletContext.contextPath}/create" method="get">
+    <input type='submit' value='Создать пользователя'>
+</form>
+<form action="${pageContext.servletContext.contextPath}/signout" method="get">
+    <input type='submit' value='Выход'>
+</form>
 </body>
 </html>
