@@ -1,31 +1,30 @@
 package ru.inurgalimov.crud.logic;
 
 import ru.inurgalimov.crud.model.User;
-import ru.inurgalimov.crud.persistent.DBStore;
+import ru.inurgalimov.crud.persistent.MemoryStore;
 import ru.inurgalimov.crud.persistent.Store;
 
 import java.util.Collection;
 import java.util.Objects;
 
 /**
- * Валидация данных.
+ * Сервис для тестов.
  */
-public class ValidateService implements Validate {
-
+public class ValidateServiceStub implements Validate {
     /**
      * Единственный экземпляр класса.
      */
-    public static final ValidateService INSTANCE = new ValidateService();
+    public static final ValidateServiceStub INSTANCE = new ValidateServiceStub();
 
     /**
      * Хранилище пользователей.
      */
-    private final Store store = DBStore.getInstance();
+    private final Store store = MemoryStore.getInstance();
 
     /**
      * Конструктор.
      */
-    private ValidateService() {
+    private ValidateServiceStub() {
 
     }
 
