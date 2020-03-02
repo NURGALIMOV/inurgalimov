@@ -7,6 +7,30 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>
+        function checkSex(node) {
+            node.checked = true;
+        }
+        function validate() {
+            if($('#name').val() == '') {
+                alert('Поле \'Имя\' не заполнено.');
+                return false;
+            }
+            if($('#surname').val() == '') {
+                alert('Поле \'Фамилия\' не заполнено.');
+                return false;
+            }
+            if (!document.getElementById('male').checked && !document.getElementById('female').checked) {
+                alert('Не выбран пол.');
+                return false;
+            }
+            if($('#description').val() == '') {
+                alert('Поле \'Описание\' не заполнено.');
+                return false;
+            }
+            return true;
+        }
+    </script>
 </head>
 <body>
 <br class="container">
@@ -22,11 +46,11 @@
         <div class="radio">
             <span>Пол:</span>
             <label>
-                <input type="radio" name="sex" value="мужской">мужчина
+                <input type="radio" id="male" name="sex" value="мужской" onclick="checkSex(this)">мужчина
                 <div class="radio-control male"></div>
             </label>
             <label>
-                <input type="radio" name="sex" value="женский">женщина
+                <input type="radio" id="female" name="sex" value="женский" onclick="checkSex(this)">женщина
                 <div class="radio-control female"></div>
             </label>
         </div>
@@ -34,7 +58,7 @@
             <label for="description">Описание:</label></br>
             <textarea class="fixedNav" id="description" placeholder="Ввод описания" name="description"></textarea>
         </div>
-        <button type="submit" class="btn btn-default">Отправить</button>
+        <button type="submit" class="btn btn-default" onclick="return validate();">Отправить</button>
     </form>
     </br>
     <table class="table table-bordered">
