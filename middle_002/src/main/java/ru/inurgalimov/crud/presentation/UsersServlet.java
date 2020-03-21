@@ -56,7 +56,7 @@ public class UsersServlet extends HttpServlet {
         validate.delete(
                 new User(null, null, null, UUID.fromString(req.getParameter("id"))));
         String photoId = req.getParameter("photoId");
-        if(Objects.nonNull(photoId) && !photoId.isEmpty()) {
+        if (Objects.nonNull(photoId) && !photoId.isEmpty()) {
             Files.deleteIfExists(Paths.get("images", req.getParameter("photoId")));
         }
         resp.sendRedirect(String.format("%s/list", req.getContextPath()));

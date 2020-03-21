@@ -40,7 +40,7 @@ public class DBStore implements Store {
         User admin = new User("admin", "admin", "admin@admin.ru", ADMIN_ID);
         admin.setRole(Role.ADMINISTRATOR);
         admin.setPassword("admin");
-        if(findById(admin) == null) {
+        if (findById(admin) == null) {
             add(admin);
         }
     }
@@ -59,22 +59,8 @@ public class DBStore implements Store {
             SOURCE.setMinIdle(5);
             SOURCE.setMaxIdle(10);
             SOURCE.setMaxOpenPreparedStatements(100);
-            try (Connection connection = SOURCE.getConnection();
-                 Statement statement = connection.createStatement()) {
-                statement.execute("CREATE TABLE IF NOT EXISTS users ("
-                        + "id VARCHAR(2000) PRIMARY KEY,"
-                        + "name VARCHAR(2000),"
-                        + "login VARCHAR(2000),"
-                        + "email VARCHAR(2000),"
-                        + "photoId VARCHAR (2000),"
-                        + "creates BIGINT,"
-                        + "role VARCHAR,"
-                        + "password VARCHAR"
-                        + ");"
-                );
-            }
         } catch (Exception e) {
-            LOGGER.error("Ошиибка инициализации.", e);
+            LOGGER.error("Ошибка инициализации.", e);
         }
     }
 
@@ -91,8 +77,8 @@ public class DBStore implements Store {
     public User add(User user) {
         try (Connection connection = SOURCE.getConnection();
              PreparedStatement pst = connection.prepareStatement(
-                     "INSERT INTO users (id, name, login, email, photoId, creates, role, password) " +
-                             "VALUES (?, ?, ?, ?, ?, ?, ?, ?)")) {
+                     "INSERT INTO users (id, name, login, email, photoId, creates, role, password, country, city) "
+                             + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
             pst.setString(1, user.getId().toString());
             pst.setString(2, user.getName());
             pst.setString(3, user.getLogin());
@@ -101,6 +87,8 @@ public class DBStore implements Store {
             pst.setLong(6, user.getCreateDate().getTime());
             pst.setString(7, user.getRole().getRoleName());
             pst.setString(8, user.getPassword());
+            pst.setString(9, user.getCountry());
+            pst.setString(10, user.getCity());
             pst.executeUpdate();
         } catch (Exception e) {
             LOGGER.error("Ошибка записи данных в БД.", e);
@@ -115,7 +103,8 @@ public class DBStore implements Store {
         if (old != null) {
             try (Connection connection = SOURCE.getConnection();
                  PreparedStatement pst = connection.prepareStatement("UPDATE users AS i "
-                         + "SET name = ?, login = ?, email = ?, role = ?, password = ? WHERE i.id = ?")) {
+                         + "SET name = ?, login = ?, email = ?, role = ?, password = ?, country = ?, city = ? "
+                         + "WHERE i.id = ?")) {
                 String newName = user.getName();
                 String oldName = old.getName();
                 pst.setString(1, ((newName != null) && !oldName.equals(newName)) ? newName : oldName);
@@ -134,10 +123,20 @@ public class DBStore implements Store {
 
                 String newPassword = user.getPassword();
                 String oldPassword = old.getPassword();
-                pst.setString(5, ((newPassword != null) && !oldPassword.equals(newPassword)) ?
-                        newPassword : oldPassword);
+                pst.setString(5, ((newPassword != null) && !oldPassword.equals(newPassword))
+                        ? newPassword : oldPassword);
 
-                pst.setString(6, user.getId().toString());
+                String newCountry  = user.getCountry();
+                String oldCountry = old.getCountry();
+                pst.setString(6, ((newCountry != null) && !oldCountry.equals(newCountry))
+                        ? newCountry : oldCountry);
+
+                String newCity = user.getCity();
+                String oldCity = old.getCity();
+                pst.setString(7, ((newCity != null) && !oldCity.equals(newCity))
+                        ? newCity : oldCity);
+
+                pst.setString(8, user.getId().toString());
                 pst.executeUpdate();
                 result = true;
             } catch (Exception e) {
@@ -184,6 +183,8 @@ public class DBStore implements Store {
                     return false;
                 }).findFirst().orElse(Role.USER));
                 user.setPassword(rst.getString("password"));
+                user.setCountry(rst.getString("country"));
+                user.setCity(rst.getString("city"));
                 result.add(user);
             }
         } catch (Exception e) {
@@ -216,6 +217,8 @@ public class DBStore implements Store {
                     return false;
                 }).findFirst().orElse(Role.USER));
                 result.setPassword(rst.getString("password"));
+                result.setCountry(rst.getString("country"));
+                result.setCity(rst.getString("city"));
             }
         } catch (Exception e) {
             LOGGER.error("Ошибка при поиске пользователя.", e);

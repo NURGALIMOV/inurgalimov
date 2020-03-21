@@ -51,5 +51,34 @@
             <artifactId>commons-fileupload</artifactId>
             <version>1.4</version>
         </dependency>
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20190722</version>
+        </dependency>
     </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-maven-plugin</artifactId>
+                <version>3.6.2</version>
+                <configuration>
+                    <changeLogFile>${basedir}/db/master.xml</changeLogFile>
+                    <url>jdbc:postgresql://127.0.0.1:5432/store</url>
+                    <driver>org.postgresql.Driver</driver>
+                    <username>ilshat</username>
+                    <password>password</password>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>update</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>

@@ -43,15 +43,17 @@ public class UserCreateServlet extends HttpServlet {
     /**
      * Действия с моделью данных.
      */
-    private static final Map<String, BiConsumer<String, User>> actions = new HashMap<>();
+    private static final Map<String, BiConsumer<String, User>> ACTIONS = new HashMap<>();
 
     static {
-        actions.put("name", (s, u) -> u.setName(s));
-        actions.put("login", (s, u) -> u.setLogin(s));
-        actions.put("email", (s, u) -> u.setEmail(s));
-        actions.put("role", (s, u) -> u.setRole(s.equals("user") ? Role.USER : Role.ADMINISTRATOR));
-        actions.put("password", (s, u) -> u.setPassword(s));
-        actions.put("file", (s, u) -> u.setPhotoId(""));
+        ACTIONS.put("name", (s, u) -> u.setName(s));
+        ACTIONS.put("login", (s, u) -> u.setLogin(s));
+        ACTIONS.put("email", (s, u) -> u.setEmail(s));
+        ACTIONS.put("role", (s, u) -> u.setRole(s.equals("user") ? Role.USER : Role.ADMINISTRATOR));
+        ACTIONS.put("password", (s, u) -> u.setPassword(s));
+        ACTIONS.put("file", (s, u) -> u.setPhotoId(""));
+        ACTIONS.put("country", (s, u) -> u.setCountry(s));
+        ACTIONS.put("city", (s, u) -> u.setCity(s));
     }
 
     /**
@@ -83,7 +85,7 @@ public class UserCreateServlet extends HttpServlet {
                             StandardCopyOption.REPLACE_EXISTING);
                     newUser.setPhotoId(item.getName());
                 } else {
-                    actions.get(item.getFieldName()).accept(item.getString(), newUser);
+                    ACTIONS.get(item.getFieldName()).accept(item.getString(), newUser);
                 }
             }
             validate.add(newUser);

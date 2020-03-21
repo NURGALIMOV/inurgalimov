@@ -30,7 +30,7 @@ public class SigninServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String login = req.getParameter(Utils.KEY_FOR_GET_LOGIN);
         String password = req.getParameter(Utils.KEY_FOR_GET_PASSWORD);
-        if(ValidateService.getInstance().isCredentional(login, password)) {
+        if (ValidateService.getInstance().isCredentional(login, password)) {
             HttpSession session = req.getSession();
             session.setAttribute(Utils.KEY_FOR_GET_LOGIN, login);
             session.setAttribute(Utils.KEY_FOR_GET_PASSWORD, password);

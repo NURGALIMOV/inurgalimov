@@ -26,5 +26,5 @@ public class Utils {
     /**
      * Конструктор.
      */
-    private Utils(){}
+    private Utils() { }
 }

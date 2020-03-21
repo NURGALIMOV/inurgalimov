@@ -50,6 +50,16 @@ public class User implements Serializable {
     private Role role;
 
     /**
+     * Страна.
+     */
+    private String country;
+
+    /**
+     * Город.
+     */
+    private String city;
+
+    /**
      * Конструктор.
      */
     public User() {
@@ -207,5 +217,41 @@ public class User implements Serializable {
      */
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    /**
+     * Возвращает страну пользователя.
+     *
+     * @return страна пользователя.
+     */
+    public String getCountry() {
+        return country;
+    }
+
+    /**
+     * Страна пользователя.
+     *
+     * @param country страна пользователя.
+     */
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    /**
+     * Возвращает город пользователя.
+     *
+     * @return город пользователя.
+     */
+    public String getCity() {
+        return city;
+    }
+
+    /**
+     * Устнавливает город пользователя.
+     *
+     * @param city город пользователя.
+     */
+    public void setCity(String city) {
+        this.city = city;
     }
 }
